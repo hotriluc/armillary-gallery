@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import Project from "./Project";
 
 const projects = [
@@ -36,11 +37,30 @@ const projects = [
 ];
 
 const Projects = () => {
+  const ref = useRef();
   const radius = 2.5;
   const interval = (Math.PI * 2) / projects.length;
 
+  const [scrollSpeed, setScrollSpeed] = useState(0);
+
+  const scrollHandler = (event) => {
+    setScrollSpeed(event.deltaY * (Math.PI / 180) * 0.2);
+  };
+
+  useEffect(() => {
+    window.addEventListener("wheel", scrollHandler);
+
+    return () => {
+      window.removeEventListener("wheel", scrollHandler);
+    };
+  }, []);
+
+  useEffect(() => {
+    ref.current.rotation.y += -1.0 * scrollSpeed;
+  }, [scrollSpeed]);
+
   return (
-    <>
+    <group ref={ref}>
       {projects.map((el, i) => (
         // position  using sin and cos we can place our objects on the circle
         // rotation (1st term - we rotate i-th plane to make its side to look into the center)
@@ -60,7 +80,7 @@ const Projects = () => {
           ]}
         />
       ))}
-    </>
+    </group>
   );
 };
 

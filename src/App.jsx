@@ -2,7 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import Wrapper from "./components/layout/Wrapper";
 import { Link, Redirect, Route, Switch } from "wouter";
 import Projects from "./components/scene/Projects";
-import { Center, OrbitControls } from "@react-three/drei";
+import { Center } from "@react-three/drei";
 
 const Works = () => {
   return <div style={{ position: "absolute" }}>works</div>;
@@ -19,7 +19,7 @@ const NotFound = () => {
 const App = () => {
   return (
     <Wrapper>
-      <nav>
+      <nav style={{ position: "absolute" }}>
         <Link href="/works"> Works</Link>
         <Link href="/about"> About</Link>
       </nav>
@@ -39,7 +39,7 @@ const App = () => {
         <Switch>
           <Route path="/works">
             <Center>
-              <OrbitControls />
+              {/* <OrbitControls /> */}
 
               <mesh>
                 <sphereGeometry />
