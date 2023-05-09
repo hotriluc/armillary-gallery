@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Project from "./Project";
+import { lerp } from "three/src/math/MathUtils";
+import { useFrame } from "@react-three/fiber";
 
 const projects = [
   {
@@ -42,11 +44,14 @@ const Projects = () => {
   const interval = (Math.PI * 2) / projects.length;
 
   const [scrollSpeed, setScrollSpeed] = useState(0);
+  const [scrollTarget, setScrollTarget] = useState(0);
 
   const scrollHandler = (event) => {
-    setScrollSpeed(event.deltaY * (Math.PI / 180) * 0.2);
+    // convert deltaY to radians (because we scroll circular)
+    setScrollSpeed(event.deltaY * (Math.PI / 180));
   };
 
+  // add event listener to the wheel
   useEffect(() => {
     window.addEventListener("wheel", scrollHandler);
 
@@ -56,8 +61,14 @@ const Projects = () => {
   }, []);
 
   useEffect(() => {
-    ref.current.rotation.y += -1.0 * scrollSpeed;
+    // set scroll target (new rotation value)
+    setScrollTarget(ref.current.rotation.y - 1.0 * scrollSpeed);
   }, [scrollSpeed]);
+
+  useFrame(() => {
+    // lerping from old to new rotation
+    ref.current.rotation.y = lerp(ref.current.rotation.y, scrollTarget, 0.07);
+  });
 
   return (
     <group ref={ref}>
