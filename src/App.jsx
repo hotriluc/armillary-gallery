@@ -40,7 +40,6 @@ const App = () => {
           <Route path="/works">
             <Center>
               {/* <OrbitControls /> */}
-
               <mesh>
                 <sphereGeometry />
               </mesh>
