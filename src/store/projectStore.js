@@ -37,9 +37,10 @@ const projects = [
 ];
 
 export const useProjectStore = create((set) => ({
-  // FOR UI PURPOSES
+  scrollSpeed: 0,
   activeID: null,
-  setActiveID: (id) => set(() => ({ activeID: id })),
-
   projects: projects,
+
+  setScrollSpeed: (speed) => set(() => ({ scrollSpeed: speed })),
+  setActiveID: (id) => set(() => ({ activeID: id })),
 }));

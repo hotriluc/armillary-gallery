@@ -3,6 +3,7 @@ import Wrapper from "./components/layout/Wrapper";
 import { Link, Redirect, Route, Switch } from "wouter";
 import Projects from "./components/scene/Projects";
 import { Center } from "@react-three/drei";
+import Model from "./components/scene/Model";
 
 const Works = () => {
   return <div style={{ position: "absolute" }}>works</div>;
@@ -34,15 +35,16 @@ const App = () => {
       </Switch>
 
       <Canvas
-      // orthographic camera={{ position: [0, 0, 2]}}
+        camera={{ position: [0, 1.5, 5] }}
+        // orthographic camera={{ position: [0, 0, 2]}}
       >
         <Switch>
           <Route path="/works">
+            {/* <OrbitControls /> */}
+            <ambientLight />
+            <directionalLight />
             <Center>
-              {/* <OrbitControls /> */}
-              <mesh>
-                <sphereGeometry />
-              </mesh>
+              <Model />
               <Projects />
             </Center>
           </Route>

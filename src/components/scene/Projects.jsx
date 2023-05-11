@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Project from "./Project";
 import { lerp } from "three/src/math/MathUtils";
 import { useFrame } from "@react-three/fiber";
@@ -6,36 +6,45 @@ import { useProjectStore } from "../../store/projectStore";
 
 const Projects = () => {
   const ref = useRef();
+
   const projects = useProjectStore((state) => state.projects);
-  const radius = 2.5;
+  const scrollSpeed = useProjectStore((state) => state.scrollSpeed);
+  const setScrollSpeed = useProjectStore((state) => state.setScrollSpeed);
+
+  const radius = 2.8;
   const interval = (Math.PI * 2) / projects.length;
 
-  const [scrollSpeed, setScrollSpeed] = useState(0);
+  // scroll target state for projects group
   const [scrollTarget, setScrollTarget] = useState(0);
 
-  const scrollHandler = (event) => {
-    // convert deltaY to radians (because we scroll circular)
-    setScrollSpeed(event.deltaY * (Math.PI / 180));
-    // set activeid null
-  };
+  const scrollHandler = useCallback(
+    (event) => {
+      // convert deltaY to radians (because we scroll circular)
+      setScrollSpeed(event.deltaY * (Math.PI / 180));
+      // set activeid null
+    },
+    [setScrollSpeed]
+  );
 
-  // add event listener to the wheel
+  // Add event listener on first render
   useEffect(() => {
     window.addEventListener("wheel", scrollHandler);
 
     return () => {
       window.removeEventListener("wheel", scrollHandler);
     };
-  }, []);
+  }, [scrollHandler]);
 
+  // Updating scroll target state (on scrollSpeed change)
   useEffect(() => {
     // set scroll target (new rotation value)
     setScrollTarget(ref.current.rotation.y - 1.0 * scrollSpeed);
   }, [scrollSpeed]);
 
+  // Animation
   useFrame(() => {
     // lerping from old to new rotation
-    ref.current.rotation.y = lerp(ref.current.rotation.y, scrollTarget, 0.07);
+    ref.current.rotation.y = lerp(ref.current.rotation.y, scrollTarget, 0.04);
   });
 
   return (

@@ -1,6 +1,5 @@
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
-import { DoubleSide } from "three";
 import { damp } from "three/src/math/MathUtils";
 import { useProjectStore } from "../../store/projectStore";
 
@@ -46,7 +45,7 @@ const Project = ({ data, ...props }) => {
       {...props}
     >
       <planeGeometry />
-      <meshBasicMaterial color={"pink"} side={DoubleSide} />
+      <meshStandardMaterial color={"#101010"} />
     </mesh>
   );
 };
