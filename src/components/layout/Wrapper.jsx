@@ -27,6 +27,10 @@ const GlobalStyle = createGlobalStyle`
     overscroll-behavior: none;
   }
 
+  body {
+    /* background-color: #101010; */
+  }
+
 `;
 
 const theme = {};

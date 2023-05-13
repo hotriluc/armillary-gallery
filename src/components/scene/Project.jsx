@@ -1,10 +1,12 @@
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
-import { damp } from "three/src/math/MathUtils";
 import { useProjectStore } from "../../store/projectStore";
+import { damp } from "three/src/math/MathUtils";
+import Constellation from "./Constellation";
 
 const Project = ({ data, ...props }) => {
   const ref = useRef();
+
   const [hovered, setHover] = useState(false);
 
   const { id: projectID } = data;
@@ -37,16 +39,18 @@ const Project = ({ data, ...props }) => {
   };
 
   return (
-    <mesh
-      ref={ref}
-      onPointerEnter={onMouseEnterHandler}
-      onPointerLeave={() => setHover(false)}
-      onClick={onMouseClickHandler}
-      {...props}
-    >
-      <planeGeometry />
-      <meshStandardMaterial color={"#101010"} />
-    </mesh>
+    <group ref={ref} {...props}>
+      <mesh
+        onPointerEnter={onMouseEnterHandler}
+        onPointerLeave={() => setHover(false)}
+        onClick={onMouseClickHandler}
+      >
+        <planeGeometry />
+        <meshStandardMaterial color={"#101010"} />
+      </mesh>
+
+      <Constellation />
+    </group>
   );
 };
 
