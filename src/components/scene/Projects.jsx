@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Project from "./Project";
 import { lerp } from "three/src/math/MathUtils";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useLoader } from "@react-three/fiber";
 import { useProjectStore } from "../../store/projectStore";
-import _ from "lodash";
+import { TextureLoader } from "three";
 
 const Projects = () => {
   const ref = useRef();
+
+  const [imgMap, noiseMap] = useLoader(TextureLoader, ["pic.jpg", "noise.png"]);
 
   const projects = useProjectStore((state) => state.projects);
   const scrollSpeed = useProjectStore((state) => state.scrollSpeed);
@@ -30,9 +32,9 @@ const Projects = () => {
   // Add event listener on first render
   useEffect(() => {
     // Throttling to mouse wheel
-    window.addEventListener("wheel", _.throttle(scrollHandler, 50));
+    window.addEventListener("wheel", scrollHandler);
     return () => {
-      window.removeEventListener("wheel", _.throttle(scrollHandler, 50));
+      window.removeEventListener("wheel", scrollHandler);
     };
   }, [scrollHandler]);
 
@@ -69,6 +71,8 @@ const Projects = () => {
               (Math.PI * projects.length) / projects.length,
             0,
           ]}
+          noiseMap={noiseMap}
+          imgMap={imgMap}
         />
       ))}
     </group>

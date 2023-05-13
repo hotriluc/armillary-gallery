@@ -4,7 +4,6 @@ import { Link, Redirect, Route, Switch } from "wouter";
 import Projects from "./components/scene/Projects";
 import { Center } from "@react-three/drei";
 import Model from "./components/scene/Model";
-import { Perf } from "r3f-perf";
 
 const Works = () => {
   return <div style={{ position: "absolute" }}>works</div>;
@@ -39,7 +38,7 @@ const App = () => {
         camera={{ position: [0, 1.5, 5] }}
         // orthographic camera={{ position: [0, 0, 2]}}
       >
-        <Perf />
+        {/* <Perf /> */}
 
         <Switch>
           <Route path="/works">

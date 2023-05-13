@@ -79,23 +79,18 @@ float cnoise(vec3 P){
 }
 
 void main() {
-      
     vec3 currentPosition = position;
     vec3 targetPosition = position;
 
+    // Move vertices
     targetPosition.y =  cnoise(vec3( targetPosition.z  + sin(uTime * .15) ) );
     targetPosition.x =  cnoise(vec3( targetPosition.x  + sin(uTime * .25))  );
-    // targetPosition.y =  cnoise(vec3( targetPosition.y  + sin(uTime * .15))  );
-
-
+    // targetPosition.z =  cnoise(vec3( targetPosition.z  + sin(uTime * .15))  );
     currentPosition = mix(currentPosition, targetPosition,  .2 );
-
 
     vec4 modelPosition = modelMatrix * vec4(targetPosition, 1.0);
     vec4 viewPosition = viewMatrix * modelPosition;
     vec4 projectedPosition = projectionMatrix * viewPosition ;
-
-
 
     gl_Position = projectedPosition;
     gl_PointSize = uSize * 10. ;

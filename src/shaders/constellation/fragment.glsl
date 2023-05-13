@@ -5,11 +5,10 @@ uniform vec3 uColorMix;
 varying vec2 vUv;
 
 void main() {
-    float strength =  (1.0 - distance(gl_PointCoord, vec2(0.5))) ;
-    strength = pow(strength, 6.);
+    float strength = (1.0 - distance(gl_PointCoord, vec2(0.5)))  ;
+    strength = pow( strength, 5.0);
 
     vec3 color = mix(uColorBase, uColorMix, strength);
 
-    
-    gl_FragColor = vec4(vec3(color), strength);
+    gl_FragColor = vec4(clamp(color, 0.0 , 1.0), strength);
 }

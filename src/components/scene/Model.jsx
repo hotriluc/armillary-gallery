@@ -18,13 +18,14 @@ const Model = (props) => {
 
   const scrollSpeed = useProjectStore((state) => state.scrollSpeed);
 
-  const [scrollTarget, setScrolTarget] = useState(0);
+  const [scrollTarget, setScrollTarget] = useState(0);
 
   useEffect(() => {
     // set scroll target (new rotation value)
-    setScrolTarget(eclipticRef.current.rotation.y - 1.0 * scrollSpeed);
+    setScrollTarget(eclipticRef.current.rotation.y - 1.0 * scrollSpeed);
   }, [scrollSpeed]);
 
+  // Animations
   useFrame(() => {
     eclipticRef.current.rotation.y = lerp(
       eclipticRef.current.rotation.y,

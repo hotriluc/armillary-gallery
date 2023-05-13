@@ -9,18 +9,18 @@ import { shaderMaterial } from "@react-three/drei";
 import { useMemo, useRef } from "react";
 
 import * as THREE from "three";
+import { damp } from "three/src/math/MathUtils";
 
 const ConstellationMaterial = new shaderMaterial(
   {
     uSize: 2.0,
     uTime: 0.0,
     uColorBase: new THREE.Color("black"),
-    uColorMix: new THREE.Color("lime"),
+    uColorMix: new THREE.Color("white"),
   },
   constellationVertexShader,
   constellationFragmentShader
 );
-
 extend({ ConstellationMaterial });
 
 const ConstellationLineMaterial = new shaderMaterial(
@@ -28,18 +28,18 @@ const ConstellationLineMaterial = new shaderMaterial(
   constellationLineVertexShader,
   constellationLineFragmentShader
 );
-
 extend({ ConstellationLineMaterial });
 
-const Constellation = () => {
-  const pointsRef = useRef();
-  const linesRef = useRef();
+const particlesCount = 6;
 
-  const particlesCount = 5;
+const Constellation = ({ hovered }) => {
+  const constellationRef = useRef();
+  const pointsMaterialRef = useRef();
+  const linesMaterialRef = useRef();
 
   const { gl } = useThree();
 
-  // preparing attributes for particles
+  // Preparing attributes for particles
   const particlesPosition = useMemo(() => {
     const position = new Float32Array(particlesCount * 3);
 
@@ -47,21 +47,35 @@ const Constellation = () => {
     for (let i = 0; i < particlesCount * 3; i++) {
       position[i * 3] = -0.5 + Math.random();
       position[i * 3 + 1] = -0.5 + Math.random();
-      position[i * 3 + 2] = -0.5 + Math.random();
+      position[i * 3 + 2] = -1 + Math.random();
     }
 
     return position;
   }, []);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const et = state.clock.getElapsedTime();
-    pointsRef.current.material.uTime = et;
-    linesRef.current.material.uTime = et;
+    pointsMaterialRef.current.uTime = et;
+    linesMaterialRef.current.uTime = et;
+
+    // if project is hovered
+    constellationRef.current.scale.y = damp(
+      constellationRef.current.scale.y,
+      hovered ? 2 : 1,
+      3,
+      delta
+    );
+    constellationRef.current.scale.x = damp(
+      constellationRef.current.scale.x,
+      hovered ? 2 : 1,
+      3,
+      delta
+    );
   });
 
   return (
-    <>
-      <points ref={pointsRef}>
+    <group ref={constellationRef} scale={[1, 1, 1]}>
+      <points>
         <bufferGeometry>
           <bufferAttribute
             attach={"attributes-position"}
@@ -71,12 +85,13 @@ const Constellation = () => {
           />
         </bufferGeometry>
         <constellationMaterial
+          ref={pointsMaterialRef}
           uSize={gl.getPixelRatio() * 8.0}
           blending={THREE.AdditiveBlending}
           transparent
         />
       </points>
-      <line ref={linesRef}>
+      <line>
         <bufferGeometry>
           <bufferAttribute
             attach={"attributes-position"}
@@ -85,9 +100,9 @@ const Constellation = () => {
             itemSize={3}
           />
         </bufferGeometry>
-        <constellationLineMaterial />
+        <constellationLineMaterial ref={linesMaterialRef} />
       </line>
-    </>
+    </group>
   );
 };
 
