@@ -3,6 +3,7 @@ import Project from "./Project";
 import { lerp } from "three/src/math/MathUtils";
 import { useFrame } from "@react-three/fiber";
 import { useProjectStore } from "../../store/projectStore";
+import _ from "lodash";
 
 const Projects = () => {
   const ref = useRef();
@@ -28,10 +29,10 @@ const Projects = () => {
 
   // Add event listener on first render
   useEffect(() => {
-    window.addEventListener("wheel", scrollHandler);
-
+    // Throttling to mouse wheel
+    window.addEventListener("wheel", _.throttle(scrollHandler, 50));
     return () => {
-      window.removeEventListener("wheel", scrollHandler);
+      window.removeEventListener("wheel", _.throttle(scrollHandler, 50));
     };
   }, [scrollHandler]);
 
@@ -39,6 +40,7 @@ const Projects = () => {
   useEffect(() => {
     // set scroll target (new rotation value)
     setScrollTarget(ref.current.rotation.y - 1.0 * scrollSpeed);
+    console.log("a");
   }, [scrollSpeed]);
 
   // Animation
