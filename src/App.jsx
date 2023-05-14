@@ -39,7 +39,6 @@ const App = () => {
         // orthographic camera={{ position: [0, 0, 2]}}
       >
         {/* <Perf /> */}
-
         <Switch>
           <Route path="/works">
             {/* <OrbitControls /> */}

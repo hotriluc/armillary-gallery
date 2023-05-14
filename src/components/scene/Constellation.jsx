@@ -30,7 +30,7 @@ const ConstellationLineMaterial = new shaderMaterial(
 );
 extend({ ConstellationLineMaterial });
 
-const particlesCount = 6;
+const particlesCount = 5;
 
 const Constellation = ({ hovered }) => {
   const constellationRef = useRef();
@@ -61,13 +61,13 @@ const Constellation = ({ hovered }) => {
     // if project is hovered
     constellationRef.current.scale.y = damp(
       constellationRef.current.scale.y,
-      hovered ? 2 : 1,
+      hovered ? 1.8 : 1,
       3,
       delta
     );
     constellationRef.current.scale.x = damp(
       constellationRef.current.scale.x,
-      hovered ? 2 : 1,
+      hovered ? 1.8 : 1,
       3,
       delta
     );

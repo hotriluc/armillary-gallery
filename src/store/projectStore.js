@@ -5,10 +5,12 @@ const projects = [
   {
     id: "clip_the_street",
     title: "Clip the street.",
+    imgUrl: "/pic.jpg",
   },
   {
     id: "bgr",
     title: "BGR.",
+    imgUrl: "/pic.jpg",
   },
   {
     id: "hollow",

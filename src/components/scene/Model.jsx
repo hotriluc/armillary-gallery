@@ -32,6 +32,7 @@ const Model = (props) => {
       scrollTarget,
       0.04
     );
+
     planetRef.current.rotation.y = lerp(
       planetRef.current.rotation.y,
       scrollTarget,

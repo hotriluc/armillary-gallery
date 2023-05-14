@@ -8,8 +8,7 @@ import { TextureLoader } from "three";
 const Projects = () => {
   const ref = useRef();
 
-  const [imgMap, noiseMap] = useLoader(TextureLoader, ["pic.jpg", "noise.png"]);
-
+  const noiseMap = useLoader(TextureLoader, "noise.png");
   const projects = useProjectStore((state) => state.projects);
   const scrollSpeed = useProjectStore((state) => state.scrollSpeed);
   const setScrollSpeed = useProjectStore((state) => state.setScrollSpeed);
@@ -42,7 +41,6 @@ const Projects = () => {
   useEffect(() => {
     // set scroll target (new rotation value)
     setScrollTarget(ref.current.rotation.y - 1.0 * scrollSpeed);
-    console.log("a");
   }, [scrollSpeed]);
 
   // Animation
@@ -72,7 +70,6 @@ const Projects = () => {
             0,
           ]}
           noiseMap={noiseMap}
-          imgMap={imgMap}
         />
       ))}
     </group>

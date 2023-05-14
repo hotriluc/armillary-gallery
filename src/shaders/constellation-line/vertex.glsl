@@ -84,9 +84,10 @@ void main() {
     vec3 targetPosition = position;
 
     // Move vertices
-    targetPosition.y =  cnoise(vec3( targetPosition.z  + sin(uTime * .15) ) );
-    targetPosition.x =  cnoise(vec3( targetPosition.x  + sin(uTime * .25))  );
-    // targetPosition.z =  cnoise(vec3( targetPosition.z  + sin(uTime * .15))  );
+    targetPosition.y = cnoise(vec3( targetPosition.z  + sin(uTime * .07) ) );
+    targetPosition.x = cnoise(vec3( targetPosition.x  + sin(uTime * .07))  );
+    targetPosition.z =  cnoise(vec3( targetPosition.y  + sin(uTime * .07))  ) - .5;
+
     currentPosition = mix(currentPosition, targetPosition,  .2 );
 
     vec4 modelPosition = modelMatrix * vec4(targetPosition, 1.0);
