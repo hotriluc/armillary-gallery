@@ -14,27 +14,27 @@ const projects = [
   },
   {
     id: "hollow",
-    title: "Hollow.",
+    title: "Project 1.",
   },
   {
     id: "hollow1",
-    title: "Hollow.",
+    title: "Project 2.",
   },
   {
     id: "hollow2",
-    title: "Hollow.",
+    title: "Project 3.",
   },
   {
     id: "hollow3",
-    title: "Hollow.",
+    title: "HolProject 4.",
   },
   {
     id: "hollow4",
-    title: "Hollow.",
+    title: "Project 5.",
   },
   {
     id: "hollow5",
-    title: "Hollow.",
+    title: "Project 6.",
   },
 ];
 

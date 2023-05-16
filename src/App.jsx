@@ -2,7 +2,6 @@ import { Canvas } from "@react-three/fiber";
 import Wrapper from "./components/layout/Wrapper";
 import { Link, Redirect, Route, Switch } from "wouter";
 import Projects from "./components/scene/Projects";
-import { Center } from "@react-three/drei";
 import Model from "./components/scene/Model";
 
 const Works = () => {
@@ -15,6 +14,20 @@ const About = () => {
 
 const NotFound = () => {
   return <div>Not found</div>;
+};
+
+const WorksPageScene = () => {
+  // const projectsSize = useProjectStore((state) => state.projects.length);
+  // const { width } = useThree((state) => state.viewport);
+
+  return (
+    <>
+      <ambientLight />
+      <directionalLight />
+      <Model />
+      <Projects />
+    </>
+  );
 };
 
 const App = () => {
@@ -41,13 +54,7 @@ const App = () => {
         {/* <Perf /> */}
         <Switch>
           <Route path="/works">
-            {/* <OrbitControls /> */}
-            <ambientLight />
-            <directionalLight />
-            <Center>
-              <Model />
-              <Projects />
-            </Center>
+            <WorksPageScene />
           </Route>
           <Route path="/about">
             <mesh>

@@ -61,20 +61,20 @@ const Constellation = ({ hovered }) => {
     // if project is hovered
     constellationRef.current.scale.y = damp(
       constellationRef.current.scale.y,
-      hovered ? 1.8 : 1,
+      hovered ? 1.8 : 0.6,
       3,
       delta
     );
     constellationRef.current.scale.x = damp(
       constellationRef.current.scale.x,
-      hovered ? 1.8 : 1,
+      hovered ? 1.8 : 0.6,
       3,
       delta
     );
   });
 
   return (
-    <group ref={constellationRef} scale={[1, 1, 1]}>
+    <group ref={constellationRef} scale={[0.6, 0.6, 0.7]}>
       <points>
         <bufferGeometry>
           <bufferAttribute
