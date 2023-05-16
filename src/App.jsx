@@ -3,6 +3,8 @@ import Wrapper from "./components/layout/Wrapper";
 import { Link, Redirect, Route, Switch } from "wouter";
 import Projects from "./components/scene/Projects";
 import Model from "./components/scene/Model";
+import { ScrollControls } from "@react-three/drei";
+import { useProjectStore } from "./store/projectStore";
 
 const Works = () => {
   return <div style={{ position: "absolute" }}>works</div>;
@@ -17,16 +19,16 @@ const NotFound = () => {
 };
 
 const WorksPageScene = () => {
-  // const projectsSize = useProjectStore((state) => state.projects.length);
+  const projectsSize = useProjectStore((state) => state.projects.length);
   // const { width } = useThree((state) => state.viewport);
 
   return (
-    <>
+    <ScrollControls pages={projectsSize / 3}>
       <ambientLight />
       <directionalLight />
       <Model />
       <Projects />
-    </>
+    </ScrollControls>
   );
 };
 

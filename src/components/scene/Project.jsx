@@ -24,7 +24,7 @@ const ProjectMaterial = new shaderMaterial(
 extend({ ProjectMaterial });
 
 const Project = ({ data, noiseMap, rotation, ...props }) => {
-  const { id: projectID, imgUrl, title } = data;
+  const { id: projectID, imgUrl: projectImg, title: projectTitle } = data;
 
   const ref = useRef();
   const materialRef = useRef();
@@ -34,7 +34,10 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
   const activeID = useProjectStore((state) => state.activeID);
   const setActiveID = useProjectStore((state) => state.setActiveID);
 
-  const imgMap = useLoader(TextureLoader, imgUrl ? imgUrl : "/default.png");
+  const imgMap = useLoader(
+    TextureLoader,
+    projectImg ? projectImg : "/default.png"
+  );
 
   const { progress } = useControls({
     progress: { min: 0, max: 1, value: 0, step: 0.05 },
@@ -102,7 +105,7 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
   };
 
   return (
-    <group ref={ref} {...props}>
+    <group ref={ref} rotation={rotation} {...props}>
       <mesh
         position={[0, 0, 0.1]}
         onPointerEnter={onMouseEnterHandler}
@@ -119,7 +122,7 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
         />
       </mesh>
       <Text ref={textRef} fillOpacity={0} fontSize={0.1} position={[0, 0, 0.2]}>
-        {title}
+        {projectTitle}
       </Text>
 
       <Constellation hovered={hovered} />

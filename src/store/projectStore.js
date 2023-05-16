@@ -5,44 +5,37 @@ const projects = [
   {
     id: "clip_the_street",
     title: "Clip the street.",
-    imgUrl: "/pic.jpg",
   },
   {
     id: "bgr",
     title: "BGR.",
-    imgUrl: "/pic.jpg",
   },
   {
     id: "hollow",
-    title: "Project 1.",
+    title: "Hollow.",
   },
   {
-    id: "hollow1",
-    title: "Project 2.",
+    id: "some",
+    title: "Something.",
   },
   {
-    id: "hollow2",
-    title: "Project 3.",
+    id: "hello",
+    title: "Hello.",
+  },
+  { id: "box_out", title: "Box out." },
+  {
+    id: "world",
+    title: "World.",
   },
   {
-    id: "hollow3",
-    title: "HolProject 4.",
-  },
-  {
-    id: "hollow4",
-    title: "Project 5.",
-  },
-  {
-    id: "hollow5",
-    title: "Project 6.",
+    id: "box",
+    title: "Box.",
   },
 ];
 
 export const useProjectStore = create((set) => ({
-  scrollSpeed: 0,
   activeID: null,
   projects: projects,
 
-  setScrollSpeed: (speed) => set(() => ({ scrollSpeed: speed })),
   setActiveID: (id) => set(() => ({ activeID: id })),
 }));

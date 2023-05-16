@@ -1,56 +1,68 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import Project from "./Project";
-import { lerp } from "three/src/math/MathUtils";
+import { damp } from "three/src/math/MathUtils";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { useProjectStore } from "../../store/projectStore";
 import { TextureLoader } from "three";
+import { useScroll } from "@react-three/drei";
 
 const Projects = () => {
   const ref = useRef();
 
   const noiseMap = useLoader(TextureLoader, "noise.png");
   const projects = useProjectStore((state) => state.projects);
-  const scrollSpeed = useProjectStore((state) => state.scrollSpeed);
-  const setScrollSpeed = useProjectStore((state) => state.setScrollSpeed);
 
   const radius = 2.8;
-  const interval = (Math.PI * 2) / projects.length;
+  const interval = useMemo(() => (Math.PI * 2) / projects.length, [projects]);
 
-  // scroll target state for projects group
-  const [scrollTarget, setScrollTarget] = useState(0);
+  const { scroll } = useScroll();
 
-  const scrollHandler = useCallback(
-    (event) => {
-      // convert deltaY to radians (because we scroll circular)
-      setScrollSpeed(event.deltaY * (Math.PI / 180));
-      // set activeid null
-    },
-    [setScrollSpeed]
-  );
-
-  // Add event listener on first render
-  useEffect(() => {
-    // Throttling to mouse wheel
-    window.addEventListener("wheel", scrollHandler);
-    return () => {
-      window.removeEventListener("wheel", scrollHandler);
-    };
-  }, [scrollHandler]);
-
-  // Updating scroll target state (on scrollSpeed change)
-  useEffect(() => {
-    // set scroll target (new rotation value)
-    setScrollTarget(ref.current.rotation.y - 1.0 * scrollSpeed);
-  }, [scrollSpeed]);
-
-  // Animation
-  useFrame(() => {
-    // lerping from old to new rotation
-    ref.current.rotation.y = lerp(ref.current.rotation.y, scrollTarget, 0.04);
+  useFrame((state, delta) => {
+    ref.current.rotation.y = damp(
+      ref.current.rotation.y,
+      (4 * Math.PI) / 3 + scroll.current * Math.PI * 2,
+      2,
+      delta
+    );
   });
 
+  // const scrollSpeed = useUIStore((state) => state.scrollSpeed);
+  // const setScrollSpeed = useUIStore((state) => state.setScrollSpeed);
+  // // scroll target state for projects group
+  // const [scrollTarget, setScrollTarget] = useState(0);
+
+  // const scrollHandler = useCallback(
+  //   (event) => {
+  //     // convert deltaY to radians (because we scroll circular)
+  //     setScrollSpeed(event.deltaY * (Math.PI / 180));
+  //     // set activeid null
+  //   },
+  //   [setScrollSpeed]
+  // );
+
+  // // Add event listener on first render
+  // useEffect(() => {
+  //   // Throttling to mouse wheel
+  //   window.addEventListener("wheel", scrollHandler);
+  //   return () => {
+  //     window.removeEventListener("wheel", scrollHandler);
+  //   };
+  // }, [scrollHandler]);
+
+  // // Updating scroll target state (on scrollSpeed change)
+  // useEffect(() => {
+  //   // set scroll target (new rotation value)
+  //   setScrollTarget(ref.current.rotation.y - 1.0 * scrollSpeed);
+  // }, [scrollSpeed]);
+
+  // // Animation
+  // useFrame(() => {
+  //   // lerping from old to new rotation
+  //   ref.current.rotation.y = lerp(ref.current.rotation.y, scrollTarget, 0.04);
+  // });
+
   return (
-    <group ref={ref}>
+    <group ref={ref} rotation-y={Math.PI / 2}>
       {projects.map((projectData, i) => (
         // position  using sin and cos we can place our objects on the circle
         // rotation (1st term - we rotate i-th plane to make its side to look into the center)
