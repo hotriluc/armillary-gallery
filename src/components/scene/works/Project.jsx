@@ -1,14 +1,17 @@
-import { extend, useFrame, useLoader } from "@react-three/fiber";
-import { useMemo, useRef, useState } from "react";
-import { useProjectStore } from "../../store/projectStore";
+import * as THREE from "three";
 import { damp, lerp } from "three/src/math/MathUtils";
-import Constellation from "./Constellation";
 
-import projectVertexShader from "../../shaders/project/vertex.glsl";
-import projectFragmentShader from "../../shaders/project/fragment.glsl";
+import { useMemo, useRef, useState } from "react";
+import { useProjectStore } from "../../../store/projectStore";
+
+import { extend, useFrame, useLoader } from "@react-three/fiber";
 import { Text, shaderMaterial } from "@react-three/drei";
 import { useControls } from "leva";
-import { TextureLoader, Vector3 } from "three";
+
+import projectVertexShader from "../../../shaders/project/vertex.glsl";
+import projectFragmentShader from "../../../shaders/project/fragment.glsl";
+
+import Constellation from "./Constellation";
 
 const ProjectMaterial = new shaderMaterial(
   {
@@ -35,7 +38,7 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
   const setActiveID = useProjectStore((state) => state.setActiveID);
 
   const imgMap = useLoader(
-    TextureLoader,
+    THREE.TextureLoader,
     projectImg ? projectImg : "/default.png"
   );
 
@@ -45,12 +48,12 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
 
   // It holds new pos when rotating
   const target = useMemo(() => {
-    return new Vector3(0, 0, 0);
+    return new THREE.Vector3(0, 0, 0);
   }, []);
 
   // Initial vector to calculate the angle between
   const initialVector = useMemo(() => {
-    return new Vector3(1, 0, 0);
+    return new THREE.Vector3(1, 0, 0);
   }, []);
 
   // Animate Click and Hover
@@ -121,7 +124,13 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
           transparent
         />
       </mesh>
-      <Text ref={textRef} fillOpacity={0} fontSize={0.1} position={[0, 0, 0.2]}>
+      <Text
+        ref={textRef}
+        color={"#B3F5A1"}
+        fillOpacity={0}
+        fontSize={0.1}
+        position={[0, 0, 0.2]}
+      >
         {projectTitle}
       </Text>
 

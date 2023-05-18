@@ -1,15 +1,15 @@
-import constellationVertexShader from "../../shaders/constellation/vertex.glsl";
-import constellationFragmentShader from "../../shaders/constellation/fragment.glsl";
-
-import constellationLineVertexShader from "../../shaders/constellation-line/vertex.glsl";
-import constellationLineFragmentShader from "../../shaders/constellation-line/fragment.glsl";
-
-import { extend, useFrame, useThree } from "@react-three/fiber";
-import { shaderMaterial } from "@react-three/drei";
-import { useMemo, useRef } from "react";
-
 import * as THREE from "three";
 import { damp } from "three/src/math/MathUtils";
+
+import { useMemo, useRef } from "react";
+import { extend, useFrame, useThree } from "@react-three/fiber";
+import { shaderMaterial } from "@react-three/drei";
+
+import constellationVertexShader from "../../../shaders/constellation/vertex.glsl";
+import constellationFragmentShader from "../../../shaders/constellation/fragment.glsl";
+
+import constellationLineVertexShader from "../../../shaders/constellation-line/vertex.glsl";
+import constellationLineFragmentShader from "../../../shaders/constellation-line/fragment.glsl";
 
 const ConstellationMaterial = new shaderMaterial(
   {
@@ -27,6 +27,7 @@ const ConstellationLineMaterial = new shaderMaterial(
   {
     uSize: 2.0,
     uTime: 0.0,
+    uColorBase: new THREE.Color("#ABEA9A"),
   },
   constellationLineVertexShader,
   constellationLineFragmentShader

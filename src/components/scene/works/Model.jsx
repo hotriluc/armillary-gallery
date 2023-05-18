@@ -1,10 +1,16 @@
-import { useGLTF, useHelper, useScroll } from "@react-three/drei";
-import { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import * as THREE from "three";
 import { damp } from "three/src/math/MathUtils";
 
-import * as THREE from "three";
+import { useGLTF, useScroll } from "@react-three/drei";
+import { useRef } from "react";
+import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
+
+const material = new THREE.MeshStandardMaterial({
+  color: "#ffff",
+  metalness: 0,
+  roughness: 0.45,
+});
 
 const Model = (props) => {
   const eclipticRef = useRef();
@@ -17,21 +23,17 @@ const Model = (props) => {
   const { scroll } = useScroll();
 
   const directionalLightRef = useRef();
-  useHelper(directionalLightRef, THREE.DirectionalLightHelper);
+  // useHelper(directionalLightRef, THREE.DirectionalLightHelper);
 
-  const { color, intensity } = useControls("Armilary lights", {
-    color: "#ffffff",
-    intensity: { min: 0, max: 20, value: 2 },
-  });
+  const { color: directionalLightColor, intensity: directionalLightIntensity } =
+    useControls("directional lights", {
+      color: "#0d9600",
+      intensity: { min: 0, max: 20, value: 8 },
+    });
 
-  const {
-    metalness,
-    roughness,
-    color: modelColor,
-  } = useControls({
-    metalness: { min: 0, max: 1, value: 0 },
-    roughness: { min: 0, max: 1, value: 0.45 },
-    color: "#ffffff",
+  const { color, intensity } = useControls("ambient lights", {
+    color: "#346899",
+    intensity: { min: 0, max: 20, value: 0.4, step: 0.1 },
   });
 
   useFrame((state, delta) => {
@@ -114,80 +116,64 @@ const Model = (props) => {
   // });
 
   return (
-    <group {...props} dispose={null} scale={0.3}>
-      <group rotation={[0, 0, -Math.PI / 3]}>
-        <directionalLight
-          ref={directionalLightRef}
+    <>
+      <ambientLight intensity={intensity} color={color} />
+
+      <group {...props} dispose={null} scale={0.3}>
+        <group rotation={[0, 0, -Math.PI / 3]}>
+          <directionalLight
+            ref={directionalLightRef}
+            castShadow
+            position={[10, -1, 0]}
+            color={directionalLightColor}
+            intensity={directionalLightIntensity}
+            shadow-mapSize={2048}
+            shadow-camera-top={10}
+            shadow-camera-right={10}
+            shadow-camera-bottom={-10}
+            shadow-camera-left={-10}
+          />
+          <mesh
+            ref={planetRef}
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube.geometry}
+            rotation={[0, 0, Math.PI / 3]}
+            material={material}
+          />
+
+          <mesh
+            ref={eclipticRef}
+            castShadow
+            receiveShadow
+            geometry={nodes.Ecliptic.geometry}
+            rotation={[0, 0, Math.PI / 3]}
+            material={material}
+          />
+        </group>
+        <mesh
+          ref={meridianRef}
           castShadow
-          position={[10, -1, 0]}
-          color={color}
-          intensity={intensity}
-          shadow-mapSize={2048}
-          shadow-camera-top={10}
-          shadow-camera-right={10}
-          shadow-camera-bottom={-10}
-          shadow-camera-left={-10}
+          receiveShadow
+          geometry={nodes.Meridian.geometry}
+          material={material}
         />
 
         <mesh
-          ref={planetRef}
+          ref={horizonRef}
           castShadow
           receiveShadow
-          geometry={nodes.Cube.geometry}
-          rotation={[0, 0, Math.PI / 3]}
-        >
-          <meshStandardMaterial
-            metalness={metalness}
-            roughness={roughness}
-            color={modelColor}
-          />
-        </mesh>
+          geometry={nodes.Horizon.geometry}
+          material={material}
+        />
         <mesh
-          ref={eclipticRef}
           castShadow
           receiveShadow
-          geometry={nodes.Ecliptic.geometry}
-          rotation={[0, 0, Math.PI / 3]}
-        >
-          <meshStandardMaterial
-            metalness={metalness}
-            roughness={roughness}
-            color={modelColor}
-          />
-        </mesh>
+          geometry={nodes.Holder.geometry}
+          material={material}
+        />
       </group>
-      <mesh
-        ref={meridianRef}
-        castShadow
-        receiveShadow
-        geometry={nodes.Meridian.geometry}
-      >
-        <meshStandardMaterial
-          metalness={metalness}
-          roughness={roughness}
-          color={modelColor}
-        />
-      </mesh>
-      <mesh
-        ref={horizonRef}
-        castShadow
-        receiveShadow
-        geometry={nodes.Horizon.geometry}
-      >
-        <meshStandardMaterial
-          metalness={metalness}
-          roughness={roughness}
-          color={modelColor}
-        />
-      </mesh>
-      <mesh castShadow receiveShadow geometry={nodes.Holder.geometry}>
-        <meshStandardMaterial
-          metalness={metalness}
-          roughness={roughness}
-          color={modelColor}
-        />
-      </mesh>
-    </group>
+    </>
   );
 };
 

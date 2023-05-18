@@ -10,7 +10,7 @@ void main() {
     vec2 st = vUv;
     st -= 0.5;
     
-    vec3 imgTexture =  texture2D(uImage, st + 0.5).rgb ;
+    vec3 imgTexture = .8 * texture2D(uImage, st + 0.5).rgb ;
     float noiseTexture = texture2D(uNoise, st * 2.0 + .5).r;
 
     // scale noise from the center
@@ -20,8 +20,8 @@ void main() {
 	progress = smoothstep(progress - 0.01, progress, lengthToCenter);
 
     // Add noise to image to see noise outlines
-    vec3 res = imgTexture + vec3(progress);
+    vec3 res = imgTexture - vec3(progress);
 
     
-    gl_FragColor = vec4(res, 0.8 - progress );
+    gl_FragColor = vec4(res, max(0.0, 0.5 - progress) );
 }

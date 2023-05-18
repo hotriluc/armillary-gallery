@@ -1,15 +1,18 @@
-import { useMemo, useRef } from "react";
-import Project from "./Project";
+import * as THREE from "three";
 import { damp } from "three/src/math/MathUtils";
+
+import { useMemo, useRef } from "react";
+import { useProjectStore } from "../../../store/projectStore";
+
 import { useFrame, useLoader } from "@react-three/fiber";
-import { useProjectStore } from "../../store/projectStore";
-import { TextureLoader } from "three";
 import { useScroll } from "@react-three/drei";
+
+import Project from "./Project";
 
 const Projects = () => {
   const ref = useRef();
 
-  const noiseMap = useLoader(TextureLoader, "noise.png");
+  const noiseMap = useLoader(THREE.TextureLoader, "noise.png");
   const projects = useProjectStore((state) => state.projects);
 
   const radius = 2.8;
