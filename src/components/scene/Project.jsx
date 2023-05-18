@@ -88,7 +88,7 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
 
     textRef.current.fillOpacity = lerp(
       textRef.current.fillOpacity,
-      angle > Math.PI / 2 || hovered ? (hovered ? 1 : 0.5) : 0,
+      angle > Math.PI / 2 + 0.1 || hovered ? (hovered ? 1 : 0.5) : 0,
       0.05
     );
   });

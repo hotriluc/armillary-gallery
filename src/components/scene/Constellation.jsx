@@ -15,8 +15,8 @@ const ConstellationMaterial = new shaderMaterial(
   {
     uSize: 2.0,
     uTime: 0.0,
-    uColorBase: new THREE.Color("black"),
-    uColorMix: new THREE.Color("white"),
+    uColorBase: new THREE.Color("#000000"),
+    uColorMix: new THREE.Color("#ffffff"),
   },
   constellationVertexShader,
   constellationFragmentShader
@@ -24,7 +24,10 @@ const ConstellationMaterial = new shaderMaterial(
 extend({ ConstellationMaterial });
 
 const ConstellationLineMaterial = new shaderMaterial(
-  { uSize: 2.0, uTime: 0.0 },
+  {
+    uSize: 2.0,
+    uTime: 0.0,
+  },
   constellationLineVertexShader,
   constellationLineFragmentShader
 );

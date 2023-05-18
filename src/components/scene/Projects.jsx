@@ -20,7 +20,7 @@ const Projects = () => {
   useFrame((state, delta) => {
     ref.current.rotation.y = damp(
       ref.current.rotation.y,
-      (4 * Math.PI) / 3 + scroll.current * Math.PI * 2,
+      Math.PI + 0.15 - scroll.current * Math.PI * 2,
       2,
       delta
     );
