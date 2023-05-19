@@ -51,6 +51,10 @@ const Model = (props) => {
       delta
     );
 
+    planetRef.current.scale.x = damp(planetRef.current.scale.x, 1, 2, delta);
+    planetRef.current.scale.y = damp(planetRef.current.scale.y, 1, 2, delta);
+    planetRef.current.scale.z = damp(planetRef.current.scale.z, 1, 2, delta);
+
     horizonRef.current.rotation.y = damp(
       horizonRef.current.rotation.y,
       scroll.current * Math.PI * 2,
@@ -139,6 +143,7 @@ const Model = (props) => {
             receiveShadow
             geometry={nodes.Cube.geometry}
             rotation={[0, 0, Math.PI / 3]}
+            scale={[0, 0, 0]}
             material={material}
           />
 
