@@ -1,10 +1,12 @@
-import { useProjectStore } from "../../../store/projectStore";
+import { useProjectStore } from "../../store/projectStore";
 
 import { Float, ScrollControls } from "@react-three/drei";
 
-import Model from "./Model";
-import Projects from "./Projects";
-import Minimap from "./Minimap";
+import { Suspense } from "react";
+
+import Model from "../gallery/Model";
+import Gallery from "../gallery/Gallery";
+import Minimap from "../gallery/Minimap";
 
 const WorksPageScene = () => {
   const projectsSize = useProjectStore((state) => state.projects.length);
@@ -15,9 +17,11 @@ const WorksPageScene = () => {
       <ScrollControls pages={projectsSize / 3}>
         <Minimap />
         <Float>
-          <Model />
+          <Suspense fallback={null}>
+            <Model />
+          </Suspense>
         </Float>
-        <Projects />
+        <Gallery />
       </ScrollControls>
     </>
   );

@@ -2,40 +2,43 @@ import * as THREE from "three";
 import { damp, lerp } from "three/src/math/MathUtils";
 
 import { useMemo, useRef, useState } from "react";
-import { useProjectStore } from "../../../store/projectStore";
 
 import { extend, useFrame, useLoader } from "@react-three/fiber";
 import { Text, shaderMaterial } from "@react-three/drei";
 import { useControls } from "leva";
 
-import projectVertexShader from "../../../shaders/project/vertex.glsl";
-import projectFragmentShader from "../../../shaders/project/fragment.glsl";
+import galleryItemVertexShader from "../../shaders/gallery-item/vertex.glsl";
+import galleryItemFragmentShader from "../../shaders/gallery-item/fragment.glsl";
 
 import Constellation from "./Constellation";
+import { useLocation } from "wouter";
 
-const ProjectMaterial = new shaderMaterial(
+const GalleryItemMaterial = new shaderMaterial(
   {
     uTime: 0.0,
     uImage: null,
     uNoise: null,
     uProgress: 0,
   },
-  projectVertexShader,
-  projectFragmentShader
+  galleryItemVertexShader,
+  galleryItemFragmentShader
 );
 
-extend({ ProjectMaterial });
+extend({ GalleryItemMaterial });
 
-const Project = ({ data, noiseMap, rotation, ...props }) => {
+const GalleryItem = ({ data, noiseMap, rotation, ...props }) => {
   const { id: projectID, imgUrl: projectImg, title: projectTitle } = data;
 
   const ref = useRef();
   const materialRef = useRef();
   const textRef = useRef();
 
-  const [hovered, setHover] = useState(false);
-  const activeID = useProjectStore((state) => state.activeID);
-  const setActiveID = useProjectStore((state) => state.setActiveID);
+  const [hovered, setHovered] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const [location, navigate] = useLocation();
+
+  // const activeID = useProjectStore((state) => state.activeID);
+  // const setActiveID = useProjectStore((state) => state.setActiveID);
 
   const imgMap = useLoader(
     THREE.TextureLoader,
@@ -58,15 +61,19 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
 
   // Animate Click and Hover
   useFrame((state, delta) => {
-    const et = state.clock.getElapsedTime();
-
-    materialRef.current.uTime = et;
+    // const et = state.clock.getElapsedTime();
+    // materialRef.current.uTime = et;
 
     ref.current.rotation.y = damp(
       ref.current.rotation.y,
-      hovered || activeID === projectID
-        ? rotation[1] - Math.PI / 5.5
-        : rotation[1],
+      hovered ? rotation[1] - Math.PI / 5.5 : rotation[1],
+      6,
+      delta
+    );
+
+    ref.current.position.y = damp(
+      ref.current.position.y,
+      clicked ? 2 : 0,
       6,
       delta
     );
@@ -99,12 +106,18 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
   // Event Handlers
   const onMouseEnterHandler = (e) => {
     e.stopPropagation();
-    setHover(true);
+    setHovered(true);
   };
 
-  const onMouseClickHandler = (e) => {
+  const onPointerUpHandler = (e) => {
     e.stopPropagation();
-    setActiveID(projectID);
+    navigate(`${location}/${projectID}`);
+    // console.log("ah");
+  };
+
+  const onClickHandler = (e) => {
+    e.stopPropagation();
+    setClicked((prev) => !prev);
   };
 
   return (
@@ -112,11 +125,12 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
       <mesh
         position={[0, 0, 0.1]}
         onPointerEnter={onMouseEnterHandler}
-        onPointerLeave={() => setHover(false)}
-        onClick={onMouseClickHandler}
+        onPointerLeave={() => setHovered(false)}
+        onClick={onClickHandler}
+        onPointerUp={onPointerUpHandler}
       >
         <planeGeometry args={[1.5, 2.5]} />
-        <projectMaterial
+        <galleryItemMaterial
           ref={materialRef}
           uImage={imgMap}
           uNoise={noiseMap}
@@ -124,6 +138,7 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
           transparent
         />
       </mesh>
+
       <Text
         ref={textRef}
         color={"#B3F5A1"}
@@ -139,4 +154,4 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
   );
 };
 
-export default Project;
+export default GalleryItem;

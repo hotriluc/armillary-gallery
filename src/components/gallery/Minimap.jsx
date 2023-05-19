@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { damp } from "three/src/math/MathUtils";
 
 import { useRef } from "react";
-import { useProjectStore } from "../../../store/projectStore";
+import { useProjectStore } from "../../store/projectStore";
 
 import { useScroll } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
@@ -29,7 +29,7 @@ const Minimap = () => {
         index / projects.length - 1.5 / projects.length,
         4 / projects.length
       );
-      child.scale.y = damp(child.scale.y, 0.2 + y / 3, 8, 8, delta);
+      child.scale.y = -damp(child.scale.y, 0.2 + y / 3, 8, 8, delta);
     });
   });
   return (

@@ -3,6 +3,8 @@ import Wrapper from "./components/layout/Wrapper";
 import { Link, Redirect, Route, Switch } from "wouter";
 
 import Scene from "./components/scene/Scene";
+import Project from "./components/project/Project";
+import { Loader } from "@react-three/drei";
 
 const Works = () => {
   return (
@@ -23,7 +25,7 @@ const NotFound = () => {
 const App = () => {
   return (
     <Wrapper>
-      <nav style={{ position: "absolute" }}>
+      <nav style={{ position: "absolute", zIndex: 101 }}>
         <Link href="/works"> Works</Link>
         <Link href="/about"> About</Link>
       </nav>
@@ -33,6 +35,7 @@ const App = () => {
           <Redirect to={"/works"} />
         </Route>
         <Route path="/works" component={Works} />
+        <Route path="/works/:id" component={Project} />
         <Route path="/about" component={About} />
         <Route component={NotFound} />
       </Switch>
@@ -45,6 +48,7 @@ const App = () => {
       >
         <Scene />
       </Canvas>
+      <Loader />
     </Wrapper>
   );
 };

@@ -28,12 +28,38 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: #101010;
+    background-color: ${(props) => props.theme.colors.secondary};
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-size: 1.6rem;
+
+  }
+
+  h1,h2,h3,h4,h5, a {
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.5em;
+  }
+  h3 {
+    font-size: 1.125em;
+  }
+  h4{
+    font-size: 1em;
   }
 
 `;
 
-const theme = {};
+const theme = {
+  colors: {
+    primary: "#abea9a",
+    secondary: "#101010",
+    light: "#fefefe",
+  },
+};
 
 const Wrapper = ({ children }) => {
   return (
