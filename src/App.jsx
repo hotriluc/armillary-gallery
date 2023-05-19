@@ -1,10 +1,15 @@
 import { Canvas } from "@react-three/fiber";
 import Wrapper from "./components/layout/Wrapper";
 import { Link, Redirect, Route, Switch } from "wouter";
-import Projects from "./components/scene/Projects";
+
+import Scene from "./components/scene/Scene";
 
 const Works = () => {
-  return <div style={{ position: "absolute" }}>works</div>;
+  return (
+    <div style={{ position: "absolute", color: "white", fontSize: "2rem" }}>
+      works
+    </div>
+  );
 };
 
 const About = () => {
@@ -18,7 +23,7 @@ const NotFound = () => {
 const App = () => {
   return (
     <Wrapper>
-      <nav>
+      <nav style={{ position: "absolute" }}>
         <Link href="/works"> Works</Link>
         <Link href="/about"> About</Link>
       </nav>
@@ -33,21 +38,12 @@ const App = () => {
       </Switch>
 
       <Canvas
-      // orthographic camera={{ position: [0, 0, 2]}}
+        shadows
+        dpr={[1, 2]}
+        camera={{ position: [0, 1.5, 5] }}
+        // orthographic camera={{ position: [0, 0, 2]}}
       >
-        <Switch>
-          <Route path="/works">
-            <Projects />
-          </Route>
-          <Route path="/about">
-            <mesh>
-              <planeGeometry />
-              <meshBasicMaterial color={"blue"} />
-            </mesh>
-          </Route>
-
-          <Route />
-        </Switch>
+        <Scene />
       </Canvas>
     </Wrapper>
   );
