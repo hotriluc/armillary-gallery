@@ -11,7 +11,7 @@ import galleryItemVertexShader from "../../shaders/gallery-item/vertex.glsl";
 import galleryItemFragmentShader from "../../shaders/gallery-item/fragment.glsl";
 
 import Constellation from "./Constellation";
-import { useLocation } from "wouter";
+import { useProjectStore } from "../../store/projectStore";
 
 const GalleryItemMaterial = new shaderMaterial(
   {
@@ -34,11 +34,11 @@ const GalleryItem = ({ data, noiseMap, rotation, ...props }) => {
   const textRef = useRef();
 
   const [hovered, setHovered] = useState(false);
-  const [clicked, setClicked] = useState(false);
-  const [location, navigate] = useLocation();
+  // const [clicked, setClicked] = useState(false);
+  // const [location, navigate] = useLocation();
 
   // const activeID = useProjectStore((state) => state.activeID);
-  // const setActiveID = useProjectStore((state) => state.setActiveID);
+  const setActiveID = useProjectStore((state) => state.setActiveID);
 
   const imgMap = useLoader(
     THREE.TextureLoader,
@@ -71,12 +71,12 @@ const GalleryItem = ({ data, noiseMap, rotation, ...props }) => {
       delta
     );
 
-    ref.current.position.y = damp(
-      ref.current.position.y,
-      clicked ? 2 : 0,
-      6,
-      delta
-    );
+    // ref.current.position.y = damp(
+    //   ref.current.position.y,
+    //   clicked ? 2 : 0,
+    //   6,
+    //   delta
+    // );
 
     materialRef.current.uProgress = lerp(
       materialRef.current.uProgress,
@@ -111,13 +111,7 @@ const GalleryItem = ({ data, noiseMap, rotation, ...props }) => {
 
   const onPointerUpHandler = (e) => {
     e.stopPropagation();
-    navigate(`${location}/${projectID}`);
-    // console.log("ah");
-  };
-
-  const onClickHandler = (e) => {
-    e.stopPropagation();
-    setClicked((prev) => !prev);
+    setActiveID(projectID);
   };
 
   return (
@@ -126,7 +120,6 @@ const GalleryItem = ({ data, noiseMap, rotation, ...props }) => {
         position={[0, 0, 0.1]}
         onPointerEnter={onMouseEnterHandler}
         onPointerLeave={() => setHovered(false)}
-        onClick={onClickHandler}
         onPointerUp={onPointerUpHandler}
       >
         <planeGeometry args={[1.5, 2.5]} />

@@ -29,7 +29,7 @@ const Minimap = () => {
         index / projects.length - 1.5 / projects.length,
         4 / projects.length
       );
-      child.scale.y = -damp(child.scale.y, 0.2 + y / 3, 8, 8, delta);
+      child.scale.y = damp(child.scale.y, 0.2 + y / 3, 8, 8, delta);
     });
   });
   return (

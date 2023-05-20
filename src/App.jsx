@@ -3,24 +3,12 @@ import Wrapper from "./components/layout/Wrapper";
 import { Link, Redirect, Route, Switch } from "wouter";
 
 import Scene from "./components/scene/Scene";
-import Project from "./components/project/Project";
 import { Loader } from "@react-three/drei";
 
-const Works = () => {
-  return (
-    <div style={{ position: "absolute", color: "white", fontSize: "2rem" }}>
-      works
-    </div>
-  );
-};
-
-const About = () => {
-  return <div>About</div>;
-};
-
-const NotFound = () => {
-  return <div>Not found</div>;
-};
+import WorksPageOverlay from "./components/layout/WorksPageOverlay";
+import AboutPageOverlay from "./components/layout/AboutPageOverlay";
+import NotFoundPageOverlay from "./components/layout/NotFoundPageOverlay";
+import ProjectPageOverlay from "./components/layout/ProjectPageOverlay";
 
 const App = () => {
   return (
@@ -34,10 +22,10 @@ const App = () => {
         <Route path="/">
           <Redirect to={"/works"} />
         </Route>
-        <Route path="/works" component={Works} />
-        <Route path="/works/:id" component={Project} />
-        <Route path="/about" component={About} />
-        <Route component={NotFound} />
+        <Route path="/works" component={WorksPageOverlay} />
+        <Route path="/about" component={AboutPageOverlay} />
+        <Route path="/works/:id" component={ProjectPageOverlay} />
+        <Route component={NotFoundPageOverlay} />
       </Switch>
 
       <Canvas

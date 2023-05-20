@@ -67,7 +67,7 @@ const DataRow = styled.div`
   }
 `;
 
-const Project = () => {
+const ProjectPageOverlay = () => {
   const [match, params] = useRoute("/works/:id");
   const projects = useProjectStore((state) => state.projects);
 
@@ -113,4 +113,4 @@ const Project = () => {
   );
 };
 
-export default Project;
+export default ProjectPageOverlay;
