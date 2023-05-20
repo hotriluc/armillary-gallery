@@ -1,5 +1,9 @@
 const AboutPageOverlay = () => {
-  return <div>AboutPageOverlay</div>;
+  return (
+    <div style={{ position: "absolute", color: "white", fontSize: "2rem" }}>
+      AboutPageOverlay
+    </div>
+  );
 };
 
 export default AboutPageOverlay;

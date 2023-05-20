@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import Wrapper from "./components/layout/Wrapper";
-import { Link, Redirect, Route, Switch } from "wouter";
+import { Redirect, Route, Switch } from "wouter";
 
 import Scene from "./components/scene/Scene";
 import { Loader } from "@react-three/drei";
@@ -9,15 +9,12 @@ import WorksPageOverlay from "./components/layout/WorksPageOverlay";
 import AboutPageOverlay from "./components/layout/AboutPageOverlay";
 import NotFoundPageOverlay from "./components/layout/NotFoundPageOverlay";
 import ProjectPageOverlay from "./components/layout/ProjectPageOverlay";
+import Navigation from "./components/layout/Navigation";
 
 const App = () => {
   return (
     <Wrapper>
-      <nav style={{ position: "absolute", zIndex: 101 }}>
-        <Link href="/works"> Works</Link>
-        <Link href="/about"> About</Link>
-      </nav>
-
+      <Navigation />
       <Switch>
         <Route path="/">
           <Redirect to={"/works"} />

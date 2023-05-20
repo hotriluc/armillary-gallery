@@ -20,7 +20,9 @@ const Banner = styled.div`
 const BannerTitle = styled.h1`
   color: #101010;
   position: absolute;
+
   font-size: 7.5em;
+  font-weight: 400;
 
   margin: 0;
   top: 50%;
@@ -32,6 +34,7 @@ const BannerTitle = styled.h1`
 
 const BannerImage = styled.div`
   height: 55rem;
+  margin-top: 4rem;
   overflow: hidden;
 
   img {
@@ -54,6 +57,13 @@ const Author = styled.div`
 
   h2 {
     color: ${(props) => props.theme.colors.light};
+    font-size: 1em;
+    font-weight: 200;
+    text-transform: uppercase;
+  }
+  p {
+    font-weight: 300;
+    text-transform: uppercase;
   }
 `;
 
@@ -64,6 +74,14 @@ const DataRow = styled.div`
 
   h2 {
     color: ${(props) => props.theme.colors.light};
+    font-weight: 200;
+    font-size: 1em;
+    text-transform: uppercase;
+  }
+
+  p {
+    font-weight: 300;
+    text-transform: uppercase;
   }
 `;
 
@@ -87,7 +105,7 @@ const ProjectPageOverlay = () => {
 
       <ProjectData>
         <Author>
-          <h2>Luc Ho</h2>
+          <h2>Ho Tri Luc</h2>
           <p> April 2023.</p>
         </Author>
         <DataRow>

@@ -29,14 +29,14 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     background-color: ${(props) => props.theme.colors.secondary};
-    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 1.6rem;
 
   }
-
-  h1,h2,h3,h4,h5, a {
+/* 
+  h1,h2,h3,h4,h5{
     font-family: 'Inter', sans-serif;
-  }
+  } */
 
   h1 {
     font-size: 2em;
