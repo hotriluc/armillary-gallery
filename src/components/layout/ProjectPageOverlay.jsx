@@ -29,6 +29,9 @@ const BannerTitle = styled.h1`
   left: 50%;
   width: max-content;
 
+  font-family: "IBM Plex Sans", sans-serif;
+  text-transform: uppercase;
+
   transform: translate(-50%, -50%);
 `;
 

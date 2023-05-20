@@ -10,6 +10,7 @@ import AboutPageOverlay from "./components/layout/AboutPageOverlay";
 import NotFoundPageOverlay from "./components/layout/NotFoundPageOverlay";
 import ProjectPageOverlay from "./components/layout/ProjectPageOverlay";
 import Navigation from "./components/layout/Navigation";
+import { Perf } from "r3f-perf";
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
         camera={{ position: [0, 1.5, 5] }}
         // orthographic camera={{ position: [0, 0, 2]}}
       >
+        {/* <Perf /> */}
         <Scene />
       </Canvas>
       <Loader />

@@ -26,7 +26,13 @@ const GalleryItemMaterial = new shaderMaterial(
 
 extend({ GalleryItemMaterial });
 
-const GalleryItem = ({ data, noiseMap, rotation, ...props }) => {
+const GalleryItem = ({
+  data,
+  noiseMap,
+  rotation,
+  c = new THREE.Color(),
+  ...props
+}) => {
   const { id: projectID, imgUrl: projectImg, title: projectTitle } = data;
 
   const ref = useRef();
@@ -90,6 +96,11 @@ const GalleryItem = ({ data, noiseMap, rotation, ...props }) => {
       0.05
     );
 
+    textRef.current.material.color.lerp(
+      c.set(hovered ? "#abea9a" : "#fefefe"),
+      hovered ? 0.3 : 0.1
+    );
+
     // In order to hide only half text we need to calculate new object position
     // by having 2 vectors we can calculate the angle between them
     // in order to hide the ones that have angle bigger then PI /2
@@ -134,12 +145,13 @@ const GalleryItem = ({ data, noiseMap, rotation, ...props }) => {
 
       <Text
         ref={textRef}
-        color={"#B3F5A1"}
-        fillOpacity={0}
-        fontSize={0.1}
         position={[0, 0, 0.2]}
+        material-toneMapped={false}
+        font={"/IBMPlexSans-Regular.woff"}
+        fontSize={0.1}
+        fillOpacity={0}
       >
-        {projectTitle}
+        {projectTitle.toUpperCase()}
       </Text>
 
       <Constellation hovered={hovered} />
