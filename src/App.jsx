@@ -3,16 +3,30 @@ import Wrapper from "./components/layout/Wrapper";
 import { Redirect, Route, Switch } from "wouter";
 
 import Scene from "./components/scene/Scene";
-import { Loader } from "@react-three/drei";
+import { Loader, useProgress } from "@react-three/drei";
 
 import WorksPageOverlay from "./components/layout/WorksPageOverlay";
 import AboutPageOverlay from "./components/layout/AboutPageOverlay";
 import NotFoundPageOverlay from "./components/layout/NotFoundPageOverlay";
 import ProjectPageOverlay from "./components/layout/ProjectPageOverlay";
 import Navigation from "./components/layout/Navigation";
-import { Perf } from "r3f-perf";
+
+import { useEffect } from "react";
+import { useUIStore } from "./store/UIStore";
 
 const App = () => {
+  const { active } = useProgress();
+
+  const setIsLoaded = useUIStore((state) => state.setIsLoaded);
+
+  useEffect(() => {
+    if (active === false) {
+      setTimeout(() => {
+        setIsLoaded(true);
+      }, 500);
+    }
+  }, [active, setIsLoaded]);
+
   return (
     <Wrapper>
       <Navigation />
