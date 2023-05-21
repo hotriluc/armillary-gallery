@@ -4,7 +4,7 @@ import { Link, useRoute } from "wouter";
 const NavBar = styled.nav`
   position: absolute;
   width: 100%;
-  z-index: 101;
+  z-index: 10;
 
   padding: 4rem 4rem;
   color: white;

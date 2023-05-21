@@ -2,23 +2,27 @@ import { useRoute } from "wouter";
 import { useProjectStore } from "../../store/projectStore";
 import { styled } from "styled-components";
 
+import { motion } from "framer-motion";
+import { useState } from "react";
+
 const ProjectWrapper = styled.div`
   padding: 4rem;
   height: 100%;
   width: 100%;
   position: absolute;
-  z-index: 10;
+  z-index: 1;
 `;
 
-const Banner = styled.div`
+const Banner = styled(motion.div)`
   width: 100%;
   /* padding: 2rem; */
   /* border: 0.5px solid #abea9a; */
   position: relative;
+  overflow: hidden;
 `;
 
 const BannerTitle = styled.h1`
-  color: #101010;
+  color: #fefefe;
   position: absolute;
 
   font-size: 7.5em;
@@ -33,18 +37,26 @@ const BannerTitle = styled.h1`
   text-transform: uppercase;
 
   transform: translate(-50%, -50%);
+  z-index: 1;
+
+  overflow: hidden;
 `;
 
-const BannerImage = styled.div`
+const BannerTitleInner = styled(motion.span)`
+  display: inline-block;
+`;
+
+const BannerImage = styled(motion.div)`
   height: 55rem;
   margin-top: 4rem;
   overflow: hidden;
+  transform-origin: top;
+`;
 
-  img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
+const BannerImageInner = styled(motion.img)`
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 `;
 
 const ProjectData = styled.div`
@@ -92,19 +104,37 @@ const ProjectPageOverlay = () => {
   const [match, params] = useRoute("/works/:id");
   const projects = useProjectStore((state) => state.projects);
 
-  if (!match) return;
-
   const filteredProjects = projects.filter((el) => el.id === params.id);
   const project = filteredProjects[0];
+
+  const [leave, setLeave] = useState(false);
 
   return (
     <ProjectWrapper>
       <Banner>
-        <BannerTitle>{project.title}</BannerTitle>
-        <BannerImage>
-          <img src="/default.png" alt="" />
+        <BannerTitle>
+          <BannerTitleInner
+            initial={{ y: "100%", opacity: 0 }}
+            animate={!leave ? { y: "0", opacity: 1 } : { y: "-100%" }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+          >
+            {project.title}
+          </BannerTitleInner>
+        </BannerTitle>
+        <BannerImage
+          initial={{ y: "-101%" }}
+          animate={!leave ? { y: 0 } : { y: "101%" }}
+          transition={{ duration: 0.8 }}
+        >
+          <BannerImageInner
+            src="/default.png"
+            initial={{ y: "101%" }}
+            animate={!leave ? { y: 0 } : { y: "-101%" }}
+            transition={{ duration: 0.8 }}
+          />
         </BannerImage>
       </Banner>
+      <button onClick={() => setLeave((prev) => !prev)}>click</button>
 
       <ProjectData>
         <Author>

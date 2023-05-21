@@ -13,6 +13,7 @@ import Navigation from "./components/layout/Navigation";
 
 import { useEffect } from "react";
 import { useUIStore } from "./store/UIStore";
+import { Perf } from "r3f-perf";
 
 const App = () => {
   const { active } = useProgress();
@@ -46,7 +47,7 @@ const App = () => {
         camera={{ position: [0, 1.5, 5] }}
         // orthographic camera={{ position: [0, 0, 2]}}
       >
-        {/* <Perf /> */}
+        <Perf />
         <Scene />
       </Canvas>
       <Loader />
