@@ -15,6 +15,10 @@ const Gallery = () => {
   const noiseMap = useLoader(THREE.TextureLoader, "noise.png");
   const projects = useProjectStore((state) => state.projects);
 
+  // for circular (desktop) we reverse in order to do correct rotation
+  // but keep indexes the same
+  const displayedProjects = [...projects].reverse();
+
   const radius = 2.8;
   const interval = useMemo(() => (Math.PI * 2) / projects.length, [projects]);
 
@@ -65,8 +69,8 @@ const Gallery = () => {
   // });
 
   return (
-    <group ref={ref} rotation-y={Math.PI / 2}>
-      {projects.map((projectData, i) => (
+    <group ref={ref}>
+      {displayedProjects.map((projectData, i) => (
         // position  using sin and cos we can place our objects on the circle
         // rotation (1st term - we rotate i-th plane to make its side to look into the center)
         // 2nd term - control how much spin you add to your cards (if multiply it by  0.5 it will look like N-gon)

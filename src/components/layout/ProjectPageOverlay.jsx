@@ -1,11 +1,11 @@
-import { useRoute } from "wouter";
+import { useLocation, useRoute } from "wouter";
 import { useProjectStore } from "../../store/projectStore";
 import { styled } from "styled-components";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { AnimatePresence, motion, usePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 
-const ProjectWrapper = styled.div`
+const ProjectWrapper = styled(motion.div)`
   padding: 4rem;
   height: 100%;
   width: 100%;
@@ -69,6 +69,8 @@ const ProjectData = styled.div`
 
 const Author = styled.div`
   flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
 
   h2 {
     color: ${(props) => props.theme.colors.light};
@@ -79,6 +81,30 @@ const Author = styled.div`
   p {
     font-weight: 300;
     text-transform: uppercase;
+  }
+`;
+
+const ProjectNavigation = styled.div`
+  margin-top: auto;
+
+  display: flex;
+  gap: 1rem;
+
+  button {
+    fill: none;
+    stroke: ${(props) => props.theme.colors.light};
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  button:hover {
+    stroke: ${(props) => props.theme.colors.primary};
+  }
+
+  button:disabled {
+    stroke: grey;
   }
 `;
 
@@ -100,67 +126,125 @@ const DataRow = styled.div`
   }
 `;
 
+function mod(n, m) {
+  return ((n % m) + m) % m;
+}
+
 const ProjectPageOverlay = () => {
   const [match, params] = useRoute("/works/:id");
   const projects = useProjectStore((state) => state.projects);
 
-  const filteredProjects = projects.filter((el) => el.id === params.id);
-  const project = filteredProjects[0];
+  const [location, navigate] = useLocation();
 
-  const [leave, setLeave] = useState(false);
+  useEffect(() => {
+    if (!match) return;
+  }, [match]);
+
+  const index = projects.findIndex((el) => el.id === params.id);
+
+  const currentProject = projects[index];
+  const prevProject = projects[mod(index - 1, projects.length)];
+  const nextProject = projects[mod(index + 1, projects.length)];
+
+  const [buttonIsEnabled, setButtonIsEnabled] = useState(true);
 
   return (
-    <ProjectWrapper>
-      <Banner>
-        <BannerTitle>
-          <BannerTitleInner
-            initial={{ y: "100%", opacity: 0 }}
-            animate={!leave ? { y: "0", opacity: 1 } : { y: "-100%" }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-          >
-            {project.title}
-          </BannerTitleInner>
-        </BannerTitle>
-        <BannerImage
-          initial={{ y: "-101%" }}
-          animate={!leave ? { y: 0 } : { y: "101%" }}
-          transition={{ duration: 0.8 }}
-        >
-          <BannerImageInner
-            src="/default.png"
-            initial={{ y: "101%" }}
-            animate={!leave ? { y: 0 } : { y: "-101%" }}
+    <AnimatePresence
+      mode="wait"
+      onExitComplete={() => setButtonIsEnabled(true)}
+    >
+      <ProjectWrapper key={currentProject.id}>
+        <Banner>
+          <BannerTitle>
+            <BannerTitleInner
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: "0", opacity: 1 }}
+              exit={{ y: "-100%", opacity: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+            >
+              {currentProject.title}
+            </BannerTitleInner>
+          </BannerTitle>
+          <BannerImage
+            initial={{ y: "-101%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "101%" }}
             transition={{ duration: 0.8 }}
-          />
-        </BannerImage>
-      </Banner>
-      <button onClick={() => setLeave((prev) => !prev)}>click</button>
+          >
+            <BannerImageInner
+              src="/default.png"
+              initial={{ y: "101%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-101%" }}
+              transition={{ duration: 0.8 }}
+            />
+          </BannerImage>
+        </Banner>
 
-      <ProjectData>
-        <Author>
-          <h2>Ho Tri Luc</h2>
-          <p> April 2023.</p>
-        </Author>
-        <DataRow>
-          <h2>Description:</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-            corporis odit, modi, dicta, quos magnam temporibus aperiam rerum
-            nihil officiis hic iure itaque harum. Nesciunt doloremque odit
-            laboriosam iure fugit.
-          </p>
-        </DataRow>
-        <DataRow>
-          <h2>Technologies:</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-            corporis odit, modi, dicta, quos magnam temporibus aperiam rerum
-            nihil officiis hic iure itaque harum. Nesciunt doloremque odit
-            laboriosam iure fugit.
-          </p>
-        </DataRow>
-      </ProjectData>
-    </ProjectWrapper>
+        <ProjectData>
+          <Author>
+            <h2>Ho Tri Luc</h2>
+            <p> April 2023.</p>
+
+            <ProjectNavigation>
+              <button
+                onClick={async () => {
+                  await setButtonIsEnabled(false);
+                  await navigate("/works/" + prevProject.id);
+                }}
+                disabled={!buttonIsEnabled}
+              >
+                <svg width="100px" height="18px" viewBox="0 0 50 9">
+                  <path
+                    vector-effect="non-scaling-stroke"
+                    d="m0 4.5 5-3m-5 3 5 3m45-3h-77"
+                  ></path>
+                </svg>
+              </button>
+              <button
+                onClick={async () => {
+                  await setButtonIsEnabled(false);
+                  await navigate("/works/" + nextProject.id);
+                }}
+                disabled={!buttonIsEnabled}
+              >
+                <svg
+                  width="100px"
+                  height="18px"
+                  viewBox="0 0 50 9"
+                  transform="scale(-1,1)"
+                >
+                  <path
+                    vector-effect="non-scaling-stroke"
+                    d="m0 4.5 5-3m-5 3 5 3m45-3h-77"
+                  ></path>
+                </svg>
+              </button>
+            </ProjectNavigation>
+          </Author>
+
+          <DataRow>
+            <h2>Description:</h2>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Dignissimos corporis odit, modi, dicta, quos magnam temporibus
+              aperiam rerum nihil officiis hic iure itaque harum. Nesciunt
+              doloremque odit laboriosam iure fugit.
+            </p>
+          </DataRow>
+
+          <DataRow>
+            <h2>Technologies:</h2>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Dignissimos corporis odit, modi, dicta, quos magnam temporibus
+              aperiam rerum nihil officiis hic iure itaque harum. Nesciunt
+              doloremque odit laboriosam iure fugit.
+            </p>
+          </DataRow>
+        </ProjectData>
+      </ProjectWrapper>
+    </AnimatePresence>
   );
 };
 

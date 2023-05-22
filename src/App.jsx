@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import Wrapper from "./components/layout/Wrapper";
-import { Redirect, Route, Switch } from "wouter";
+import { Redirect, Route, Switch, useLocation } from "wouter";
 
 import Scene from "./components/scene/Scene";
 import { Loader, useProgress } from "@react-three/drei";
@@ -14,6 +14,7 @@ import Navigation from "./components/layout/Navigation";
 import { useEffect } from "react";
 import { useUIStore } from "./store/UIStore";
 import { Perf } from "r3f-perf";
+import { AnimatePresence } from "framer-motion";
 
 const App = () => {
   const { active } = useProgress();
@@ -27,6 +28,8 @@ const App = () => {
       }, 500);
     }
   }, [active, setIsLoaded]);
+
+  const [location] = useLocation();
 
   return (
     <Wrapper>
@@ -47,7 +50,7 @@ const App = () => {
         camera={{ position: [0, 1.5, 5] }}
         // orthographic camera={{ position: [0, 0, 2]}}
       >
-        <Perf />
+        {/* <Perf /> */}
         <Scene />
       </Canvas>
       <Loader />
