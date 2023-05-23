@@ -83,9 +83,7 @@ const WorksPageOverlay = () => {
           opacity: 1,
           scaleY: 0,
 
-          transition: {
-            duration: 0.8,
-          },
+          transition: { duration: 1, ease: [0.87, 0, 0.13, 1] },
         },
       }
     : {
@@ -97,9 +95,7 @@ const WorksPageOverlay = () => {
           opacity: 1,
           scaleY: 1,
 
-          transition: {
-            duration: 0.8,
-          },
+          transition: { duration: 1, ease: [0.87, 0, 0.13, 1] },
         },
       };
 

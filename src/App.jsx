@@ -50,7 +50,7 @@ const App = () => {
         camera={{ position: [0, 1.5, 5] }}
         // orthographic camera={{ position: [0, 0, 2]}}
       >
-        {/* <Perf /> */}
+        <Perf />
         <Scene />
       </Canvas>
       <Loader />

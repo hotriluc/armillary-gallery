@@ -2,8 +2,9 @@ import { useLocation, useRoute } from "wouter";
 import { useProjectStore } from "../../store/projectStore";
 import { styled } from "styled-components";
 
-import { AnimatePresence, motion, usePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { SplitText } from "@cyriacbr/react-split-text";
 
 const ProjectWrapper = styled(motion.div)`
   padding: 4rem;
@@ -11,12 +12,22 @@ const ProjectWrapper = styled(motion.div)`
   width: 100%;
   position: absolute;
   z-index: 1;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: min-content 1fr;
+  grid-row-gap: 2rem;
+  grid-column-gap: 2rem;
+
+  grid-template-areas:
+    "banner banner banner"
+    "nav description technologies";
 `;
 
 const Banner = styled(motion.div)`
   width: 100%;
-  /* padding: 2rem; */
-  /* border: 0.5px solid #abea9a; */
+
+  grid-area: banner;
   position: relative;
   overflow: hidden;
 `;
@@ -40,10 +51,10 @@ const BannerTitle = styled.h1`
   z-index: 1;
 
   overflow: hidden;
-`;
 
-const BannerTitleInner = styled(motion.span)`
-  display: inline-block;
+  span {
+    display: inline-block;
+  }
 `;
 
 const BannerImage = styled(motion.div)`
@@ -59,32 +70,36 @@ const BannerImageInner = styled(motion.img)`
   object-fit: cover;
 `;
 
-const ProjectData = styled.div`
-  margin-top: 4rem;
-  color: ${(props) => props.theme.colors.primary};
-
-  display: flex;
-  gap: 4rem;
-`;
-
 const Author = styled.div`
-  flex-basis: 100%;
   display: flex;
   flex-direction: column;
 
-  h2 {
-    color: ${(props) => props.theme.colors.light};
-    font-size: 1em;
-    font-weight: 200;
-    text-transform: uppercase;
-  }
   p {
     font-weight: 300;
     text-transform: uppercase;
   }
 `;
 
+const Heading = styled(motion.h2)`
+  color: ${(props) => props.theme.colors.light};
+  font-size: 1em;
+  font-weight: 200;
+  text-transform: uppercase;
+`;
+
+const OverflowTextHolder = styled(motion.div)`
+  overflow: hidden;
+  /* text-transform: uppercase; */
+
+  span {
+    font-weight: 300;
+    display: inline-block;
+    color: ${(props) => props.theme.colors.primary};
+  }
+`;
+
 const ProjectNavigation = styled.div`
+  grid-area: navigation;
   margin-top: auto;
 
   display: flex;
@@ -108,45 +123,39 @@ const ProjectNavigation = styled.div`
   }
 `;
 
-const DataRow = styled.div`
+const Description = styled.div`
+  grid-area: description;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+`;
 
-  h2 {
-    color: ${(props) => props.theme.colors.light};
-    font-weight: 200;
-    font-size: 1em;
-    text-transform: uppercase;
-  }
-
-  p {
-    font-weight: 300;
-    text-transform: uppercase;
-  }
+const Technologies = styled.div`
+  grid-area: technologies;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 `;
 
 function mod(n, m) {
   return ((n % m) + m) % m;
 }
 
+const text = `This is the project inspered by me. I was surfing through the net in
+order to find cool inspiration.`;
+
 const ProjectPageOverlay = () => {
   const [match, params] = useRoute("/works/:id");
   const projects = useProjectStore((state) => state.projects);
+  const [buttonIsEnabled, setButtonIsEnabled] = useState(true);
 
   const [location, navigate] = useLocation();
-
-  useEffect(() => {
-    if (!match) return;
-  }, [match]);
+  if (!match) return;
 
   const index = projects.findIndex((el) => el.id === params.id);
-
   const currentProject = projects[index];
   const prevProject = projects[mod(index - 1, projects.length)];
   const nextProject = projects[mod(index + 1, projects.length)];
-
-  const [buttonIsEnabled, setButtonIsEnabled] = useState(true);
 
   return (
     <AnimatePresence
@@ -156,93 +165,156 @@ const ProjectPageOverlay = () => {
       <ProjectWrapper key={currentProject.id}>
         <Banner>
           <BannerTitle>
-            <BannerTitleInner
-              initial={{ y: "100%", opacity: 0 }}
+            <motion.span
+              initial={{ y: "101%", opacity: 0 }}
               animate={{ y: "0", opacity: 1 }}
-              exit={{ y: "-100%", opacity: 0 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
+              exit={{ y: "-101%", opacity: 1 }}
+              transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
             >
               {currentProject.title}
-            </BannerTitleInner>
+            </motion.span>
           </BannerTitle>
           <BannerImage
             initial={{ y: "-101%" }}
             animate={{ y: 0 }}
             exit={{ y: "101%" }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
           >
             <BannerImageInner
               src="/default.png"
               initial={{ y: "101%" }}
               animate={{ y: 0 }}
               exit={{ y: "-101%" }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
             />
           </BannerImage>
         </Banner>
 
-        <ProjectData>
-          <Author>
-            <h2>Ho Tri Luc</h2>
-            <p> April 2023.</p>
+        <Author>
+          <OverflowTextHolder>
+            <Heading
+              initial={{ y: "101%", opacity: 0 }}
+              animate={{ y: "0", opacity: 1 }}
+              exit={{ y: "-101%", opacity: 1 }}
+              transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
+            >
+              Ho Tri Luc
+            </Heading>
+          </OverflowTextHolder>
+          <OverflowTextHolder>
+            <motion.span
+              initial={{ y: "101%", opacity: 0 }}
+              animate={{ y: "0", opacity: 1 }}
+              exit={{ y: "-101%", opacity: 1 }}
+              transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
+            >
+              APRIL 23
+            </motion.span>
+          </OverflowTextHolder>
 
-            <ProjectNavigation>
-              <button
-                onClick={async () => {
-                  await setButtonIsEnabled(false);
-                  await navigate("/works/" + prevProject.id);
-                }}
-                disabled={!buttonIsEnabled}
+          <ProjectNavigation>
+            <motion.button
+              onClick={async () => {
+                await navigate("/works/" + prevProject.id);
+              }}
+              initial={{ opacity: 0.2 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              exit={{ opacity: 0.2, pointerEvents: "none" }}
+            >
+              <svg width="100px" height="18px" viewBox="0 0 50 9">
+                <path
+                  vectorEffect="non-scaling-stroke"
+                  d="m0 4.5 5-3m-5 3 5 3m45-3h-77"
+                ></path>
+              </svg>
+            </motion.button>
+            <motion.button
+              onClick={async () => {
+                // await setButtonIsEnabled(false);
+                await navigate("/works/" + nextProject.id);
+              }}
+              initial={{ opacity: 0.2 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              exit={{ opacity: 0.2, pointerEvents: "none" }}
+            >
+              <svg
+                width="100px"
+                height="18px"
+                viewBox="0 0 50 9"
+                transform="scale(-1,1)"
               >
-                <svg width="100px" height="18px" viewBox="0 0 50 9">
-                  <path
-                    vector-effect="non-scaling-stroke"
-                    d="m0 4.5 5-3m-5 3 5 3m45-3h-77"
-                  ></path>
-                </svg>
-              </button>
-              <button
-                onClick={async () => {
-                  await setButtonIsEnabled(false);
-                  await navigate("/works/" + nextProject.id);
-                }}
-                disabled={!buttonIsEnabled}
+                <path
+                  vectorEffect="non-scaling-stroke"
+                  d="m0 4.5 5-3m-5 3 5 3m45-3h-77"
+                ></path>
+              </svg>
+            </motion.button>
+          </ProjectNavigation>
+        </Author>
+
+        <Description>
+          <OverflowTextHolder>
+            <Heading
+              initial={{ y: "101%", opacity: 0 }}
+              animate={{ y: "0", opacity: 1 }}
+              exit={{ y: "-101%", opacity: 1 }}
+              transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
+            >
+              Description:
+            </Heading>
+          </OverflowTextHolder>
+
+          <SplitText
+            LineWrapper={({ id, children }) => (
+              <OverflowTextHolder>{children}</OverflowTextHolder>
+            )}
+            WordWrapper={({ id, children }) => (
+              <motion.span
+                style={{ whiteSpace: "pre" }}
+                initial={{ y: "101%", opacity: 0 }}
+                animate={{ y: "0", opacity: 1 }}
+                exit={{ y: "-101%", opacity: 1 }}
+                transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
               >
-                <svg
-                  width="100px"
-                  height="18px"
-                  viewBox="0 0 50 9"
-                  transform="scale(-1,1)"
-                >
-                  <path
-                    vector-effect="non-scaling-stroke"
-                    d="m0 4.5 5-3m-5 3 5 3m45-3h-77"
-                  ></path>
-                </svg>
-              </button>
-            </ProjectNavigation>
-          </Author>
+                {children}
+              </motion.span>
+            )}
+          >
+            {text.toUpperCase()}
+          </SplitText>
+        </Description>
 
-          <DataRow>
-            <h2>Description:</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Dignissimos corporis odit, modi, dicta, quos magnam temporibus
-              aperiam rerum nihil officiis hic iure itaque harum. Nesciunt
-              doloremque odit laboriosam iure fugit.
-            </p>
-          </DataRow>
-
-          <DataRow>
-            <h2>Technologies:</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Dignissimos corporis odit, modi, dicta, quos magnam temporibus
-              aperiam rerum nihil officiis hic iure itaque harum. Nesciunt
-              doloremque odit laboriosam iure fugit.
-            </p>
-          </DataRow>
-        </ProjectData>
+        <Technologies>
+          <OverflowTextHolder>
+            <Heading
+              initial={{ y: "101%", opacity: 0 }}
+              animate={{ y: "0", opacity: 1 }}
+              exit={{ y: "-101%", opacity: 1 }}
+              transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
+            >
+              Technologies:
+            </Heading>
+          </OverflowTextHolder>
+          <SplitText
+            LineWrapper={({ children }) => (
+              <OverflowTextHolder>{children}</OverflowTextHolder>
+            )}
+            WordWrapper={({ children }) => (
+              <motion.span
+                initial={{ y: "101%", opacity: 0 }}
+                animate={{ y: "0", opacity: 1 }}
+                exit={{ y: "-101%", opacity: 1 }}
+                transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
+              >
+                {children}
+              </motion.span>
+            )}
+          >
+            {text.toUpperCase()}
+          </SplitText>
+        </Technologies>
       </ProjectWrapper>
     </AnimatePresence>
   );

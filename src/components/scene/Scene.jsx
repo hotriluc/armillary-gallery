@@ -13,9 +13,9 @@ const Scene = () => {
 
   return (
     <>
-      <EffectComposer>
+      {/* <EffectComposer>
         <Bloom mipmapBlur intensity={0.2} luminanceThreshold={0} />
-      </EffectComposer>
+      </EffectComposer> */}
 
       <SoftShadows size={size} focus={focus} samples={samples} />
 
@@ -23,7 +23,6 @@ const Scene = () => {
         <Route path="/works">
           <WorksPageScene />
         </Route>
-
         <Route path="/about">
           <mesh>
             <planeGeometry />
