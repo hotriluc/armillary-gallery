@@ -1,4 +1,4 @@
-import { Link, useRoute } from "wouter";
+import { Link, useLocation, useRoute } from "wouter";
 
 import { motion, useAnimate } from "framer-motion";
 import {
@@ -13,11 +13,7 @@ import { useEffect } from "react";
 export const ActiveLink = (props) => {
   const [isActive] = useRoute(props.href);
 
-  return (
-    <Link {...props}>
-      <a className={isActive ? "active" : ""}>{props.children}</a>
-    </Link>
-  );
+  return <a className={isActive ? "active" : ""}>{props.children}</a>;
 };
 
 const Navigation = () => {
@@ -56,7 +52,7 @@ const Navigation = () => {
 
       <NavList>
         <NavItem>
-          <ActiveLink href="/works"> Works</ActiveLink>
+          <ActiveLink href="/works">Works</ActiveLink>
         </NavItem>
         <NavItem>
           <ActiveLink href="/about">About</ActiveLink>

@@ -1,141 +1,24 @@
 import { useLocation, useRoute } from "wouter";
 import { useProjectStore } from "../../store/projectStore";
-import { styled } from "styled-components";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useAnimate } from "framer-motion";
 import { SplitText } from "@cyriacbr/react-split-text";
 import { mod } from "../../helpers/math";
-import Navigation from "./Navigation";
 
-const ProjectWrapper = styled(motion.div)`
-  padding: 8rem 4rem;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  z-index: 1;
-
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: min-content 1fr;
-  grid-row-gap: 2rem;
-  grid-column-gap: 2rem;
-
-  grid-template-areas:
-    "banner banner banner"
-    "nav description technologies";
-`;
-
-const Banner = styled(motion.div)`
-  width: 100%;
-
-  grid-area: banner;
-  position: relative;
-  overflow: hidden;
-`;
-
-const BannerTitle = styled.h1`
-  color: #fefefe;
-  position: absolute;
-
-  font-size: 7.5em;
-  font-weight: 400;
-
-  margin: 0;
-  top: 50%;
-  left: 50%;
-  width: max-content;
-
-  font-family: "IBM Plex Sans", sans-serif;
-  text-transform: uppercase;
-
-  transform: translate(-50%, -50%);
-  z-index: 1;
-
-  overflow: hidden;
-
-  span {
-    display: inline-block;
-  }
-`;
-
-const BannerImage = styled(motion.div)`
-  height: 55rem;
-  overflow: hidden;
-  transform-origin: top;
-`;
-
-const BannerImageInner = styled(motion.img)`
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-`;
-
-const Author = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  p {
-    font-weight: 300;
-    text-transform: uppercase;
-  }
-`;
-
-const Heading = styled(motion.h2)`
-  color: ${(props) => props.theme.colors.light};
-  font-size: 1em;
-  font-weight: 200;
-  text-transform: uppercase;
-`;
-
-const OverflowTextHolder = styled(motion.div)`
-  overflow: hidden;
-  /* text-transform: uppercase; */
-
-  span {
-    font-weight: 300;
-    display: inline-block;
-    color: ${(props) => props.theme.colors.primary};
-  }
-`;
-
-const ProjectNavigation = styled.div`
-  grid-area: navigation;
-  margin-top: auto;
-
-  display: flex;
-  gap: 1rem;
-
-  button {
-    fill: none;
-    stroke: ${(props) => props.theme.colors.light};
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  button:hover {
-    stroke: ${(props) => props.theme.colors.primary};
-  }
-
-  button:disabled {
-    stroke: grey;
-  }
-`;
-
-const Description = styled.div`
-  grid-area: description;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
-
-const Technologies = styled.div`
-  grid-area: technologies;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
+import {
+  Author,
+  Banner,
+  BannerImage,
+  BannerImageInner,
+  BannerTitle,
+  Button,
+  Description,
+  Heading,
+  OverflowTextHolder,
+  ProjectNavigation,
+  ProjectWrapper,
+  Technologies,
+} from "../../styled/Project";
 
 const text = `This is the project inspered by me. I was surfing through the net in
 order to find cool inspiration.`;
@@ -144,6 +27,9 @@ const ProjectPageOverlay = () => {
   const [match, params] = useRoute("/works/:id");
   const projects = useProjectStore((state) => state.projects);
   const [location, navigate] = useLocation();
+
+  const [projectScope, animateProject] = useAnimate();
+  const [imageScope, animateImage] = useAnimate();
 
   if (!match) return;
 
@@ -197,14 +83,84 @@ const ProjectPageOverlay = () => {
     },
   };
 
+  const onClickBackHandler = async () => {
+    await Promise.all([
+      animateProject(
+        "span",
+        {
+          y: "-101%",
+          opacity: 0,
+        },
+        { duration: 1.1, ease: [0.87, 0, 0.13, 1] }
+      ),
+      animateProject(
+        "h2",
+        {
+          y: "-101%",
+          opacity: 0,
+        },
+        { duration: 1.1, ease: [0.87, 0, 0.13, 1] }
+      ),
+      animateProject(
+        "button",
+        {
+          pointerEvents: "none",
+          opacity: 0,
+        },
+        { duration: 1.1, ease: [0.87, 0, 0.13, 1] }
+      ),
+      animateImage(
+        imageScope.current,
+        {
+          y: "101%",
+        },
+        { duration: 1.1, ease: [0.87, 0, 0.13, 1] }
+      ),
+      animateImage(
+        imageScope.current.children,
+        {
+          y: "-101%",
+        },
+        { duration: 1.1, ease: [0.87, 0, 0.13, 1] }
+      ),
+    ]);
+
+    await navigate("/works");
+  };
+
   return (
     <>
-      <Navigation />
       <AnimatePresence mode="wait">
-        <ProjectWrapper key={currentProject.id}>
+        <ProjectWrapper key={currentProject.id} ref={projectScope}>
+          <Button
+            style={{
+              position: "absolute",
+              top: -20,
+              left: -30,
+              zIndex: 15,
+              color: "#fefefe",
+              fontWeight: 200,
+            }}
+            onClick={onClickBackHandler}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            exit={{ opacity: 0, pointerEvents: "none" }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="329pt"
+              viewBox="0 0 350 350"
+              width="329pt"
+              strokeWidth={2}
+            >
+              <path d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0" />
+            </svg>
+          </Button>
           <Banner>
             <BannerTitle>
               <motion.span
+                className="title"
                 initial="initial"
                 animate="animate"
                 exit="exit"
@@ -213,7 +169,9 @@ const ProjectPageOverlay = () => {
                 {currentProject.title}
               </motion.span>
             </BannerTitle>
+
             <BannerImage
+              ref={imageScope}
               initial="initial"
               animate="animate"
               exit="exit"
@@ -252,7 +210,7 @@ const ProjectPageOverlay = () => {
             </OverflowTextHolder>
 
             <ProjectNavigation>
-              <motion.button
+              <Button
                 onClick={async () => {
                   await navigate("/works/" + prevProject.id);
                 }}
@@ -267,10 +225,9 @@ const ProjectPageOverlay = () => {
                     d="m0 4.5 5-3m-5 3 5 3m45-3h-77"
                   ></path>
                 </svg>
-              </motion.button>
-              <motion.button
+              </Button>
+              <Button
                 onClick={async () => {
-                  // await setButtonIsEnabled(false);
                   await navigate("/works/" + nextProject.id);
                 }}
                 initial={{ opacity: 0.2 }}
@@ -289,7 +246,7 @@ const ProjectPageOverlay = () => {
                     d="m0 4.5 5-3m-5 3 5 3m45-3h-77"
                   ></path>
                 </svg>
-              </motion.button>
+              </Button>
             </ProjectNavigation>
           </Author>
 

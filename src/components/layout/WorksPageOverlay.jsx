@@ -2,9 +2,9 @@ import { useLocation } from "wouter";
 import { useProjectStore } from "../../store/projectStore";
 import { useEffect } from "react";
 import { useUIStore } from "../../store/UIStore";
-import { AnimatePresence, motion, useAnimate } from "framer-motion";
+import { motion, useAnimate } from "framer-motion";
 import { styled } from "styled-components";
-import Navigation, { ActiveLink } from "./Navigation";
+import { ActiveLink } from "./Navigation";
 import {
   NavBar,
   NavItem,
@@ -34,7 +34,7 @@ const OverlayBottomHalf = styled.div`
   transform-origin: bottom;
 `;
 
-const WorksPageOverlay = ({ path }) => {
+const WorksPageOverlay = () => {
   const activeID = useProjectStore((state) => state.activeID);
   const setActiveID = useProjectStore((state) => state.setActiveID);
   const isLoaded = useUIStore((state) => state.isLoaded);

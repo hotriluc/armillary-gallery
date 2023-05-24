@@ -38,6 +38,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Inter', sans-serif;
   } */
 
+  button {
+    font-family: 'Inter', sans-serif;
+  }
+
   h1 {
     font-size: 2em;
   }
