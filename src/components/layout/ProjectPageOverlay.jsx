@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { SplitText } from "@cyriacbr/react-split-text";
 
 const ProjectWrapper = styled(motion.div)`
-  padding: 4rem;
+  padding: 8rem 4rem;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -59,7 +59,6 @@ const BannerTitle = styled.h1`
 
 const BannerImage = styled(motion.div)`
   height: 55rem;
-  margin-top: 4rem;
   overflow: hidden;
   transform-origin: top;
 `;
@@ -147,9 +146,8 @@ order to find cool inspiration.`;
 const ProjectPageOverlay = () => {
   const [match, params] = useRoute("/works/:id");
   const projects = useProjectStore((state) => state.projects);
-  const [buttonIsEnabled, setButtonIsEnabled] = useState(true);
-
   const [location, navigate] = useLocation();
+
   if (!match) return;
 
   const index = projects.findIndex((el) => el.id === params.id);
@@ -157,35 +155,77 @@ const ProjectPageOverlay = () => {
   const prevProject = projects[mod(index - 1, projects.length)];
   const nextProject = projects[mod(index + 1, projects.length)];
 
+  const textVariants = {
+    initial: {
+      y: "101%",
+      opacity: 0,
+    },
+    animate: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 1.2, ease: [0.87, 0, 0.13, 1] },
+    },
+    exit: {
+      y: "-101%",
+      opacity: 0,
+      transition: { duration: 1.2, ease: [0.87, 0, 0.13, 1] },
+    },
+  };
+
+  const imageVariants = {
+    initial: {
+      y: "-101%",
+    },
+    animate: {
+      y: 0,
+      transition: { duration: 1.2, ease: [0.87, 0, 0.13, 1] },
+    },
+    exit: {
+      y: "101%",
+      transition: { duration: 1.2, ease: [0.87, 0, 0.13, 1] },
+    },
+  };
+
+  const imageInnerVariants = {
+    initial: {
+      y: "101%",
+    },
+    animate: {
+      y: 0,
+      transition: { duration: 1.2, ease: [0.87, 0, 0.13, 1] },
+    },
+    exit: {
+      y: "-101%",
+      transition: { duration: 1.2, ease: [0.87, 0, 0.13, 1] },
+    },
+  };
+
   return (
-    <AnimatePresence
-      mode="wait"
-      onExitComplete={() => setButtonIsEnabled(true)}
-    >
+    <AnimatePresence mode="wait">
       <ProjectWrapper key={currentProject.id}>
         <Banner>
           <BannerTitle>
             <motion.span
-              initial={{ y: "101%", opacity: 0 }}
-              animate={{ y: "0", opacity: 1 }}
-              exit={{ y: "-101%", opacity: 1 }}
-              transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={textVariants}
             >
               {currentProject.title}
             </motion.span>
           </BannerTitle>
           <BannerImage
-            initial={{ y: "-101%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "101%" }}
-            transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={imageVariants}
           >
             <BannerImageInner
               src="/default.png"
-              initial={{ y: "101%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "-101%" }}
-              transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={imageInnerVariants}
             />
           </BannerImage>
         </Banner>
@@ -193,20 +233,20 @@ const ProjectPageOverlay = () => {
         <Author>
           <OverflowTextHolder>
             <Heading
-              initial={{ y: "101%", opacity: 0 }}
-              animate={{ y: "0", opacity: 1 }}
-              exit={{ y: "-101%", opacity: 1 }}
-              transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={textVariants}
             >
               Ho Tri Luc
             </Heading>
           </OverflowTextHolder>
           <OverflowTextHolder>
             <motion.span
-              initial={{ y: "101%", opacity: 0 }}
-              animate={{ y: "0", opacity: 1 }}
-              exit={{ y: "-101%", opacity: 1 }}
-              transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={textVariants}
             >
               APRIL 23
             </motion.span>
@@ -273,10 +313,10 @@ const ProjectPageOverlay = () => {
             WordWrapper={({ id, children }) => (
               <motion.span
                 style={{ whiteSpace: "pre" }}
-                initial={{ y: "101%", opacity: 0 }}
-                animate={{ y: "0", opacity: 1 }}
-                exit={{ y: "-101%", opacity: 1 }}
-                transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={textVariants}
               >
                 {children}
               </motion.span>
@@ -289,10 +329,10 @@ const ProjectPageOverlay = () => {
         <Technologies>
           <OverflowTextHolder>
             <Heading
-              initial={{ y: "101%", opacity: 0 }}
-              animate={{ y: "0", opacity: 1 }}
-              exit={{ y: "-101%", opacity: 1 }}
-              transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={textVariants}
             >
               Technologies:
             </Heading>
@@ -303,10 +343,10 @@ const ProjectPageOverlay = () => {
             )}
             WordWrapper={({ children }) => (
               <motion.span
-                initial={{ y: "101%", opacity: 0 }}
-                animate={{ y: "0", opacity: 1 }}
-                exit={{ y: "-101%", opacity: 1 }}
-                transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={textVariants}
               >
                 {children}
               </motion.span>

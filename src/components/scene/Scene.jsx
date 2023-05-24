@@ -1,8 +1,9 @@
 import { SoftShadows } from "@react-three/drei";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { useControls } from "leva";
-import { Route, Switch } from "wouter";
+import { Route, Switch, useLocation } from "wouter";
 import WorksPageScene from "./WorksPageScene";
+import { AnimatePresence } from "framer-motion";
 
 const Scene = () => {
   const { size, focus, samples } = useControls("soft shadows", {
@@ -10,6 +11,8 @@ const Scene = () => {
     focus: { min: 1, max: 20, value: 20, step: 1 },
     samples: { min: 1, max: 100, value: 8, step: 1 },
   });
+
+  const [location] = useLocation();
 
   return (
     <>
@@ -23,13 +26,12 @@ const Scene = () => {
         <Route path="/works">
           <WorksPageScene />
         </Route>
-        <Route path="/about">
+        {/* <Route path="/about">
           <mesh>
             <planeGeometry />
             <meshBasicMaterial color={"blue"} />
           </mesh>
-        </Route>
-        <Route />
+        </Route> */}
       </Switch>
     </>
   );

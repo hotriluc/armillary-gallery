@@ -3,8 +3,30 @@ import { useProjectStore } from "../../store/projectStore";
 import { useEffect } from "react";
 import { useUIStore } from "../../store/UIStore";
 import { motion } from "framer-motion";
+import { styled } from "styled-components";
 
-const WorksPageOverlay = () => {
+const Overlay = styled(motion.div)`
+  position: absolute;
+  width: 99%;
+  color: white;
+  z-index: 15;
+`;
+
+const OverlayTopHalf = styled(motion.div)`
+  background: ${(props) => props.theme.colors.secondary};
+  width: 100%;
+  height: 50vh;
+  transform-origin: top;
+`;
+
+const OverlayBottomHalf = styled(motion.div)`
+  background: ${(props) => props.theme.colors.secondary};
+  width: 100%;
+  height: 50vh;
+  transform-origin: bottom;
+`;
+
+const WorksPageOverlay = ({ path }) => {
   const activeID = useProjectStore((state) => state.activeID);
   const setActiveID = useProjectStore((state) => state.setActiveID);
   const isLoaded = useUIStore((state) => state.isLoaded);
@@ -129,14 +151,8 @@ const WorksPageOverlay = () => {
     // </div>
 
     // Animate only whe all files have been loaded
-    <motion.div
-      style={{
-        position: "absolute",
-        width: "99%",
-        color: "white",
-        zIndex: 15,
-        fontSize: "2rem",
-      }}
+
+    <Overlay
       initial="initial"
       animate={isLoaded ? "animate" : ""}
       variants={parentVariants}
@@ -144,25 +160,9 @@ const WorksPageOverlay = () => {
         if (activeID) navigate("/works/" + activeID);
       }}
     >
-      <motion.div
-        style={{
-          background: "#101010",
-          width: "100%",
-          height: "50vh",
-          transformOrigin: "top",
-        }}
-        variants={childVariants}
-      />
-      <motion.div
-        style={{
-          background: "#101010",
-          width: "100%",
-          height: "50vh",
-          transformOrigin: "bottom",
-        }}
-        variants={childVariants}
-      />
-    </motion.div>
+      <OverlayTopHalf variants={childVariants} />
+      <OverlayBottomHalf variants={childVariants} />
+    </Overlay>
   );
 };
 

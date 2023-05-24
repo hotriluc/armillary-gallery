@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import Wrapper from "./components/layout/Wrapper";
-import { Redirect, Route, Switch, useLocation } from "wouter";
+import { Redirect, Route, Switch, useLocation, useRoute } from "wouter";
 
 import Scene from "./components/scene/Scene";
 import { Loader, useProgress } from "@react-three/drei";
@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { useUIStore } from "./store/UIStore";
 import { Perf } from "r3f-perf";
 import { AnimatePresence } from "framer-motion";
+import { useProjectStore } from "./store/projectStore";
 
 const App = () => {
   const { active } = useProgress();
@@ -30,19 +31,28 @@ const App = () => {
   }, [active, setIsLoaded]);
 
   const [location] = useLocation();
+  const [isProjectRoute] = useRoute("/works/:id");
 
   return (
     <Wrapper>
       <Navigation />
-      <Switch>
-        <Route path="/">
-          <Redirect to={"/works"} />
-        </Route>
-        <Route path="/works" component={WorksPageOverlay} />
-        <Route path="/about" component={AboutPageOverlay} />
-        <Route path="/works/:id" component={ProjectPageOverlay} />
-        <Route component={NotFoundPageOverlay} />
-      </Switch>
+
+      <AnimatePresence>
+        <Switch
+          key={!isProjectRoute ? location : "/works/"}
+          location={location}
+        >
+          <Route path="/">
+            <Redirect to={"/works"} />
+          </Route>
+          <Route path="/works">
+            <WorksPageOverlay path="/works" />
+          </Route>
+          <Route path="/about" component={AboutPageOverlay} />
+          <Route path="/works/:id" component={ProjectPageOverlay} />
+          <Route component={NotFoundPageOverlay} />
+        </Switch>
+      </AnimatePresence>
 
       <Canvas
         shadows

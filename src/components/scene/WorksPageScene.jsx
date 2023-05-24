@@ -13,17 +13,15 @@ const WorksPageScene = () => {
   // const { width } = useThree((state) => state.viewport);
 
   return (
-    <>
-      <ScrollControls pages={projectsSize / 3}>
-        <Minimap />
-        <Float>
-          <Suspense fallback={null}>
-            <Model />
-          </Suspense>
-        </Float>
-        <Gallery />
-      </ScrollControls>
-    </>
+    <ScrollControls pages={projectsSize / 3}>
+      <Minimap />
+      <Float>
+        <Suspense fallback={null}>
+          <Model />
+        </Suspense>
+      </Float>
+      <Gallery />
+    </ScrollControls>
   );
 };
 
