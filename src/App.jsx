@@ -16,6 +16,7 @@ import { useUIStore } from "./store/UIStore";
 import { Perf } from "r3f-perf";
 import { AnimatePresence } from "framer-motion";
 import { useProjectStore } from "./store/projectStore";
+import { Leva } from "leva";
 
 const App = () => {
   const { active } = useProgress();
@@ -35,8 +36,7 @@ const App = () => {
 
   return (
     <Wrapper>
-      <Navigation />
-
+      <Leva hidden />
       <AnimatePresence>
         <Switch
           key={!isProjectRoute ? location : "/works/"}
@@ -60,7 +60,7 @@ const App = () => {
         camera={{ position: [0, 1.5, 5] }}
         // orthographic camera={{ position: [0, 0, 2]}}
       >
-        <Perf />
+        {/* <Perf /> */}
         <Scene />
       </Canvas>
       <Loader />

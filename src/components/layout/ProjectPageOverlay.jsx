@@ -3,8 +3,9 @@ import { useProjectStore } from "../../store/projectStore";
 import { styled } from "styled-components";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
 import { SplitText } from "@cyriacbr/react-split-text";
+import { mod } from "../../helpers/math";
+import Navigation from "./Navigation";
 
 const ProjectWrapper = styled(motion.div)`
   padding: 8rem 4rem;
@@ -136,10 +137,6 @@ const Technologies = styled.div`
   gap: 0.5rem;
 `;
 
-function mod(n, m) {
-  return ((n % m) + m) % m;
-}
-
 const text = `This is the project inspered by me. I was surfing through the net in
 order to find cool inspiration.`;
 
@@ -163,12 +160,12 @@ const ProjectPageOverlay = () => {
     animate: {
       y: 0,
       opacity: 1,
-      transition: { duration: 1.2, ease: [0.87, 0, 0.13, 1] },
+      transition: { duration: 1.1, ease: [0.87, 0, 0.13, 1] },
     },
     exit: {
       y: "-101%",
       opacity: 0,
-      transition: { duration: 1.2, ease: [0.87, 0, 0.13, 1] },
+      transition: { duration: 1.1, ease: [0.87, 0, 0.13, 1] },
     },
   };
 
@@ -178,11 +175,11 @@ const ProjectPageOverlay = () => {
     },
     animate: {
       y: 0,
-      transition: { duration: 1.2, ease: [0.87, 0, 0.13, 1] },
+      transition: { duration: 1.1, ease: [0.87, 0, 0.13, 1] },
     },
     exit: {
       y: "101%",
-      transition: { duration: 1.2, ease: [0.87, 0, 0.13, 1] },
+      transition: { duration: 1.1, ease: [0.87, 0, 0.13, 1] },
     },
   };
 
@@ -192,171 +189,174 @@ const ProjectPageOverlay = () => {
     },
     animate: {
       y: 0,
-      transition: { duration: 1.2, ease: [0.87, 0, 0.13, 1] },
+      transition: { duration: 1.1, ease: [0.87, 0, 0.13, 1] },
     },
     exit: {
       y: "-101%",
-      transition: { duration: 1.2, ease: [0.87, 0, 0.13, 1] },
+      transition: { duration: 1.1, ease: [0.87, 0, 0.13, 1] },
     },
   };
 
   return (
-    <AnimatePresence mode="wait">
-      <ProjectWrapper key={currentProject.id}>
-        <Banner>
-          <BannerTitle>
-            <motion.span
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={textVariants}
-            >
-              {currentProject.title}
-            </motion.span>
-          </BannerTitle>
-          <BannerImage
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={imageVariants}
-          >
-            <BannerImageInner
-              src="/default.png"
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={imageInnerVariants}
-            />
-          </BannerImage>
-        </Banner>
-
-        <Author>
-          <OverflowTextHolder>
-            <Heading
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={textVariants}
-            >
-              Ho Tri Luc
-            </Heading>
-          </OverflowTextHolder>
-          <OverflowTextHolder>
-            <motion.span
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={textVariants}
-            >
-              APRIL 23
-            </motion.span>
-          </OverflowTextHolder>
-
-          <ProjectNavigation>
-            <motion.button
-              onClick={async () => {
-                await navigate("/works/" + prevProject.id);
-              }}
-              initial={{ opacity: 0.2 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              exit={{ opacity: 0.2, pointerEvents: "none" }}
-            >
-              <svg width="100px" height="18px" viewBox="0 0 50 9">
-                <path
-                  vectorEffect="non-scaling-stroke"
-                  d="m0 4.5 5-3m-5 3 5 3m45-3h-77"
-                ></path>
-              </svg>
-            </motion.button>
-            <motion.button
-              onClick={async () => {
-                // await setButtonIsEnabled(false);
-                await navigate("/works/" + nextProject.id);
-              }}
-              initial={{ opacity: 0.2 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              exit={{ opacity: 0.2, pointerEvents: "none" }}
-            >
-              <svg
-                width="100px"
-                height="18px"
-                viewBox="0 0 50 9"
-                transform="scale(-1,1)"
-              >
-                <path
-                  vectorEffect="non-scaling-stroke"
-                  d="m0 4.5 5-3m-5 3 5 3m45-3h-77"
-                ></path>
-              </svg>
-            </motion.button>
-          </ProjectNavigation>
-        </Author>
-
-        <Description>
-          <OverflowTextHolder>
-            <Heading
-              initial={{ y: "101%", opacity: 0 }}
-              animate={{ y: "0", opacity: 1 }}
-              exit={{ y: "-101%", opacity: 1 }}
-              transition={{ duration: 1.2, ease: [0.87, 0, 0.13, 1] }}
-            >
-              Description:
-            </Heading>
-          </OverflowTextHolder>
-
-          <SplitText
-            LineWrapper={({ id, children }) => (
-              <OverflowTextHolder>{children}</OverflowTextHolder>
-            )}
-            WordWrapper={({ id, children }) => (
-              <motion.span
-                style={{ whiteSpace: "pre" }}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                variants={textVariants}
-              >
-                {children}
-              </motion.span>
-            )}
-          >
-            {text.toUpperCase()}
-          </SplitText>
-        </Description>
-
-        <Technologies>
-          <OverflowTextHolder>
-            <Heading
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={textVariants}
-            >
-              Technologies:
-            </Heading>
-          </OverflowTextHolder>
-          <SplitText
-            LineWrapper={({ children }) => (
-              <OverflowTextHolder>{children}</OverflowTextHolder>
-            )}
-            WordWrapper={({ children }) => (
+    <>
+      <Navigation />
+      <AnimatePresence mode="wait">
+        <ProjectWrapper key={currentProject.id}>
+          <Banner>
+            <BannerTitle>
               <motion.span
                 initial="initial"
                 animate="animate"
                 exit="exit"
                 variants={textVariants}
               >
-                {children}
+                {currentProject.title}
               </motion.span>
-            )}
-          >
-            {text.toUpperCase()}
-          </SplitText>
-        </Technologies>
-      </ProjectWrapper>
-    </AnimatePresence>
+            </BannerTitle>
+            <BannerImage
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={imageVariants}
+            >
+              <BannerImageInner
+                src="/default.png"
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={imageInnerVariants}
+              />
+            </BannerImage>
+          </Banner>
+
+          <Author>
+            <OverflowTextHolder>
+              <Heading
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={textVariants}
+              >
+                Ho Tri Luc
+              </Heading>
+            </OverflowTextHolder>
+            <OverflowTextHolder>
+              <motion.span
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={textVariants}
+              >
+                APRIL 23
+              </motion.span>
+            </OverflowTextHolder>
+
+            <ProjectNavigation>
+              <motion.button
+                onClick={async () => {
+                  await navigate("/works/" + prevProject.id);
+                }}
+                initial={{ opacity: 0.2 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8 }}
+                exit={{ opacity: 0.2, pointerEvents: "none" }}
+              >
+                <svg width="100px" height="18px" viewBox="0 0 50 9">
+                  <path
+                    vectorEffect="non-scaling-stroke"
+                    d="m0 4.5 5-3m-5 3 5 3m45-3h-77"
+                  ></path>
+                </svg>
+              </motion.button>
+              <motion.button
+                onClick={async () => {
+                  // await setButtonIsEnabled(false);
+                  await navigate("/works/" + nextProject.id);
+                }}
+                initial={{ opacity: 0.2 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8 }}
+                exit={{ opacity: 0.2, pointerEvents: "none" }}
+              >
+                <svg
+                  width="100px"
+                  height="18px"
+                  viewBox="0 0 50 9"
+                  transform="scale(-1,1)"
+                >
+                  <path
+                    vectorEffect="non-scaling-stroke"
+                    d="m0 4.5 5-3m-5 3 5 3m45-3h-77"
+                  ></path>
+                </svg>
+              </motion.button>
+            </ProjectNavigation>
+          </Author>
+
+          <Description>
+            <OverflowTextHolder>
+              <Heading
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={textVariants}
+              >
+                Description:
+              </Heading>
+            </OverflowTextHolder>
+
+            <SplitText
+              LineWrapper={({ children }) => (
+                <OverflowTextHolder>{children}</OverflowTextHolder>
+              )}
+              WordWrapper={({ children }) => (
+                <motion.span
+                  style={{ whiteSpace: "pre" }}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  variants={textVariants}
+                >
+                  {children}
+                </motion.span>
+              )}
+            >
+              {text.toUpperCase()}
+            </SplitText>
+          </Description>
+
+          <Technologies>
+            <OverflowTextHolder>
+              <Heading
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={textVariants}
+              >
+                Technologies:
+              </Heading>
+            </OverflowTextHolder>
+            <SplitText
+              LineWrapper={({ children }) => (
+                <OverflowTextHolder>{children}</OverflowTextHolder>
+              )}
+              WordWrapper={({ children }) => (
+                <motion.span
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  variants={textVariants}
+                >
+                  {children}
+                </motion.span>
+              )}
+            >
+              {text.toUpperCase()}
+            </SplitText>
+          </Technologies>
+        </ProjectWrapper>
+      </AnimatePresence>
+    </>
   );
 };
 

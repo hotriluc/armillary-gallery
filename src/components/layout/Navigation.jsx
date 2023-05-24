@@ -1,66 +1,16 @@
-import { styled } from "styled-components";
 import { Link, useRoute } from "wouter";
 
-const NavBar = styled.nav`
-  position: absolute;
-  width: 100%;
-  z-index: 10;
+import { motion, useAnimate } from "framer-motion";
+import {
+  NavBar,
+  NavItem,
+  NavList,
+  NavLogo,
+  NavSocials,
+} from "../../styled/Navigation";
+import { useEffect } from "react";
 
-  padding: 4rem 4rem;
-  color: white;
-  font-weight: 200;
-
-  display: flex;
-  gap: 4rem;
-`;
-
-const NavList = styled.ul`
-  flex: 1;
-  list-style: none;
-
-  display: flex;
-  justify-content: center;
-  gap: 4rem;
-`;
-
-const NavItem = styled.li`
-  a {
-    color: ${(props) => props.theme.colors.light};
-    transition: all 0.3s;
-    text-decoration: none;
-    text-transform: uppercase;
-  }
-  a:hover {
-    color: ${(props) => props.theme.colors.primary};
-  }
-
-  .active {
-    color: ${(props) => props.theme.colors.primary};
-    border-bottom: 1px solid;
-  }
-`;
-
-const NavLogo = styled.div`
-  flex: 1;
-`;
-
-const NavSocials = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-
-  a {
-    color: ${(props) => props.theme.colors.light};
-    transition: all 0.3s;
-    text-decoration: none;
-  }
-
-  a:hover {
-    color: ${(props) => props.theme.colors.primary};
-  }
-`;
-
-const ActiveLink = (props) => {
+export const ActiveLink = (props) => {
   const [isActive] = useRoute(props.href);
 
   return (
@@ -71,8 +21,37 @@ const ActiveLink = (props) => {
 };
 
 const Navigation = () => {
+  const [navigationScope, animateNavigation] = useAnimate();
+
+  // Animations (useAnimate solution)
+  useEffect(() => {
+    const enterAnimation = async () => {
+      await animateNavigation(
+        navigationScope.current,
+        {
+          y: 0,
+          opacity: 1,
+        },
+        { duration: 0.6 }
+      );
+    };
+
+    const leaveAnimation = async () => {
+      await animateNavigation(
+        navigationScope.current,
+        {
+          y: -10,
+          opacity: 0,
+        },
+        { duration: 0.25 }
+      );
+    };
+
+    enterAnimation();
+  }, [animateNavigation, navigationScope]);
+
   return (
-    <NavBar>
+    <NavBar ref={navigationScope} initial={{ y: 20, opacity: 0 }}>
       <NavLogo>logo</NavLogo>
 
       <NavList>
@@ -84,7 +63,7 @@ const Navigation = () => {
         </NavItem>
       </NavList>
       <NavSocials>
-        <a href=""> hotriluc97@gmail.com</a>
+        <motion.a href="">hotriluc97@gmail.com</motion.a>
       </NavSocials>
     </NavBar>
   );
