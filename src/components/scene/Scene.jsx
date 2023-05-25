@@ -1,7 +1,7 @@
 import { SoftShadows } from "@react-three/drei";
-import { Bloom, EffectComposer, N8AO } from "@react-three/postprocessing";
+import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { useControls } from "leva";
-import { Route, Switch, useLocation } from "wouter";
+import { Route, Switch } from "wouter";
 import WorksPageScene from "./WorksPageScene";
 
 const Scene = () => {

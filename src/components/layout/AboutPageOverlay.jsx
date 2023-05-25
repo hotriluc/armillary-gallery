@@ -1,8 +1,13 @@
+import Navigation from "../navigation/Navigation";
+
 const AboutPageOverlay = () => {
   return (
-    <div style={{ position: "absolute", color: "white", fontSize: "2rem" }}>
-      AboutPageOverlay
-    </div>
+    <>
+      <Navigation />
+      <div style={{ position: "absolute", color: "white", fontSize: "2rem" }}>
+        AboutPageOverlay
+      </div>
+    </>
   );
 };
 

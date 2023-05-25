@@ -39,6 +39,7 @@ const ProjectPageOverlay = () => {
   const prevProject = projects[mod(index - 1, projects.length)];
   const nextProject = projects[mod(index + 1, projects.length)];
 
+  // ANIMATIONS
   const textVariants = {
     initial: {
       y: "101%",

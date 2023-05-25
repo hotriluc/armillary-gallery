@@ -1,21 +1,15 @@
 import { useLocation } from "wouter";
 import { useProjectStore } from "../../store/projectStore";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useUIStore } from "../../store/UIStore";
-import { motion, useAnimate } from "framer-motion";
-import {
-  NavBar,
-  NavItem,
-  NavList,
-  NavLogo,
-  NavSocials,
-} from "../../styled/Navigation";
-import ActiveLink from "../navigation/ActiveLink";
+import { useAnimate } from "framer-motion";
+
 import {
   Overlay,
   OverlayBottomHalf,
   OverlayTopHalf,
 } from "../../styled/Overlay";
+import Navigation from "../navigation/Navigation";
 
 const WorksPageOverlay = () => {
   const activeID = useProjectStore((state) => state.activeID);
@@ -24,7 +18,6 @@ const WorksPageOverlay = () => {
 
   const [location, navigate] = useLocation();
   const [overlayScope, animateOverlay] = useAnimate();
-  const [navigationScope, animateNavigation] = useAnimate();
 
   // Cleanup
   useEffect(() => {
@@ -35,6 +28,15 @@ const WorksPageOverlay = () => {
   }, [activeID, setActiveID]);
 
   // Animations (useAnimate solution)
+  const galleryLeaveAnimation = useCallback(async () => {
+    await animateOverlay(overlayScope.current, { display: "block" });
+    await animateOverlay(
+      overlayScope.current.children,
+      { scaleY: 1 },
+      { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
+    );
+  }, [animateOverlay, overlayScope]);
+
   useEffect(() => {
     const enterAnimation = async () => {
       await animateOverlay(
@@ -42,38 +44,16 @@ const WorksPageOverlay = () => {
         { scaleY: 0 },
         { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
       );
-      await animateNavigation(
-        navigationScope.current,
-        {
-          y: 0,
-          opacity: 1,
-        },
-        { duration: 0.6 }
-      );
-
       await animateOverlay(overlayScope.current, { display: "none" });
     };
 
-    const leaveAnimation = async () => {
-      await animateNavigation(
-        navigationScope.current,
-        {
-          y: -10,
-          opacity: 0,
-        },
-        { duration: 0.25 }
-      );
-      await animateOverlay(overlayScope.current, { display: "block" });
-      await animateOverlay(
-        overlayScope.current.children,
-        { scaleY: 1 },
-        { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
-      );
+    const leaveToProject = async () => {
+      await galleryLeaveAnimation();
       await navigate("/works/" + activeID);
     };
 
     if (activeID) {
-      leaveAnimation();
+      leaveToProject();
     } else if (isLoaded) {
       enterAnimation();
     }
@@ -83,13 +63,13 @@ const WorksPageOverlay = () => {
     navigate,
     animateOverlay,
     overlayScope,
-    animateNavigation,
-    navigationScope,
+    galleryLeaveAnimation,
   ]);
 
   return (
     <>
-      <NavBar ref={navigationScope} initial={{ y: 10, opacity: 0 }}>
+      <Navigation leaveAnimation={galleryLeaveAnimation} />
+      {/* <NavBar ref={navigationScope} initial={{ y: 10, opacity: 0 }}>
         <NavLogo>logo</NavLogo>
 
         <NavList>
@@ -103,7 +83,7 @@ const WorksPageOverlay = () => {
         <NavSocials>
           <motion.a href="">hotriluc97@gmail.com</motion.a>
         </NavSocials>
-      </NavBar>
+      </NavBar> */}
 
       <Overlay ref={overlayScope}>
         <OverlayTopHalf />

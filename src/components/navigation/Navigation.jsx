@@ -16,54 +16,84 @@ const navigationConfig = [
   { title: "About", href: "/about" },
 ];
 
-const Navigation = (props) => {
+const Navigation = ({ delay, leaveAnimation }) => {
   const [navigationScope, animateNavigation] = useAnimate();
   const [destination, setDestination] = useState(null);
   const [location, navigate] = useLocation();
 
-  console.log(destination);
-
   const onClickLogoHandler = async () => {
-    // We play leave animation of other components and after navigate
-    await Promise.all([
-      props.leaveAnimation(),
-      animateNavigation(
-        navigationScope.current,
-        { y: 20, opacity: 0 },
-        { duration: 0.6 }
-      ),
-    ]);
+    if (location === "/works") return;
 
-    await navigate("/home");
+    // We play leave animation of other components and after navigate
+    try {
+      if (leaveAnimation) {
+        await Promise.all([
+          leaveAnimation(),
+          animateNavigation(
+            navigationScope.current,
+            { y: "-25%", opacity: 0 },
+            { duration: 0.6 }
+          ),
+        ]);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+    await navigate("/works");
   };
 
   useEffect(() => {
-    async function leave() {
-      await Promise.all([
-        props.leaveAnimation(),
-        animateNavigation(
-          navigationScope.current,
-          { y: -20, opacity: 0 },
-          { duration: 0.6 }
-        ),
-      ]);
+    const leave = async () => {
+      // Play animation if exist
+      try {
+        if (leaveAnimation) {
+          await Promise.all([
+            leaveAnimation(),
+            animateNavigation(
+              navigationScope.current,
+              { y: "-25%", opacity: 0 },
+              { duration: 0.6, ease: [0.57, 0, 0.13, 1] }
+            ),
+          ]);
+        }
+      } catch (err) {
+        console.log(err);
+      }
 
       await navigate(destination);
-    }
+    };
 
     if (destination) leave();
-  }, [destination]);
+  }, [
+    destination,
+    location,
+    navigate,
+    navigationScope,
+    animateNavigation,
+    leaveAnimation,
+  ]);
 
   const onClickActiveLinkFn = (href) => {
+    // Redirection won't be occurred if we click the link that we are already on
+    if (location === href) {
+      return;
+    }
+
+    // Otherwise set new destination
     setDestination(href);
   };
 
   return (
     <NavBar
       ref={navigationScope}
-      initial={{ y: 20, opacity: 0 }}
+      initial={{ y: "-25%", opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
+      transition={{
+        duration: 0.75,
+        ease: [0.57, 0, 0.13, 1],
+        delay: delay || 0,
+      }}
     >
       <NavLogo onClick={onClickLogoHandler}>logo</NavLogo>
 
