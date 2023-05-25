@@ -3,8 +3,6 @@ import { useProjectStore } from "../../store/projectStore";
 import { useEffect } from "react";
 import { useUIStore } from "../../store/UIStore";
 import { motion, useAnimate } from "framer-motion";
-import { styled } from "styled-components";
-import { ActiveLink } from "./Navigation";
 import {
   NavBar,
   NavItem,
@@ -12,27 +10,12 @@ import {
   NavLogo,
   NavSocials,
 } from "../../styled/Navigation";
-
-const Overlay = styled.div`
-  position: absolute;
-  width: 99%;
-  color: white;
-  z-index: 15;
-`;
-
-const OverlayTopHalf = styled.div`
-  background: ${(props) => props.theme.colors.secondary};
-  width: 100%;
-  height: 50vh;
-  transform-origin: top;
-`;
-
-const OverlayBottomHalf = styled.div`
-  background: ${(props) => props.theme.colors.secondary};
-  width: 100%;
-  height: 50vh;
-  transform-origin: bottom;
-`;
+import ActiveLink from "../navigation/ActiveLink";
+import {
+  Overlay,
+  OverlayBottomHalf,
+  OverlayTopHalf,
+} from "../../styled/Overlay";
 
 const WorksPageOverlay = () => {
   const activeID = useProjectStore((state) => state.activeID);
@@ -46,7 +29,6 @@ const WorksPageOverlay = () => {
   // Cleanup
   useEffect(() => {
     if (!activeID) return;
-
     return () => {
       setActiveID(null);
     };
@@ -128,21 +110,6 @@ const WorksPageOverlay = () => {
         <OverlayBottomHalf />
       </Overlay>
     </>
-
-    // Animate only whe all files have been loaded
-    // <>
-    //   <Overlay
-    //     initial="initial"
-    //     animate={isLoaded ? "animate" : ""}
-    //     variants={parentVariants}
-    //     onAnimationComplete={() => {
-    //       if (activeID) navigate("/works/" + activeID);
-    //     }}
-    //   >
-    //     <OverlayTopHalf variants={childVariants} />
-    //     <OverlayBottomHalf variants={childVariants} />
-    //   </Overlay>
-    // </>
   );
 };
 

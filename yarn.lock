@@ -1602,6 +1602,17 @@
     screen-space-reflections "2.5.0"
     three-stdlib "^2.21.10"
 
+"@react-three/postprocessing@^2.13.0":
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/@react-three/postprocessing/-/postprocessing-2.13.0.tgz#2e9c071c3b714a43e100b726e374b9cec1d7138a"
+  integrity sha512-VSwCEc8Lk4WsD/VVgmiYC1rsfceCaY7wJt9d1IOl5/6YVMCVrKm44rQuFYn/Jt9zxcdq60Cp4QsKkRryR0IT0w==
+  dependencies:
+    maath "^0.5.3"
+    n8ao "^1.3.1"
+    postprocessing "^6.31.0"
+    screen-space-reflections "2.5.0"
+    three-stdlib "^2.21.10"
+
 "@rollup/pluginutils@^5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@rollup/pluginutils/-/pluginutils-5.0.2.tgz#012b8f53c71e4f6f9cb317e311df1404f56e7a33"
@@ -3237,6 +3248,11 @@ ms@2.1.2:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
+n8ao@^1.3.1:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/n8ao/-/n8ao-1.3.2.tgz#94c023eb8374081dd29f4727ec694e627f8c396e"
+  integrity sha512-T0HKKnNx5Jg84IONosyBHE9lzbsduBtsSB8RtzLa2F65/wWvna+ieJhG8hMidTrEqYXgLCdul9D9wBXgaRSXUg==
+
 nanoid@^3.3.6:
   version "3.3.6"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.6.tgz#443380c856d6e9f9824267d960b4236ad583ea4c"
@@ -3452,7 +3468,7 @@ postcss@^8.4.23:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-postprocessing@^6.30.2:
+postprocessing@^6.30.2, postprocessing@^6.31.0:
   version "6.31.0"
   resolved "https://registry.yarnpkg.com/postprocessing/-/postprocessing-6.31.0.tgz#0d3d0157bfe963d2a66a73ee16cfa81a99138419"
   integrity sha512-h1g2KDVrTS6QB4AHP55opp8FYzq66jJHh4JIFCptaj283RUX1y/tPkv8FBB2oK4WYrdPgqvElnKrXZwgiLWeHQ==

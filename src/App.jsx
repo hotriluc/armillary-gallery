@@ -9,7 +9,7 @@ import WorksPageOverlay from "./components/layout/WorksPageOverlay";
 import AboutPageOverlay from "./components/layout/AboutPageOverlay";
 import NotFoundPageOverlay from "./components/layout/NotFoundPageOverlay";
 import ProjectPageOverlay from "./components/layout/ProjectPageOverlay";
-import Navigation from "./components/layout/Navigation";
+import Navigation from "./components/navigation/Navigation";
 
 import { useEffect } from "react";
 import { useUIStore } from "./store/UIStore";
