@@ -6,4 +6,7 @@ export const useUIStore = create((set) => ({
 
   isLoaded: false,
   setIsLoaded: (value) => set(() => ({ isLoaded: value })),
+
+  destination: null,
+  setDestination: (value) => set(() => ({ destination: value })),
 }));

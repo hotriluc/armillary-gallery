@@ -8,8 +8,9 @@ import {
   NavLogo,
   NavSocials,
 } from "../../styled/Navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ActiveLink from "./ActiveLink";
+import { useUIStore } from "../../store/UIStore";
 
 const navigationConfig = [
   { title: "Works", href: "/works" },
@@ -17,35 +18,19 @@ const navigationConfig = [
 ];
 
 const Navigation = ({ delay, leaveAnimation }) => {
-  const [navigationScope, animateNavigation] = useAnimate();
-  const [destination, setDestination] = useState(null);
   const [location, navigate] = useLocation();
 
-  const onClickLogoHandler = async () => {
-    if (location === "/works") return;
+  const isLoaded = useUIStore((state) => state.isLoaded);
+  const destination = useUIStore((state) => state.destination);
+  const setDestination = useUIStore((state) => state.setDestination);
 
-    // We play leave animation of other components and after navigate
-    try {
-      if (leaveAnimation) {
-        await Promise.all([
-          leaveAnimation(),
-          animateNavigation(
-            navigationScope.current,
-            { y: "-25%", opacity: 0 },
-            { duration: 0.6 }
-          ),
-        ]);
-      }
-    } catch (err) {
-      console.log(err);
-    }
+  // ANIMATION
+  const [navigationScope, animateNavigation] = useAnimate();
 
-    await navigate("/works");
-  };
-
+  // This will handle leave animation whenever destination is set
   useEffect(() => {
     const leave = async () => {
-      // Play animation if exist
+      // Play leave animation if provided
       try {
         if (leaveAnimation) {
           await Promise.all([
@@ -61,48 +46,39 @@ const Navigation = ({ delay, leaveAnimation }) => {
         console.log(err);
       }
 
-      await navigate(destination);
+      await Promise.all([navigate(destination), setDestination(null)]);
     };
 
+    // if destination is set then leave
     if (destination) leave();
   }, [
     destination,
-    location,
     navigate,
+    setDestination,
     navigationScope,
     animateNavigation,
     leaveAnimation,
   ]);
 
-  const onClickActiveLinkFn = (href) => {
-    // Redirection won't be occurred if we click the link that we are already on
-    if (location === href) {
-      return;
-    }
-
-    // Otherwise set new destination
-    setDestination(href);
-  };
-
   return (
     <NavBar
       ref={navigationScope}
       initial={{ y: "-25%", opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
+      animate={isLoaded ? { y: 0, opacity: 1 } : ""}
       transition={{
         duration: 0.75,
         ease: [0.57, 0, 0.13, 1],
         delay: delay || 0,
       }}
     >
-      <NavLogo onClick={onClickLogoHandler}>logo</NavLogo>
+      <NavLogo>
+        <ActiveLink href={"/works"}> Logo</ActiveLink>
+      </NavLogo>
 
       <NavList>
         {navigationConfig.map((link) => (
           <NavItem key={link.href}>
-            <ActiveLink href={link.href} onClickFn={onClickActiveLinkFn}>
-              {link.title}
-            </ActiveLink>
+            <ActiveLink href={link.href}>{link.title}</ActiveLink>
           </NavItem>
         ))}
       </NavList>

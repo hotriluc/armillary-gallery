@@ -11,8 +11,7 @@ import galleryItemVertexShader from "../../shaders/gallery-item/vertex.glsl";
 import galleryItemFragmentShader from "../../shaders/gallery-item/fragment.glsl";
 
 import Constellation from "./Constellation";
-import { useProjectStore } from "../../store/projectStore";
-import { useLocation } from "wouter";
+import { useUIStore } from "../../store/UIStore";
 
 const GalleryItemMaterial = new shaderMaterial(
   {
@@ -43,8 +42,7 @@ const GalleryItem = ({
   const [hovered, setHovered] = useState(false);
   // const [clicked, setClicked] = useState(false);
 
-  // const activeID = useProjectStore((state) => state.activeID);
-  const setActiveID = useProjectStore((state) => state.setActiveID);
+  const setDestination = useUIStore((state) => state.setDestination);
 
   const imgMap = useLoader(
     THREE.TextureLoader,
@@ -122,7 +120,7 @@ const GalleryItem = ({
 
   const onPointerUpHandler = (e) => {
     e.stopPropagation();
-    setActiveID(projectID);
+    setDestination("/works/" + projectID);
   };
 
   return (

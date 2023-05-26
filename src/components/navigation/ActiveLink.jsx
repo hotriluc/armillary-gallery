@@ -1,11 +1,20 @@
-import { useRoute } from "wouter";
+import { useLocation, useRoute } from "wouter";
+import { useUIStore } from "../../store/UIStore";
 
-const ActiveLink = ({ href, onClickFn, ...props }) => {
+const ActiveLink = ({ href, ...props }) => {
   const [isActive] = useRoute(href);
+  const [location] = useLocation();
 
-  // pass destination to parent
+  const setDestination = useUIStore((state) => state.setDestination);
+
   const onClickHandler = () => {
-    onClickFn(href);
+    // click on active link will not occur redirection
+    if (location === href) {
+      return;
+    }
+
+    // otherwise set new destination
+    setDestination(href);
   };
 
   return (
