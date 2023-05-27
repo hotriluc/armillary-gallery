@@ -85,7 +85,7 @@ const GalleryItem = ({
     materialRef.current.uProgress = lerp(
       materialRef.current.uProgress,
       hovered ? 1 : 0,
-      0.02
+      0.022
     );
 
     textRef.current.fontSize = lerp(
