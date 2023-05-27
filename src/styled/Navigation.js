@@ -29,6 +29,7 @@ export const NavItem = styled(motion.li)`
     transition: all 0.3s;
     text-decoration: none;
     text-transform: uppercase;
+    cursor: pointer;
   }
   a:hover {
     color: ${(props) => props.theme.colors.primary};
@@ -41,6 +42,7 @@ export const NavItem = styled(motion.li)`
 
 export const NavLogo = styled.div`
   flex: 1;
+  cursor: pointer;
 `;
 
 export const NavSocials = styled.div`
@@ -52,6 +54,7 @@ export const NavSocials = styled.div`
     color: ${(props) => props.theme.colors.light};
     transition: all 0.3s;
     text-decoration: none;
+    cursor: pointer;
   }
 
   a:hover {
