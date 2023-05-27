@@ -84,7 +84,9 @@ const Navigation = ({ delay, leaveAnimation }) => {
       </NavList>
 
       <NavSocials>
-        <motion.a href="">hotriluc97@gmail.com</motion.a>
+        <motion.a href="mailto:hotriluc97@gmail.com">
+          hotriluc97@gmail.com
+        </motion.a>
       </NavSocials>
     </NavBar>
   );

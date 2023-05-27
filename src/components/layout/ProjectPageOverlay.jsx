@@ -96,6 +96,14 @@ const ProjectPageOverlay = () => {
         { duration: 1.1, ease: [0.87, 0, 0.13, 1] }
       ),
       animateProject(
+        "a",
+        {
+          y: "-101%",
+          opacity: 0,
+        },
+        { duration: 1.1, ease: [0.87, 0, 0.13, 1] }
+      ),
+      animateProject(
         "h2",
         {
           y: "-101%",
@@ -136,15 +144,19 @@ const ProjectPageOverlay = () => {
         <ProjectWrapper key={currentProject.id} ref={projectScope}>
           <Banner>
             <BannerTitle>
-              <motion.span
+              <motion.a
+                href="#"
                 className="title"
                 initial="initial"
                 animate="animate"
                 exit="exit"
                 variants={textVariants}
+                whileHover={{
+                  color: "#101010",
+                }}
               >
                 {currentProject.title}
-              </motion.span>
+              </motion.a>
             </BannerTitle>
 
             <BannerImage
