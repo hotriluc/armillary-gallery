@@ -87,7 +87,7 @@ void main() {
     targetPosition.x =  cnoise(vec3( targetPosition.x  + sin(uTime * .07))  );
     targetPosition.z =  cnoise(vec3( targetPosition.y  + sin(uTime * .07))  ) - .5;
 
-    currentPosition = mix(currentPosition, targetPosition,  .2 );
+    currentPosition = mix(currentPosition, targetPosition,  .8 );
 
     vec4 modelPosition = modelMatrix * vec4(targetPosition, 1.0);
     vec4 viewPosition = viewMatrix * modelPosition;

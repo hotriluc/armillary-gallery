@@ -2,12 +2,15 @@ import * as THREE from "three";
 import { damp } from "three/src/math/MathUtils";
 
 import { useRef } from "react";
-import { useProjectStore } from "../../../store/projectStore";
+import { useProjectStore } from "../../store/projectStore";
 
 import { useScroll } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 
-const material = new THREE.LineBasicMaterial({ color: "#ABEA9A" });
+const material = new THREE.LineBasicMaterial({
+  color: "#ABEA9A",
+  toneMapped: false,
+});
 const geometry = new THREE.BufferGeometry().setFromPoints([
   new THREE.Vector3(0, -0.5, 0),
   new THREE.Vector3(0, 0.5, 0),

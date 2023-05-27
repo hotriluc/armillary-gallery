@@ -2,40 +2,47 @@ import * as THREE from "three";
 import { damp, lerp } from "three/src/math/MathUtils";
 
 import { useMemo, useRef, useState } from "react";
-import { useProjectStore } from "../../../store/projectStore";
 
 import { extend, useFrame, useLoader } from "@react-three/fiber";
 import { Text, shaderMaterial } from "@react-three/drei";
 import { useControls } from "leva";
 
-import projectVertexShader from "../../../shaders/project/vertex.glsl";
-import projectFragmentShader from "../../../shaders/project/fragment.glsl";
+import galleryItemVertexShader from "../../shaders/gallery-item/vertex.glsl";
+import galleryItemFragmentShader from "../../shaders/gallery-item/fragment.glsl";
 
 import Constellation from "./Constellation";
+import { useUIStore } from "../../store/UIStore";
 
-const ProjectMaterial = new shaderMaterial(
+const GalleryItemMaterial = new shaderMaterial(
   {
     uTime: 0.0,
     uImage: null,
     uNoise: null,
     uProgress: 0,
   },
-  projectVertexShader,
-  projectFragmentShader
+  galleryItemVertexShader,
+  galleryItemFragmentShader
 );
 
-extend({ ProjectMaterial });
+extend({ GalleryItemMaterial });
 
-const Project = ({ data, noiseMap, rotation, ...props }) => {
+const GalleryItem = ({
+  data,
+  noiseMap,
+  rotation,
+  c = new THREE.Color(),
+  ...props
+}) => {
   const { id: projectID, imgUrl: projectImg, title: projectTitle } = data;
 
   const ref = useRef();
   const materialRef = useRef();
   const textRef = useRef();
 
-  const [hovered, setHover] = useState(false);
-  const activeID = useProjectStore((state) => state.activeID);
-  const setActiveID = useProjectStore((state) => state.setActiveID);
+  const [hovered, setHovered] = useState(false);
+  // const [clicked, setClicked] = useState(false);
+
+  const setDestination = useUIStore((state) => state.setDestination);
 
   const imgMap = useLoader(
     THREE.TextureLoader,
@@ -58,29 +65,38 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
 
   // Animate Click and Hover
   useFrame((state, delta) => {
-    const et = state.clock.getElapsedTime();
-
-    materialRef.current.uTime = et;
+    // const et = state.clock.getElapsedTime();
+    // materialRef.current.uTime = et;
 
     ref.current.rotation.y = damp(
       ref.current.rotation.y,
-      hovered || activeID === projectID
-        ? rotation[1] - Math.PI / 5.5
-        : rotation[1],
+      hovered ? rotation[1] - Math.PI / 5.5 : rotation[1],
       6,
       delta
     );
 
+    // ref.current.position.y = damp(
+    //   ref.current.position.y,
+    //   clicked ? 2 : 0,
+    //   6,
+    //   delta
+    // );
+
     materialRef.current.uProgress = lerp(
       materialRef.current.uProgress,
       hovered ? 1 : 0,
-      0.02
+      0.022
     );
 
     textRef.current.fontSize = lerp(
       textRef.current.fontSize,
       hovered ? 0.2 : 0.1,
       0.05
+    );
+
+    textRef.current.material.color.lerp(
+      c.set(hovered ? "#abea9a" : "#fefefe"),
+      hovered ? 0.3 : 0.1
     );
 
     // In order to hide only half text we need to calculate new object position
@@ -99,12 +115,12 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
   // Event Handlers
   const onMouseEnterHandler = (e) => {
     e.stopPropagation();
-    setHover(true);
+    setHovered(true);
   };
 
-  const onMouseClickHandler = (e) => {
+  const onPointerUpHandler = (e) => {
     e.stopPropagation();
-    setActiveID(projectID);
+    setDestination("/works/" + projectID);
   };
 
   return (
@@ -112,11 +128,11 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
       <mesh
         position={[0, 0, 0.1]}
         onPointerEnter={onMouseEnterHandler}
-        onPointerLeave={() => setHover(false)}
-        onClick={onMouseClickHandler}
+        onPointerLeave={() => setHovered(false)}
+        onPointerUp={onPointerUpHandler}
       >
         <planeGeometry args={[1.5, 2.5]} />
-        <projectMaterial
+        <galleryItemMaterial
           ref={materialRef}
           uImage={imgMap}
           uNoise={noiseMap}
@@ -124,14 +140,16 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
           transparent
         />
       </mesh>
+
       <Text
         ref={textRef}
-        color={"#B3F5A1"}
-        fillOpacity={0}
-        fontSize={0.1}
         position={[0, 0, 0.2]}
+        material-toneMapped={false}
+        font={"/IBMPlexSans-Regular.woff"}
+        fontSize={0.1}
+        fillOpacity={0}
       >
-        {projectTitle}
+        {projectTitle.toUpperCase()}
       </Text>
 
       <Constellation hovered={hovered} />
@@ -139,4 +157,4 @@ const Project = ({ data, noiseMap, rotation, ...props }) => {
   );
 };
 
-export default Project;
+export default GalleryItem;

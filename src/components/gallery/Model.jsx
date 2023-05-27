@@ -7,7 +7,7 @@ import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
 
 const material = new THREE.MeshStandardMaterial({
-  color: "#ffff",
+  color: "#ffffff",
   metalness: 0,
   roughness: 0.45,
 });

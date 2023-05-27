@@ -5,11 +5,11 @@ import { useMemo, useRef } from "react";
 import { extend, useFrame, useThree } from "@react-three/fiber";
 import { shaderMaterial } from "@react-three/drei";
 
-import constellationVertexShader from "../../../shaders/constellation/vertex.glsl";
-import constellationFragmentShader from "../../../shaders/constellation/fragment.glsl";
+import constellationVertexShader from "../../shaders/constellation/vertex.glsl";
+import constellationFragmentShader from "../../shaders/constellation/fragment.glsl";
 
-import constellationLineVertexShader from "../../../shaders/constellation-line/vertex.glsl";
-import constellationLineFragmentShader from "../../../shaders/constellation-line/fragment.glsl";
+import constellationLineVertexShader from "../../shaders/constellation-line/vertex.glsl";
+import constellationLineFragmentShader from "../../shaders/constellation-line/fragment.glsl";
 
 const ConstellationMaterial = new shaderMaterial(
   {
