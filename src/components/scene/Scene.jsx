@@ -2,7 +2,9 @@ import { SoftShadows } from "@react-three/drei";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { useControls } from "leva";
 import { Route, Switch } from "wouter";
+
 import WorksPageScene from "./WorksPageScene";
+import AboutPageScene from "./AboutPageScene";
 
 const Scene = () => {
   const { size, focus, samples } = useControls("soft shadows", {
@@ -23,12 +25,9 @@ const Scene = () => {
         <Route path="/works">
           <WorksPageScene />
         </Route>
-        {/* <Route path="/about">
-          <mesh>
-            <planeGeometry />
-            <meshBasicMaterial color={"blue"} />
-          </mesh>
-        </Route> */}
+        <Route path="/about">
+          <AboutPageScene />
+        </Route>
       </Switch>
     </>
   );

@@ -5,20 +5,16 @@ import { useGLTF, useScroll } from "@react-three/drei";
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
+import { useUIStore } from "../../store/UIStore";
 
-const material = new THREE.MeshStandardMaterial({
-  color: "#ffffff",
-  metalness: 0,
-  roughness: 0.45,
-});
-
-const Model = (props) => {
+const ArmillaryModel = (props) => {
+  const isLoaded = useUIStore((state) => state.isLoaded);
   const eclipticRef = useRef();
   const planetRef = useRef();
   const horizonRef = useRef();
   const meridianRef = useRef();
 
-  const { nodes } = useGLTF("/arm.glb");
+  const { nodes, materials } = useGLTF("/arm.glb");
 
   const { scroll } = useScroll();
 
@@ -37,6 +33,7 @@ const Model = (props) => {
   });
 
   useFrame((state, delta) => {
+    if (!isLoaded) return;
     eclipticRef.current.rotation.y = damp(
       eclipticRef.current.rotation.y,
       scroll.current * Math.PI * 2,
@@ -144,7 +141,7 @@ const Model = (props) => {
             geometry={nodes.Cube.geometry}
             rotation={[0, 0, Math.PI / 3]}
             scale={[0, 0, 0]}
-            material={material}
+            material={materials["Planet"]}
           />
 
           <mesh
@@ -153,7 +150,7 @@ const Model = (props) => {
             receiveShadow
             geometry={nodes.Ecliptic.geometry}
             rotation={[0, 0, Math.PI / 3]}
-            material={material}
+            material={materials["Planet"]}
           />
         </group>
         <mesh
@@ -161,7 +158,7 @@ const Model = (props) => {
           castShadow
           receiveShadow
           geometry={nodes.Meridian.geometry}
-          material={material}
+          material={materials["Planet"]}
         />
 
         <mesh
@@ -169,13 +166,13 @@ const Model = (props) => {
           castShadow
           receiveShadow
           geometry={nodes.Horizon.geometry}
-          material={material}
+          material={materials["Planet"]}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Holder.geometry}
-          material={material}
+          material={materials["Planet"]}
         />
       </group>
     </>
@@ -184,4 +181,4 @@ const Model = (props) => {
 
 useGLTF.preload("/arm.glb");
 
-export default Model;
+export default ArmillaryModel;

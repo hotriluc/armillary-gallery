@@ -4,9 +4,9 @@ import { Float, ScrollControls } from "@react-three/drei";
 
 import { Suspense } from "react";
 
-import Model from "../gallery/Model";
 import Gallery from "../gallery/Gallery";
 import Minimap from "../gallery/Minimap";
+import ArmillaryModel from "../models/ArmillaryModel";
 
 const WorksPageScene = () => {
   const projectsSize = useProjectStore((state) => state.projects.length);
@@ -17,7 +17,7 @@ const WorksPageScene = () => {
       <Minimap />
       <Float>
         <Suspense fallback={null}>
-          <Model />
+          <ArmillaryModel />
         </Suspense>
       </Float>
       <Gallery />
