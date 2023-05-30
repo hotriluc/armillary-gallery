@@ -38,7 +38,7 @@ const Navigation = ({ delay, leaveAnimation }) => {
             animateNavigation(
               navigationScope.current,
               { y: "-25%", opacity: 0 },
-              { duration: 0.6, ease: [0.57, 0, 0.13, 1] }
+              { type: "spring", stiffness: 100, damping: 20 }
             ),
           ]);
         }
@@ -66,8 +66,9 @@ const Navigation = ({ delay, leaveAnimation }) => {
       initial={{ y: "-25%", opacity: 0 }}
       animate={isLoaded ? { y: 0, opacity: 1 } : ""}
       transition={{
-        duration: 0.75,
-        ease: [0.57, 0, 0.13, 1],
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
         delay: delay || 0,
       }}
     >

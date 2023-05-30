@@ -23,13 +23,13 @@ const CharacterModel = (props) => {
 
   useEffect(() => {
     actions["Swim"].play();
-  });
+  }, []);
 
   useFrame((state, delta) => {
     maskRef.current.scale.y = damp(
       maskRef.current.scale.y,
       location === "/about" && destination === null ? 1 : 0,
-      location === "/about" && destination === null ? 5 : 10,
+      location === "/about" && destination === null ? 3.5 : 7.2,
       delta
     );
   });

@@ -17,7 +17,7 @@ import Navigation from "../navigation/Navigation";
 import { AnimatePresence, motion, stagger, useAnimate } from "framer-motion";
 
 import AnimatedSplitText from "../text/AnimatedSplitText";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useAboutStore } from "../../store/aboutStore";
 
 const contentNavItems = [
@@ -35,12 +35,12 @@ const textVariants = {
   animate: {
     y: 0,
     opacity: 1,
-    transition: { duration: 0.8, ease: [0.8, 0, 0.13, 1] },
+    transition: { duration: 1.05, ease: [0.82, 0, 0.13, 1] },
   },
   exit: {
     y: "-101%",
     opacity: 0,
-    transition: { duration: 0.8, ease: [0.8, 0, 0.13, 1] },
+    transition: { duration: 0.7, ease: [0.82, 0, 0.13, 1] },
   },
 };
 
@@ -200,7 +200,7 @@ const AboutPageOverlay = () => {
         {
           delay: stagger(0.2, { from: "last" }),
           duration: 0.8,
-          ease: [0.8, 0, 0.13, 1],
+          ease: [0.82, 0, 0.13, 1],
         }
       ),
     ]);
@@ -228,7 +228,7 @@ const AboutPageOverlay = () => {
       scaleX: 1,
       transition: {
         duration: 0.8,
-        ease: [0.8, 0, 0.13, 1],
+        ease: [0.82, 0, 0.13, 1],
       },
     },
   };
