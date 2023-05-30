@@ -2,7 +2,7 @@ import * as THREE from "three";
 
 import { Suspense, useRef } from "react";
 import CharacterModel from "../models/CharacterModel";
-import { useHelper } from "@react-three/drei";
+import { Float, useHelper } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { damp } from "three/src/math/MathUtils";
 
