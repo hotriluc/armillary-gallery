@@ -8,7 +8,7 @@ import { damp } from "three/src/math/MathUtils";
 
 const AboutPageScene = () => {
   const directionalLightRef = useRef();
-  useHelper(directionalLightRef, THREE.DirectionalLightHelper);
+  // useHelper(directionalLightRef, THREE.DirectionalLightHelper);
 
   useFrame((state, delta) => {
     directionalLightRef.current.position.x = damp(

@@ -28,7 +28,6 @@ export const Banner = styled(motion.div)`
 `;
 
 export const BannerTitle = styled(motion.h1)`
-  color: #fefefe;
   position: absolute;
 
   font-size: 7.5em;

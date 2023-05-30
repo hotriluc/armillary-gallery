@@ -7,7 +7,7 @@ export const NavBar = styled(motion.nav)`
   z-index: 10;
 
   padding: 4rem 4rem;
-  color: white;
+  color: ${(props) => props.theme.colors.light};
   font-weight: 200;
 
   display: flex;
