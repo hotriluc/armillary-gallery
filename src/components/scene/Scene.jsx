@@ -15,7 +15,7 @@ const Scene = () => {
 
   return (
     <>
-      {/* <EffectComposer>
+      {/* <EffectComposer stencilBuffer multisampling={1}>
         <Bloom mipmapBlur intensity={0.2} luminanceThreshold={0} />
       </EffectComposer> */}
 

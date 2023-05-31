@@ -68,6 +68,7 @@ export const ContentNavItem = styled(motion.li)`
     background: none;
 
     cursor: pointer;
+    transition: all 0.3s;
   }
 
   button:hover {
@@ -76,6 +77,13 @@ export const ContentNavItem = styled(motion.li)`
 
   .active {
     color: ${(props) => props.theme.colors.primary};
+  }
+
+  button:disabled,
+  button:disabled:hover {
+    color: grey;
+    pointer-events: none;
+    opacity: 0.8;
   }
 `;
 

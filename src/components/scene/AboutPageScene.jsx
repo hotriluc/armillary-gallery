@@ -5,6 +5,7 @@ import CharacterModel from "../models/CharacterModel";
 import { Float, useHelper } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { damp } from "three/src/math/MathUtils";
+import ArmillaryModel from "../models/ArmillaryModel";
 
 const AboutPageScene = () => {
   const directionalLightRef = useRef();

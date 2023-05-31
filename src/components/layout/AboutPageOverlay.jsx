@@ -14,11 +14,18 @@ import {
   SocialsWrapper,
 } from "../../styled/About";
 import Navigation from "../navigation/Navigation";
-import { AnimatePresence, motion, stagger, useAnimate } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  stagger,
+  useAnimate,
+  useIsPresent,
+} from "framer-motion";
 
 import AnimatedSplitText from "../text/AnimatedSplitText";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useAboutStore } from "../../store/aboutStore";
+import _ from "lodash";
 
 const contentNavItems = [
   { title: "bio", id: 1 },
@@ -35,7 +42,7 @@ const textVariants = {
   animate: {
     y: 0,
     opacity: 1,
-    transition: { duration: 1.05, ease: [0.82, 0, 0.13, 1] },
+    transition: { duration: 1, ease: [0.82, 0, 0.13, 1] },
   },
   exit: {
     y: "-101%",
@@ -88,6 +95,12 @@ const socialsData = [
 
 const Bio = () => {
   const text = `My name is Luc and I do things on the web. Sometimes I also design.`;
+
+  return <AnimatedSplitText text={text} textVariants={textVariants} />;
+};
+
+const Credits = () => {
+  const text = `Credits`;
 
   return <AnimatedSplitText text={text} textVariants={textVariants} />;
 };
@@ -161,7 +174,7 @@ const Socials = () => {
                   viewBox="0 0 24 24"
                 >
                   <path
-                    vector-effect="non-scaling-stroke"
+                    vectorEffect="non-scaling-stroke"
                     d="M18.25 15.5a.75.75 0 0 0 .75-.75v-9a.75.75 0 0 0-.75-.75h-9a.75.75 0 0 0 0 1.5h7.19L6.22 16.72a.75.75 0 1 0 1.06 1.06L17.5 7.56v7.19c0 .414.336.75.75.75z"
                   ></path>
                 </svg>
@@ -180,6 +193,7 @@ const AboutPageOverlay = () => {
 
   const activeContentID = useAboutStore((state) => state.activeContentID);
   const setActiveContentID = useAboutStore((state) => state.setActiveContentID);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const aboutLeaveAnimation = useCallback(async () => {
     await Promise.all([
@@ -233,6 +247,13 @@ const AboutPageOverlay = () => {
     },
   };
 
+  const onClickSectionHandler = (id) => {
+    if (id === activeContentID) return;
+
+    setActiveContentID(id);
+    setIsAnimating(true);
+  };
+
   return (
     <>
       <Navigation leaveAnimation={aboutLeaveAnimation} />
@@ -251,10 +272,14 @@ const AboutPageOverlay = () => {
           </Name>
 
           <Content>
-            <AnimatePresence mode="wait">
+            <AnimatePresence
+              mode="wait"
+              onExitComplete={() => setIsAnimating(false)}
+            >
               {activeContentID === 1 && <Bio key={"bio"} />}
-              {activeContentID === 2 && <Experience key={"exp"} />}
-              {activeContentID === 3 && <Socials key={"socials"} />}
+              {activeContentID === 2 && <Experience key={"experience"} />}
+              {activeContentID === 3 && <Socials key={"social"} />}
+              {activeContentID === 4 && <Credits key={"credits"} />}
             </AnimatePresence>
           </Content>
 
@@ -267,8 +292,9 @@ const AboutPageOverlay = () => {
             {contentNavItems.map((el) => (
               <ContentNavItem key={el.id} variants={contentNavItemVariants}>
                 <motion.button
+                  disabled={isAnimating}
                   className={el.id === activeContentID ? "active" : ""}
-                  onClick={() => setActiveContentID(el.id)}
+                  onClick={() => onClickSectionHandler(el.id)}
                 >{`0${el.id}. ${el.title}`}</motion.button>
               </ContentNavItem>
             ))}
