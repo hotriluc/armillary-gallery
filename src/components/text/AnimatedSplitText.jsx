@@ -1,6 +1,6 @@
 import { SplitText } from "@cyriacbr/react-split-text";
-import { OverflowTextHolder } from "../../styled/Project";
 import { motion } from "framer-motion";
+import { OverflowTextHolder } from "../../styled/Global";
 
 const AnimatedSplitText = ({ text, textVariants }) => {
   return (

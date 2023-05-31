@@ -23,7 +23,7 @@ const CharacterModel = (props) => {
   const [location] = useLocation();
 
   useEffect(() => {
-    actions["Swim"].play();
+    void actions["Swim"].play();
   }, []);
 
   useFrame((state, delta) => {

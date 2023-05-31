@@ -3,29 +3,24 @@ import {
   Content,
   ContentNav,
   ContentNavItem,
-  ExperienceWrapper,
+  Credit,
+  CreditsList,
+  Link,
   Name,
   Position,
   PositionDate,
   PositionList,
   PositionName,
-  SocialLink,
+  Social,
   SocialsList,
-  SocialsWrapper,
 } from "../../styled/About";
 import Navigation from "../navigation/Navigation";
-import {
-  AnimatePresence,
-  motion,
-  stagger,
-  useAnimate,
-  useIsPresent,
-} from "framer-motion";
+import { AnimatePresence, motion, stagger, useAnimate } from "framer-motion";
 
 import AnimatedSplitText from "../text/AnimatedSplitText";
 import { useCallback, useState } from "react";
 import { useAboutStore } from "../../store/aboutStore";
-import _ from "lodash";
+import { Flex } from "../../styled/Global";
 
 const contentNavItems = [
   { title: "bio", id: 1 },
@@ -42,12 +37,12 @@ const textVariants = {
   animate: {
     y: 0,
     opacity: 1,
-    transition: { duration: 1, ease: [0.82, 0, 0.13, 1] },
+    transition: { duration: 1, ease: [0.8, 0, 0.13, 1] },
   },
   exit: {
     y: "-101%",
     opacity: 0,
-    transition: { duration: 0.7, ease: [0.82, 0, 0.13, 1] },
+    transition: { duration: 0.7, ease: [0.8, 0, 0.13, 1] },
   },
 };
 
@@ -93,6 +88,19 @@ const socialsData = [
   },
 ];
 
+const creditsData = [
+  {
+    name: "Character Model",
+    author: "Jaeyeon Nam",
+    href: "https://jaeysart.artstation.com/",
+  },
+  {
+    name: "Transitions Tutorial",
+    author: "Manoela Ilic",
+    href: "https://jaeysart.artstation.com/",
+  },
+];
+
 const Bio = () => {
   const text = `My name is Luc and I do things on the web. Sometimes I also design.`;
 
@@ -100,37 +108,70 @@ const Bio = () => {
 };
 
 const Credits = () => {
-  const text = `Credits`;
+  const text = `The assets and inspiration that have been used to build this website`;
 
-  return <AnimatedSplitText text={text} textVariants={textVariants} />;
+  return (
+    <Flex column="true">
+      <AnimatedSplitText text={text} textVariants={textVariants} />
+
+      <CreditsList>
+        {creditsData.map((credit, id) => (
+          <Credit key={`credits_${id}`}>
+            <div>
+              <AnimatedSplitText
+                text={credit.name}
+                textVariants={textVariants}
+              />
+            </div>
+
+            <Link
+              href={credit.href}
+              target="_blank"
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={textVariants}
+            >
+              <span>
+                {credit.author}
+                <svg
+                  width="18"
+                  height="18"
+                  strokeWidth=".7"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    vectorEffect="non-scaling-stroke"
+                    d="M18.25 15.5a.75.75 0 0 0 .75-.75v-9a.75.75 0 0 0-.75-.75h-9a.75.75 0 0 0 0 1.5h7.19L6.22 16.72a.75.75 0 1 0 1.06 1.06L17.5 7.56v7.19c0 .414.336.75.75.75z"
+                  ></path>
+                </svg>
+              </span>
+            </Link>
+          </Credit>
+        ))}
+      </CreditsList>
+    </Flex>
+  );
 };
 
 const Experience = () => {
   return (
-    <ExperienceWrapper>
+    <Flex column="true">
       <PositionList>
         {positionsData.map((position, id) => (
           <Position key={`position_${id}`}>
             <PositionDate>
-              <motion.span
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                variants={textVariants}
-              >
-                {position.startDate.month} {position.startDate.year}
-              </motion.span>
+              <AnimatedSplitText
+                textVariants={textVariants}
+                text={`${position.startDate.month} ${position.startDate.year}`}
+              />
             </PositionDate>
 
             <PositionDate>
-              <motion.span
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                variants={textVariants}
-              >
-                {position.endDate.month} {position.endDate.year}
-              </motion.span>
+              <AnimatedSplitText
+                textVariants={textVariants}
+                text={`${position.endDate.month} ${position.endDate.year}`}
+              />
             </PositionDate>
 
             <PositionName>
@@ -142,13 +183,13 @@ const Experience = () => {
           </Position>
         ))}
       </PositionList>
-    </ExperienceWrapper>
+    </Flex>
   );
 };
 
 const Socials = () => {
   return (
-    <SocialsWrapper>
+    <Flex column="true">
       <AnimatedSplitText
         text={"I can be found on those platforms."}
         textVariants={textVariants}
@@ -156,8 +197,8 @@ const Socials = () => {
 
       <SocialsList>
         {socialsData.map((el, id) => (
-          <SocialLink key={`social_${id}`}>
-            <motion.a
+          <Social key={`social_${id}`}>
+            <Link
               href={el.href}
               target="_blank"
               initial="initial"
@@ -179,11 +220,11 @@ const Socials = () => {
                   ></path>
                 </svg>
               </span>
-            </motion.a>
-          </SocialLink>
+            </Link>
+          </Social>
         ))}
       </SocialsList>
-    </SocialsWrapper>
+    </Flex>
   );
 };
 
@@ -203,8 +244,22 @@ const AboutPageOverlay = () => {
           y: "-101%",
           opacity: 0,
         },
-        { duration: 0.9, ease: [0.82, 0, 0.13, 1] }
+        { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
       ),
+
+      // only socials and credits consist links
+      // if it was not conditional, then promise all will return rejection
+      // and leave animation won't be executed because other sections don't have 'a'
+      (activeContentID === 3 || activeContentID === 4) &&
+        animateAbout(
+          "a",
+          {
+            y: "-101%",
+            opacity: 0,
+          },
+          { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
+        ),
+
       animateContentNav(
         "li",
         {
@@ -214,11 +269,11 @@ const AboutPageOverlay = () => {
         {
           delay: stagger(0.2, { from: "last" }),
           duration: 0.8,
-          ease: [0.82, 0, 0.13, 1],
+          ease: [0.8, 0, 0.13, 1],
         }
       ),
     ]);
-  }, [animateAbout, animateContentNav]);
+  }, [animateAbout, animateContentNav, activeContentID]);
 
   const contentNavVariants = {
     initial: {
@@ -242,7 +297,7 @@ const AboutPageOverlay = () => {
       scaleX: 1,
       transition: {
         duration: 0.8,
-        ease: [0.82, 0, 0.13, 1],
+        ease: [0.8, 0, 0.13, 1],
       },
     },
   };

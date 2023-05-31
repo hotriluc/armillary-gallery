@@ -14,13 +14,13 @@ import {
   Button,
   Description,
   Heading,
-  OverflowTextHolder,
   ProjectNavigation,
   ProjectWrapper,
   Technologies,
 } from "../../styled/Project";
 import Navigation from "../navigation/Navigation";
 import AnimatedSplitText from "../text/AnimatedSplitText";
+import { OverflowTextHolder } from "../../styled/Global";
 
 const text = `This is the project inspered by me. I was surfing through the net in
 order to find cool inspiration.`;
@@ -49,12 +49,12 @@ const ProjectPageOverlay = () => {
     animate: {
       y: 0,
       opacity: 1,
-      transition: { duration: 1.05, ease: [0.82, 0, 0.13, 1] },
+      transition: { duration: 1, ease: [0.8, 0, 0.13, 1] },
     },
     exit: {
       y: "-101%",
       opacity: 0,
-      transition: { duration: 0.9, ease: [0.82, 0, 0.13, 1] },
+      transition: { duration: 0.9, ease: [0.8, 0, 0.13, 1] },
     },
   };
 
@@ -64,11 +64,11 @@ const ProjectPageOverlay = () => {
     },
     animate: {
       y: 0,
-      transition: { duration: 1.05, ease: [0.82, 0, 0.13, 1] },
+      transition: { duration: 1, ease: [0.8, 0, 0.13, 1] },
     },
     exit: {
       y: "101%",
-      transition: { duration: 0.9, ease: [0.82, 0, 0.13, 1] },
+      transition: { duration: 0.9, ease: [0.8, 0, 0.13, 1] },
     },
   };
 
@@ -78,11 +78,11 @@ const ProjectPageOverlay = () => {
     },
     animate: {
       y: 0,
-      transition: { duration: 1.05, ease: [0.82, 0, 0.13, 1] },
+      transition: { duration: 1, ease: [0.8, 0, 0.13, 1] },
     },
     exit: {
       y: "-101%",
-      transition: { duration: 0.9, ease: [0.82, 0, 0.13, 1] },
+      transition: { duration: 0.9, ease: [0.8, 0, 0.13, 1] },
     },
   };
 
@@ -94,7 +94,7 @@ const ProjectPageOverlay = () => {
           y: "-101%",
           opacity: 0,
         },
-        { duration: 0.9, ease: [0.82, 0, 0.13, 1] }
+        { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
       ),
       animateProject(
         "a",
@@ -102,7 +102,7 @@ const ProjectPageOverlay = () => {
           y: "-101%",
           opacity: 0,
         },
-        { duration: 0.9, ease: [0.82, 0, 0.13, 1] }
+        { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
       ),
       animateProject(
         "h2",
@@ -110,7 +110,7 @@ const ProjectPageOverlay = () => {
           y: "-101%",
           opacity: 0,
         },
-        { duration: 0.9, ease: [0.82, 0, 0.13, 1] }
+        { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
       ),
       animateProject(
         "button",
@@ -118,21 +118,21 @@ const ProjectPageOverlay = () => {
           pointerEvents: "none",
           opacity: 0,
         },
-        { duration: 0.9, ease: [0.82, 0, 0.13, 1] }
+        { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
       ),
       animateImage(
         imageScope.current,
         {
           y: "101%",
         },
-        { duration: 0.9, ease: [0.82, 0, 0.13, 1] }
+        { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
       ),
       animateImage(
         imageScope.current.children,
         {
           y: "-101%",
         },
-        { duration: 0.9, ease: [0.82, 0, 0.13, 1] }
+        { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
       ),
     ]);
   };
@@ -266,6 +266,7 @@ const ProjectPageOverlay = () => {
                 Technologies:
               </Heading>
             </OverflowTextHolder>
+
             <AnimatedSplitText text={text} textVariants={textVariants} />
           </Technologies>
         </ProjectWrapper>

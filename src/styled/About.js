@@ -88,10 +88,6 @@ export const ContentNavItem = styled(motion.li)`
 `;
 
 // EXPERIENCE
-export const ExperienceWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
 
 export const PositionList = styled.ul`
   list-style: none;
@@ -124,11 +120,6 @@ export const PositionName = styled.div`
 `;
 
 // SOCIALS
-export const SocialsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4rem;
-`;
 
 export const SocialsList = styled.ul`
   display: flex;
@@ -137,14 +128,48 @@ export const SocialsList = styled.ul`
   gap: 1rem;
 `;
 
-export const SocialLink = styled(motion.li)`
+export const Social = styled(motion.li)`
   overflow: hidden;
 
   text-decoration: none;
-
   text-transform: uppercase;
   font-weight: 300;
   position: relative;
+`;
+
+export const Link = styled(motion.a)`
+  display: inline-block;
+  text-decoration: none;
+  color: ${(props) => props.theme.colors.primary};
+  fill: none;
+  stroke: ${(props) => props.theme.colors.primary};
+
+  span {
+    display: flex;
+    align-items: center;
+  }
+
+  &:hover {
+    color: ${(props) => props.theme.colors.light};
+    stroke: ${(props) => props.theme.colors.light};
+  }
+`;
+
+export const CreditsList = styled.ul`
+  display: flex;
+  list-style: none;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+export const Credit = styled.li`
+  overflow: hidden;
+  color: ${(props) => props.theme.colors.primary};
+  font-weight: 300;
+  text-transform: uppercase;
+
+  display: flex;
+  gap: 2rem;
 
   a {
     display: inline-block;
@@ -157,10 +182,5 @@ export const SocialLink = styled(motion.li)`
       display: flex;
       align-items: center;
     }
-  }
-
-  a:hover {
-    color: ${(props) => props.theme.colors.light};
-    stroke: ${(props) => props.theme.colors.light};
   }
 `;

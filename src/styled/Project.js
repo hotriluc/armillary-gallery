@@ -88,17 +88,6 @@ export const Heading = styled(motion.h2)`
   text-transform: uppercase;
 `;
 
-export const OverflowTextHolder = styled(motion.div)`
-  overflow: hidden;
-  /* text-transform: uppercase; */
-
-  span {
-    font-weight: 300;
-    display: inline-block;
-    color: ${(props) => props.theme.colors.primary};
-  }
-`;
-
 export const ProjectNavigation = styled.div`
   grid-area: navigation;
   margin-top: auto;
