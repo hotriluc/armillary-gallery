@@ -18,6 +18,7 @@ export const AboutWrapper = styled(motion.div)`
   column-gap: 2rem;
 `;
 
+// NAME
 export const Name = styled(motion.h1)`
   grid-area: name;
 
@@ -37,6 +38,7 @@ export const Name = styled(motion.h1)`
   }
 `;
 
+// CONTENT
 export const Content = styled.div`
   grid-area: content;
 `;
@@ -88,7 +90,6 @@ export const ContentNavItem = styled(motion.li)`
 `;
 
 // EXPERIENCE
-
 export const PositionList = styled.ul`
   list-style: none;
   color: ${(props) => props.theme.colors.primary};
@@ -97,7 +98,7 @@ export const PositionList = styled.ul`
 
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 `;
 
 export const Position = styled(motion.li)`
@@ -120,7 +121,6 @@ export const PositionName = styled.div`
 `;
 
 // SOCIALS
-
 export const SocialsList = styled.ul`
   display: flex;
   list-style: none;
@@ -155,6 +155,7 @@ export const Link = styled(motion.a)`
   }
 `;
 
+// CREDITS
 export const CreditsList = styled.ul`
   display: flex;
   list-style: none;
@@ -183,4 +184,11 @@ export const Credit = styled.li`
       align-items: center;
     }
   }
+`;
+
+// COPYRIGHT
+export const Copyright = styled.div`
+  grid-area: copyright;
+  text-transform: uppercase;
+  align-self: end;
 `;

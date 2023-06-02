@@ -3,6 +3,7 @@ import {
   Content,
   ContentNav,
   ContentNavItem,
+  Copyright,
   Credit,
   CreditsList,
   Link,
@@ -20,7 +21,7 @@ import { AnimatePresence, motion, stagger, useAnimate } from "framer-motion";
 import AnimatedSplitText from "../text/AnimatedSplitText";
 import { useCallback, useState } from "react";
 import { useAboutStore } from "../../store/aboutStore";
-import { Flex } from "../../styled/Global";
+import { Flex, OverflowTextHolder } from "../../styled/Global";
 
 const contentNavItems = [
   { title: "bio", id: 1 },
@@ -97,7 +98,7 @@ const creditsData = [
   {
     name: "Transitions Tutorial",
     author: "Manoela Ilic",
-    href: "https://jaeysart.artstation.com/",
+    href: "https://tympanus.net/codrops/2022/07/06/how-to-create-a-cover-page-transition/",
   },
 ];
 
@@ -354,6 +355,18 @@ const AboutPageOverlay = () => {
               </ContentNavItem>
             ))}
           </ContentNav>
+
+          <Copyright>
+            <OverflowTextHolder>
+              <motion.span
+                initial="initial"
+                animate="animate"
+                variants={textVariants}
+              >
+                Designed and developed by Ho Tri Luc. All rights reserved. 2023.
+              </motion.span>
+            </OverflowTextHolder>
+          </Copyright>
         </AboutWrapper>
       </AnimatePresence>
     </>
