@@ -5,6 +5,8 @@ import {
   ContentNavItem,
   Copyright,
   Credit,
+  CreditAuthor,
+  CreditLink,
   CreditsList,
   Link,
   Name,
@@ -103,13 +105,23 @@ const creditsData = [
 ];
 
 const Bio = () => {
-  const text = `My name is Luc and I do things on the web. Sometimes I also design.`;
+  const text = `Hi. My name is Luc and I do things on the Internet. Sometimes I also design.`;
+  const text2 = `Today I am mainly focused on frontend development but do not mind working on the backend. My goal with every project is to keep it simple and easy to use.
+ it has been a year since I started to get interested in 3D.`;
+  const text3 = `When something catches my eye I wonder If I can recreate it. During the coding process more ideas come and I end up with some interesting results.
+  `;
 
-  return <AnimatedSplitText text={text} textVariants={textVariants} />;
+  return (
+    <Flex column="true">
+      <AnimatedSplitText text={text} textVariants={textVariants} />
+      <AnimatedSplitText text={text2} textVariants={textVariants} />
+      <AnimatedSplitText text={text3} textVariants={textVariants} />
+    </Flex>
+  );
 };
 
 const Credits = () => {
-  const text = `The assets and inspiration that have been used to build this website`;
+  const text = `The resources that were used to build this website.`;
 
   return (
     <Flex column="true">
@@ -118,36 +130,38 @@ const Credits = () => {
       <CreditsList>
         {creditsData.map((credit, id) => (
           <Credit key={`credits_${id}`}>
-            <div>
+            <CreditAuthor>
               <AnimatedSplitText
                 text={credit.name}
                 textVariants={textVariants}
               />
-            </div>
+            </CreditAuthor>
 
-            <Link
-              href={credit.href}
-              target="_blank"
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={textVariants}
-            >
-              <span>
-                {credit.author}
-                <svg
-                  width="18"
-                  height="18"
-                  strokeWidth=".7"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    vectorEffect="non-scaling-stroke"
-                    d="M18.25 15.5a.75.75 0 0 0 .75-.75v-9a.75.75 0 0 0-.75-.75h-9a.75.75 0 0 0 0 1.5h7.19L6.22 16.72a.75.75 0 1 0 1.06 1.06L17.5 7.56v7.19c0 .414.336.75.75.75z"
-                  ></path>
-                </svg>
-              </span>
-            </Link>
+            <CreditLink>
+              <Link
+                href={credit.href}
+                target="_blank"
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={textVariants}
+              >
+                <span>
+                  {credit.author}
+                  <svg
+                    width="18"
+                    height="18"
+                    strokeWidth=".7"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      vectorEffect="non-scaling-stroke"
+                      d="M18.25 15.5a.75.75 0 0 0 .75-.75v-9a.75.75 0 0 0-.75-.75h-9a.75.75 0 0 0 0 1.5h7.19L6.22 16.72a.75.75 0 1 0 1.06 1.06L17.5 7.56v7.19c0 .414.336.75.75.75z"
+                    ></path>
+                  </svg>
+                </span>
+              </Link>
+            </CreditLink>
           </Credit>
         ))}
       </CreditsList>

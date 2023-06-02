@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { styled } from "styled-components";
 
 export const AboutWrapper = styled(motion.div)`
-  padding: 8rem 4rem;
+  padding: 4rem 4rem;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -14,8 +14,8 @@ export const AboutWrapper = styled(motion.div)`
     "content guy"
     "copyright contentNav";
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: min-content repeat(2, 1fr);
-  column-gap: 2rem;
+  grid-template-rows: min-content 1fr 1fr;
+  column-gap: 4rem;
 `;
 
 // NAME
@@ -125,7 +125,7 @@ export const SocialsList = styled.ul`
   display: flex;
   list-style: none;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
 `;
 
 export const Social = styled(motion.li)`
@@ -160,17 +160,17 @@ export const CreditsList = styled.ul`
   display: flex;
   list-style: none;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
 `;
 
 export const Credit = styled.li`
-  overflow: hidden;
   color: ${(props) => props.theme.colors.primary};
   font-weight: 300;
   text-transform: uppercase;
 
   display: flex;
   gap: 2rem;
+  align-items: flex-start;
 
   a {
     display: inline-block;
@@ -184,6 +184,14 @@ export const Credit = styled.li`
       align-items: center;
     }
   }
+`;
+
+export const CreditAuthor = styled.div`
+  overflow: hidden;
+`;
+
+export const CreditLink = styled.div`
+  overflow: hidden;
 `;
 
 // COPYRIGHT

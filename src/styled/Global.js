@@ -4,7 +4,7 @@ import { styled, css } from "styled-components";
 export const Flex = styled.div`
   display: flex;
 
-  gap: ${(props) => props.gap || "4rem"};
+  gap: ${(props) => props.gap || "2rem"};
 
   ${(props) =>
     props.column &&
@@ -27,6 +27,10 @@ export const Flex = styled.div`
 
 export const OverflowTextHolder = styled(motion.div)`
   overflow: hidden;
+
+  &:not(:last-of-type) {
+    margin-bottom: 0.5rem;
+  }
   /* text-transform: uppercase; */
 
   span {
