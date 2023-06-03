@@ -4,14 +4,14 @@ import { damp } from "three/src/math/MathUtils";
 import { useMemo, useRef } from "react";
 import { useProjectStore } from "../../store/projectStore";
 
-import { useFrame, useLoader } from "@react-three/fiber";
+import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import { useScroll } from "@react-three/drei";
 
 import GalleryItem from "./GalleryItem";
 
 const Gallery = () => {
   const ref = useRef();
-
+  const { width } = useThree((state) => state.viewport);
   const noiseMap = useLoader(THREE.TextureLoader, "noise.png");
   const projects = useProjectStore((state) => state.projects);
 
@@ -19,7 +19,8 @@ const Gallery = () => {
   // but keep indexes the same
   const displayedProjects = [...projects].reverse();
 
-  const radius = 2.8;
+  const radius = width > 7 ? 2.8 : 1.8;
+
   const interval = useMemo(() => (Math.PI * 2) / projects.length, [projects]);
 
   const { scroll } = useScroll();

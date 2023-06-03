@@ -5,12 +5,11 @@ import {
   useGLTF,
   useMask,
 } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import { damp } from "three/src/math/MathUtils";
 import { useUIStore } from "../../store/UIStore";
 import { useLocation } from "wouter";
-import ArmillaryModel from "./ArmillaryModel";
 
 const CharacterModel = (props) => {
   const group = useRef();
@@ -21,6 +20,8 @@ const CharacterModel = (props) => {
   const maskRef = useRef();
   const destination = useUIStore((state) => state.destination);
   const [location] = useLocation();
+
+  const { width } = useThree((state) => state.viewport);
 
   useEffect(() => {
     void actions["Swim"].play();
@@ -41,7 +42,7 @@ const CharacterModel = (props) => {
         <Mask
           ref={maskRef}
           colorWrite
-          position={[3, 0, 0]}
+          position={[width / 4, 0, 0]}
           rotation-x={-0.5}
           scale-y={0}
         >
@@ -56,7 +57,7 @@ const CharacterModel = (props) => {
             name="Armature"
             rotation={[Math.PI / 2, 0, Math.PI / 4]}
             scale={0.03}
-            position={[3, -1.5, 0]}
+            position={[width / 4, -1.5, 0]}
           >
             <primitive object={nodes.mixamorigHips} />
             <skinnedMesh

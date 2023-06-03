@@ -2,7 +2,6 @@ import { useLocation, useRoute } from "wouter";
 import { useProjectStore } from "../../store/projectStore";
 
 import { AnimatePresence, motion, useAnimate } from "framer-motion";
-import { SplitText } from "@cyriacbr/react-split-text";
 import { mod } from "../../helpers/math";
 
 import {
@@ -178,26 +177,28 @@ const ProjectPageOverlay = () => {
           </Banner>
 
           <Author>
-            <OverflowTextHolder>
-              <Heading
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                variants={textVariants}
-              >
-                Ho Tri Luc
-              </Heading>
-            </OverflowTextHolder>
-            <OverflowTextHolder>
-              <motion.span
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                variants={textVariants}
-              >
-                APRIL 23
-              </motion.span>
-            </OverflowTextHolder>
+            <div>
+              <OverflowTextHolder>
+                <Heading
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  variants={textVariants}
+                >
+                  Ho Tri Luc
+                </Heading>
+              </OverflowTextHolder>
+              <OverflowTextHolder>
+                <motion.span
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  variants={textVariants}
+                >
+                  APRIL 23
+                </motion.span>
+              </OverflowTextHolder>
+            </div>
 
             <ProjectNavigation>
               <Button
@@ -229,7 +230,7 @@ const ProjectPageOverlay = () => {
                   width="100px"
                   height="18px"
                   viewBox="0 0 50 9"
-                  transform="scale(-1,1)"
+                  style={{ transform: "scale(-1,1)" }}
                 >
                   <path
                     vectorEffect="non-scaling-stroke"

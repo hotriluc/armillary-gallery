@@ -17,6 +17,15 @@ export const ProjectWrapper = styled(motion.div)`
   grid-template-areas:
     "banner banner banner"
     "nav description technologies";
+
+  @media (max-width: 768px) {
+    padding: 7rem 2rem;
+    grid-template-rows: min-content;
+    grid-template-areas:
+      "banner banner banner"
+      "description description description"
+      "technologies technologies technologies";
+  }
 `;
 
 export const Banner = styled(motion.div)`
@@ -57,12 +66,20 @@ export const BannerTitle = styled(motion.h1)`
   /* a:hover {
     color: ${(props) => props.theme.colors.primary};
   } */
+
+  @media (max-width: 768px) {
+    font-size: 3.2em;
+  }
 `;
 
 export const BannerImage = styled(motion.div)`
   height: 55rem;
   overflow: hidden;
   transform-origin: top;
+
+  @media (max-width: 768px) {
+    height: 35rem;
+  }
 `;
 
 export const BannerImageInner = styled(motion.img)`
@@ -79,6 +96,13 @@ export const Author = styled.div`
     font-weight: 300;
     text-transform: uppercase;
   }
+
+  @media (max-width: 768px) {
+    grid-column: 1/-1;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
 `;
 
 export const Heading = styled(motion.h2)`
@@ -94,6 +118,11 @@ export const ProjectNavigation = styled.div`
 
   display: flex;
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    /* margin-top: 0; */
+    align-self: flex-end;
+  }
 `;
 
 export const Button = styled(motion.button)`
@@ -103,7 +132,7 @@ export const Button = styled(motion.button)`
     background: transparent;
     border: none;
     cursor: pointer;
-    transition: all 0.3s;
+    /* transition: all 0.3s; */
   }
 
   &:hover {

@@ -12,6 +12,11 @@ export const NavBar = styled(motion.nav)`
 
   display: flex;
   gap: 4rem;
+
+  @media (max-width: 768px) {
+    padding: 3rem 2rem;
+    gap: 2rem;
+  }
 `;
 
 export const NavList = styled.ul`
@@ -21,6 +26,10 @@ export const NavList = styled.ul`
   display: flex;
   justify-content: center;
   gap: 4rem;
+
+  @media (max-width: 768px) {
+    gap: 2rem;
+  }
 `;
 
 export const NavItem = styled(motion.li)`

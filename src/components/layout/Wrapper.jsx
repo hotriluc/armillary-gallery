@@ -32,6 +32,9 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Inter', sans-serif;
     font-size: 1.6rem;
 
+    @media (max-width: 768px) {
+      font-size: 1.4rem;
+    }
   }
 /* 
   h1,h2,h3,h4,h5{
@@ -53,6 +56,20 @@ const GlobalStyle = createGlobalStyle`
   }
   h4{
     font-size: 1em;
+  }
+
+  ::-webkit-scrollbar {
+    width: .8rem;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #101010;
+  }
+
+  ::-webkit-scrollbar-thumb {
+      background: ${(props) => props.theme.colors.primary};
+      -webkit-box-shadow: none;
+      border-radius: 4px;
   }
 
 `;
