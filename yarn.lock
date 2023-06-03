@@ -1592,16 +1592,6 @@
     suspend-react "^0.0.8"
     zustand "^3.7.1"
 
-"@react-three/postprocessing@^2.11.4":
-  version "2.11.4"
-  resolved "https://registry.yarnpkg.com/@react-three/postprocessing/-/postprocessing-2.11.4.tgz#037216af417a9db552a86123f136ff62b8344727"
-  integrity sha512-I/AnS73TFPTw9KqZTgqdCpNW9zmnQt3cMkM2fH50OvFuimCV7mAALr1JCt4uuUMtHwSJXBQVMulSurrgq3LEyA==
-  dependencies:
-    maath "^0.5.3"
-    postprocessing "^6.30.2"
-    screen-space-reflections "2.5.0"
-    three-stdlib "^2.21.10"
-
 "@react-three/postprocessing@^2.13.0":
   version "2.13.0"
   resolved "https://registry.yarnpkg.com/@react-three/postprocessing/-/postprocessing-2.13.0.tgz#2e9c071c3b714a43e100b726e374b9cec1d7138a"
@@ -3468,7 +3458,7 @@ postcss@^8.4.23:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-postprocessing@^6.30.2, postprocessing@^6.31.0:
+postprocessing@^6.31.0:
   version "6.31.0"
   resolved "https://registry.yarnpkg.com/postprocessing/-/postprocessing-6.31.0.tgz#0d3d0157bfe963d2a66a73ee16cfa81a99138419"
   integrity sha512-h1g2KDVrTS6QB4AHP55opp8FYzq66jJHh4JIFCptaj283RUX1y/tPkv8FBB2oK4WYrdPgqvElnKrXZwgiLWeHQ==

@@ -27,8 +27,7 @@ export const Banner = styled(motion.div)`
   overflow: hidden;
 `;
 
-export const BannerTitle = styled.h1`
-  color: #fefefe;
+export const BannerTitle = styled(motion.h1)`
   position: absolute;
 
   font-size: 7.5em;
@@ -47,9 +46,17 @@ export const BannerTitle = styled.h1`
 
   overflow: hidden;
 
-  span {
+  a {
     display: inline-block;
+    text-decoration: none;
+    color: ${(props) => props.theme.colors.light};
+
+    position: relative;
   }
+
+  /* a:hover {
+    color: ${(props) => props.theme.colors.primary};
+  } */
 `;
 
 export const BannerImage = styled(motion.div)`
@@ -79,17 +86,6 @@ export const Heading = styled(motion.h2)`
   font-size: 1em;
   font-weight: 200;
   text-transform: uppercase;
-`;
-
-export const OverflowTextHolder = styled(motion.div)`
-  overflow: hidden;
-  /* text-transform: uppercase; */
-
-  span {
-    font-weight: 300;
-    display: inline-block;
-    color: ${(props) => props.theme.colors.primary};
-  }
 `;
 
 export const ProjectNavigation = styled.div`

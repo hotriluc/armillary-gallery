@@ -7,7 +7,8 @@ const ActiveLink = ({ href, ...props }) => {
 
   const setDestination = useUIStore((state) => state.setDestination);
 
-  const onClickHandler = () => {
+  const onClickHandler = (e) => {
+    e.preventDefault();
     // click on active link will not occur redirection
     if (location === href) {
       return;
@@ -18,7 +19,11 @@ const ActiveLink = ({ href, ...props }) => {
   };
 
   return (
-    <a className={isActive ? "active" : ""} onClick={onClickHandler}>
+    <a
+      href={href}
+      className={isActive ? "active" : ""}
+      onClick={onClickHandler}
+    >
       {props.children}
     </a>
   );

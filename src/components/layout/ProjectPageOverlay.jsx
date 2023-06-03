@@ -14,12 +14,13 @@ import {
   Button,
   Description,
   Heading,
-  OverflowTextHolder,
   ProjectNavigation,
   ProjectWrapper,
   Technologies,
 } from "../../styled/Project";
 import Navigation from "../navigation/Navigation";
+import AnimatedSplitText from "../text/AnimatedSplitText";
+import { OverflowTextHolder } from "../../styled/Global";
 
 const text = `This is the project inspered by me. I was surfing through the net in
 order to find cool inspiration.`;
@@ -48,12 +49,12 @@ const ProjectPageOverlay = () => {
     animate: {
       y: 0,
       opacity: 1,
-      transition: { duration: 1.1, ease: [0.87, 0, 0.13, 1] },
+      transition: { duration: 1, ease: [0.8, 0, 0.13, 1] },
     },
     exit: {
       y: "-101%",
       opacity: 0,
-      transition: { duration: 1.1, ease: [0.87, 0, 0.13, 1] },
+      transition: { duration: 0.9, ease: [0.8, 0, 0.13, 1] },
     },
   };
 
@@ -63,11 +64,11 @@ const ProjectPageOverlay = () => {
     },
     animate: {
       y: 0,
-      transition: { duration: 1.1, ease: [0.87, 0, 0.13, 1] },
+      transition: { duration: 1, ease: [0.8, 0, 0.13, 1] },
     },
     exit: {
       y: "101%",
-      transition: { duration: 1.1, ease: [0.87, 0, 0.13, 1] },
+      transition: { duration: 0.9, ease: [0.8, 0, 0.13, 1] },
     },
   };
 
@@ -77,11 +78,11 @@ const ProjectPageOverlay = () => {
     },
     animate: {
       y: 0,
-      transition: { duration: 1.1, ease: [0.87, 0, 0.13, 1] },
+      transition: { duration: 1, ease: [0.8, 0, 0.13, 1] },
     },
     exit: {
       y: "-101%",
-      transition: { duration: 1.1, ease: [0.87, 0, 0.13, 1] },
+      transition: { duration: 0.9, ease: [0.8, 0, 0.13, 1] },
     },
   };
 
@@ -93,7 +94,15 @@ const ProjectPageOverlay = () => {
           y: "-101%",
           opacity: 0,
         },
-        { duration: 1.1, ease: [0.87, 0, 0.13, 1] }
+        { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
+      ),
+      animateProject(
+        "a",
+        {
+          y: "-101%",
+          opacity: 0,
+        },
+        { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
       ),
       animateProject(
         "h2",
@@ -101,7 +110,7 @@ const ProjectPageOverlay = () => {
           y: "-101%",
           opacity: 0,
         },
-        { duration: 1.1, ease: [0.87, 0, 0.13, 1] }
+        { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
       ),
       animateProject(
         "button",
@@ -109,21 +118,21 @@ const ProjectPageOverlay = () => {
           pointerEvents: "none",
           opacity: 0,
         },
-        { duration: 1.1, ease: [0.87, 0, 0.13, 1] }
+        { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
       ),
       animateImage(
         imageScope.current,
         {
           y: "101%",
         },
-        { duration: 1.1, ease: [0.87, 0, 0.13, 1] }
+        { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
       ),
       animateImage(
         imageScope.current.children,
         {
           y: "-101%",
         },
-        { duration: 1.1, ease: [0.87, 0, 0.13, 1] }
+        { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
       ),
     ]);
   };
@@ -136,15 +145,19 @@ const ProjectPageOverlay = () => {
         <ProjectWrapper key={currentProject.id} ref={projectScope}>
           <Banner>
             <BannerTitle>
-              <motion.span
+              <motion.a
+                href="#"
                 className="title"
                 initial="initial"
                 animate="animate"
                 exit="exit"
                 variants={textVariants}
+                whileHover={{
+                  color: "#101010",
+                }}
               >
                 {currentProject.title}
-              </motion.span>
+              </motion.a>
             </BannerTitle>
 
             <BannerImage
@@ -239,24 +252,7 @@ const ProjectPageOverlay = () => {
               </Heading>
             </OverflowTextHolder>
 
-            <SplitText
-              LineWrapper={({ children }) => (
-                <OverflowTextHolder>{children}</OverflowTextHolder>
-              )}
-              WordWrapper={({ children }) => (
-                <motion.span
-                  style={{ whiteSpace: "pre" }}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  variants={textVariants}
-                >
-                  {children}
-                </motion.span>
-              )}
-            >
-              {text.toUpperCase()}
-            </SplitText>
+            <AnimatedSplitText text={text} textVariants={textVariants} />
           </Description>
 
           <Technologies>
@@ -270,23 +266,8 @@ const ProjectPageOverlay = () => {
                 Technologies:
               </Heading>
             </OverflowTextHolder>
-            <SplitText
-              LineWrapper={({ children }) => (
-                <OverflowTextHolder>{children}</OverflowTextHolder>
-              )}
-              WordWrapper={({ children }) => (
-                <motion.span
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  variants={textVariants}
-                >
-                  {children}
-                </motion.span>
-              )}
-            >
-              {text.toUpperCase()}
-            </SplitText>
+
+            <AnimatedSplitText text={text} textVariants={textVariants} />
           </Technologies>
         </ProjectWrapper>
       </AnimatePresence>
