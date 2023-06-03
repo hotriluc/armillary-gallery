@@ -10,7 +10,7 @@ void main() {
     vec2 st = vUv;
     st -= 0.5;
     
-    vec3 imgTexture = .8 * texture2D(uImage, st + 0.5).rgb ;
+    vec3 imgTexture = .95 * texture2D(uImage, st + 0.5).rgb ;
     float noiseTexture = texture2D(uNoise, st * 2.0 + .5).r;
 
     // from 0 - 2

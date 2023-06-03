@@ -9,13 +9,11 @@ import WorksPageOverlay from "./components/layout/WorksPageOverlay";
 import AboutPageOverlay from "./components/layout/AboutPageOverlay";
 import NotFoundPageOverlay from "./components/layout/NotFoundPageOverlay";
 import ProjectPageOverlay from "./components/layout/ProjectPageOverlay";
-import Navigation from "./components/navigation/Navigation";
 
 import { useEffect } from "react";
 import { useUIStore } from "./store/UIStore";
 import { Perf } from "r3f-perf";
 import { AnimatePresence } from "framer-motion";
-import { useProjectStore } from "./store/projectStore";
 import { Leva } from "leva";
 
 const App = () => {
@@ -63,7 +61,14 @@ const App = () => {
         {/* <Perf /> */}
         <Scene />
       </Canvas>
-      <Loader />
+      <Loader
+        innerStyles={{ width: "40vw" }}
+        barStyles={{ backgroundColor: "#abea9a" }}
+        dataStyles={{
+          fontWeight: 300,
+          fontFamily: `'Inter', sans-serif`,
+        }}
+      />
     </Wrapper>
   );
 };

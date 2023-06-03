@@ -58,6 +58,20 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1em;
   }
 
+  ::-webkit-scrollbar {
+    width: .8rem;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #101010;
+  }
+
+  ::-webkit-scrollbar-thumb {
+      background: ${(props) => props.theme.colors.primary};
+      -webkit-box-shadow: none;
+      border-radius: 4px;
+  }
+
 `;
 
 const theme = {

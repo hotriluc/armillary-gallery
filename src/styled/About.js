@@ -51,6 +51,7 @@ export const Name = styled(motion.h1)`
 
   @media (max-width: 768px) {
     font-size: 4em;
+    margin-bottom: 2rem;
   }
 `;
 

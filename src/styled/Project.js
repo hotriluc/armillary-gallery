@@ -68,7 +68,7 @@ export const BannerTitle = styled(motion.h1)`
   } */
 
   @media (max-width: 768px) {
-    font-size: 3em;
+    font-size: 3.2em;
   }
 `;
 
@@ -101,7 +101,7 @@ export const Author = styled.div`
     grid-column: 1/-1;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
   }
 `;
 
