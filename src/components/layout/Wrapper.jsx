@@ -67,9 +67,13 @@ const GlobalStyle = createGlobalStyle`
   }
 
   ::-webkit-scrollbar-thumb {
-      background: ${(props) => props.theme.colors.primary};
+      background: rgba(116, 116, 116, 0.8);
       -webkit-box-shadow: none;
       border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+      background: ${(props) => props.theme.colors.primary};
   }
 
 `;
