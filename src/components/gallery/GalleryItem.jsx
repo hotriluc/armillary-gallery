@@ -118,7 +118,7 @@ const GalleryItem = ({
     setHovered(true);
   };
 
-  const onPointerUpHandler = (e) => {
+  const onPointerUpHandler = async (e) => {
     e.stopPropagation();
     setDestination("/works/" + projectID);
   };

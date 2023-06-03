@@ -3,12 +3,14 @@ import { damp } from "three/src/math/MathUtils";
 
 import { useGLTF, useScroll } from "@react-three/drei";
 import { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useControls } from "leva";
 import { useUIStore } from "../../store/UIStore";
 
 const ArmillaryModel = (props) => {
+  const { width } = useThree((state) => state.viewport);
   const isLoaded = useUIStore((state) => state.isLoaded);
+  const groupRef = useRef();
   const eclipticRef = useRef();
   const planetRef = useRef();
   const horizonRef = useRef();
@@ -120,7 +122,12 @@ const ArmillaryModel = (props) => {
     <>
       <ambientLight intensity={intensity} color={color} />
 
-      <group {...props} dispose={null} scale={0.3}>
+      <group
+        ref={groupRef}
+        {...props}
+        dispose={null}
+        scale={width > 7 ? 0.3 : 0.2}
+      >
         <group rotation={[0, 0, -Math.PI / 3]}>
           <directionalLight
             ref={directionalLightRef}

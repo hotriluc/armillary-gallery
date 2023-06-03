@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { styled } from "styled-components";
 
 export const AboutWrapper = styled(motion.div)`
-  padding: 4rem 4rem;
+  padding: 4rem;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -16,6 +16,18 @@ export const AboutWrapper = styled(motion.div)`
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: min-content 1fr 1fr;
   column-gap: 4rem;
+
+  @media (max-width: 768px) {
+    column-gap: 0;
+    padding: 4rem 2rem;
+    grid-template-areas:
+      "name name"
+      "content content"
+      "contentNav contentNav"
+      "copyright copyright";
+
+    grid-template-rows: min-content 1fr;
+  }
 `;
 
 // NAME
@@ -35,6 +47,10 @@ export const Name = styled(motion.h1)`
   span {
     display: inline-block;
     color: ${(props) => props.theme.colors.light};
+  }
+
+  @media (max-width: 768px) {
+    font-size: 4em;
   }
 `;
 

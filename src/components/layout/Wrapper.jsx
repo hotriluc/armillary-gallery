@@ -32,6 +32,9 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Inter', sans-serif;
     font-size: 1.6rem;
 
+    @media (max-width: 768px) {
+      font-size: 1.4rem;
+    }
   }
 /* 
   h1,h2,h3,h4,h5{
