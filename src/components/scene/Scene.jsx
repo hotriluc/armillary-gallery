@@ -4,6 +4,7 @@ import { Route, Switch } from "wouter";
 
 import WorksPageScene from "./WorksPageScene";
 import AboutPageScene from "./AboutPageScene";
+import { Bloom, EffectComposer } from "@react-three/postprocessing";
 
 const Scene = () => {
   const { size, focus, samples } = useControls("soft shadows", {
@@ -15,7 +16,9 @@ const Scene = () => {
   return (
     <>
       <SoftShadows size={size} focus={focus} samples={samples} />
-
+      {/* <EffectComposer>
+        <Bloom mipmapBlur intensity={0.2} luminanceThreshold={0} />
+      </EffectComposer> */}
       <Switch>
         <Route path="/works">
           <WorksPageScene />

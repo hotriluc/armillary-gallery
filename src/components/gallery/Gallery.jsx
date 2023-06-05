@@ -4,7 +4,7 @@ import { damp } from "three/src/math/MathUtils";
 import { useMemo, useRef } from "react";
 import { useProjectStore } from "../../store/projectStore";
 
-import { useFrame, useLoader, useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useScroll } from "@react-three/drei";
 
 import GalleryItem from "./GalleryItem";
@@ -12,7 +12,6 @@ import GalleryItem from "./GalleryItem";
 const Gallery = () => {
   const ref = useRef();
   const { width } = useThree((state) => state.viewport);
-  const noiseMap = useLoader(THREE.TextureLoader, "noise.png");
   const projects = useProjectStore((state) => state.projects);
 
   // for circular (desktop) we reverse in order to do correct rotation
@@ -89,7 +88,6 @@ const Gallery = () => {
               (Math.PI * projects.length) / projects.length,
             0,
           ]}
-          noiseMap={noiseMap}
         />
       ))}
     </group>

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { styled } from "styled-components";
 
 export const ProjectWrapper = styled(motion.div)`
-  padding: 8rem 4rem;
+  padding: 8rem 8rem;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -19,7 +19,7 @@ export const ProjectWrapper = styled(motion.div)`
     "nav description technologies";
 
   @media (max-width: 768px) {
-    padding: 7rem 2rem;
+    padding: 7rem 4rem;
     grid-template-rows: min-content;
     grid-template-areas:
       "banner banner banner"
@@ -58,7 +58,10 @@ export const BannerTitle = styled(motion.h1)`
   a {
     display: inline-block;
     text-decoration: none;
-    color: ${(props) => props.theme.colors.light};
+    color: ${(props) => props.theme.colors.primary};
+
+    -webkit-text-stroke: 1px;
+    -webkit-text-fill-color: transparent;
 
     position: relative;
   }
@@ -73,7 +76,7 @@ export const BannerTitle = styled(motion.h1)`
 `;
 
 export const BannerImage = styled(motion.div)`
-  height: 55rem;
+  /* height: 55rem; */
   overflow: hidden;
   transform-origin: top;
 
@@ -85,7 +88,7 @@ export const BannerImage = styled(motion.div)`
 export const BannerImageInner = styled(motion.img)`
   height: 100%;
   width: 100%;
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 export const Author = styled.div`

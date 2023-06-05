@@ -26,14 +26,8 @@ const GalleryItemMaterial = new shaderMaterial(
 
 extend({ GalleryItemMaterial });
 
-const GalleryItem = ({
-  data,
-  noiseMap,
-  rotation,
-  c = new THREE.Color(),
-  ...props
-}) => {
-  const { id: projectID, imgUrl: projectImg, title: projectTitle } = data;
+const GalleryItem = ({ data, rotation, c = new THREE.Color(), ...props }) => {
+  const { id: projectID, thumbImgUrl: projectImg, title: projectTitle } = data;
 
   const ref = useRef();
   const materialRef = useRef();
@@ -135,7 +129,6 @@ const GalleryItem = ({
         <galleryItemMaterial
           ref={materialRef}
           uImage={imgMap}
-          uNoise={noiseMap}
           uProgress={progress}
           transparent
         />
@@ -149,7 +142,7 @@ const GalleryItem = ({
         fontSize={0.1}
         fillOpacity={0}
       >
-        {projectTitle.toUpperCase()}
+        {projectTitle ? projectTitle.toUpperCase() : "UNTITLED"}
       </Text>
 
       <Constellation hovered={hovered} />
