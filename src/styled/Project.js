@@ -19,7 +19,7 @@ export const ProjectWrapper = styled(motion.div)`
     "nav description technologies";
 
   @media (max-width: 768px) {
-    padding: 7rem 4rem;
+    padding: 8rem 2rem;
     grid-template-rows: min-content;
     grid-template-areas:
       "banner banner banner"
@@ -34,6 +34,10 @@ export const Banner = styled(motion.div)`
   grid-area: banner;
   position: relative;
   overflow: hidden;
+
+  /* @media (max-width: 768px) {
+    margin-top: 4rem;
+  } */
 `;
 
 export const BannerTitle = styled(motion.h1)`
@@ -71,17 +75,18 @@ export const BannerTitle = styled(motion.h1)`
   } */
 
   @media (max-width: 768px) {
-    font-size: 3.2em;
+    font-size: 3em;
   }
 `;
 
 export const BannerImage = styled(motion.div)`
-  /* height: 55rem; */
   overflow: hidden;
   transform-origin: top;
+  display: flex;
+  gap: 2rem;
 
   @media (max-width: 768px) {
-    height: 35rem;
+    gap: 1rem;
   }
 `;
 

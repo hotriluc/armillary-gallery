@@ -18,8 +18,8 @@ export const AboutWrapper = styled(motion.div)`
   gap: 4rem;
 
   @media (max-width: 768px) {
-    column-gap: 0;
-    padding: 8rem 4rem;
+    gap: 2rem;
+    padding: 8rem 2rem;
     grid-template-areas:
       "name name"
       "content content"
@@ -55,7 +55,6 @@ export const Name = styled(motion.h1)`
 
   @media (max-width: 768px) {
     font-size: 4em;
-    margin-bottom: 2rem;
   }
 `;
 

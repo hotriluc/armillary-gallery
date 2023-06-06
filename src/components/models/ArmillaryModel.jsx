@@ -1,4 +1,3 @@
-import * as THREE from "three";
 import { damp } from "three/src/math/MathUtils";
 
 import { useGLTF, useScroll } from "@react-three/drei";

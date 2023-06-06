@@ -162,7 +162,6 @@ const ProjectPageOverlay = () => {
             </BannerTitle>
 
             <BannerImage
-              style={{ display: "flex", gap: "2rem" }}
               ref={imageScope}
               initial="initial"
               animate="animate"

@@ -14,7 +14,7 @@ export const NavBar = styled(motion.nav)`
   gap: 4rem;
 
   @media (max-width: 768px) {
-    padding: 3rem 4rem;
+    padding: 3rem 2rem;
     gap: 2rem;
   }
 `;
