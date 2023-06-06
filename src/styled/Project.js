@@ -58,10 +58,10 @@ export const BannerTitle = styled(motion.h1)`
   a {
     display: inline-block;
     text-decoration: none;
-    color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors.secondary};
 
     -webkit-text-stroke: 1px;
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: ${(props) => props.theme.colors.light};
 
     position: relative;
   }

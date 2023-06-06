@@ -153,8 +153,7 @@ const ProjectPageOverlay = () => {
                 exit="exit"
                 variants={textVariants}
                 whileHover={{
-                  color: "#101010",
-                  WebkitTextFillColor: "#fefefe",
+                  WebkitTextFillColor: "#abea9a",
                   opacity: 0.95,
                 }}
               >

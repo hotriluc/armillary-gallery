@@ -6,7 +6,7 @@ export const NavBar = styled(motion.nav)`
   width: 100%;
   z-index: 10;
 
-  padding: 4rem 4rem;
+  padding: 4rem 8rem;
   color: ${(props) => props.theme.colors.light};
   font-weight: 200;
 
@@ -14,7 +14,7 @@ export const NavBar = styled(motion.nav)`
   gap: 4rem;
 
   @media (max-width: 768px) {
-    padding: 3rem 2rem;
+    padding: 3rem 4rem;
     gap: 2rem;
   }
 `;
