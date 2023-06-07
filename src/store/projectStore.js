@@ -41,7 +41,7 @@ const projects = [
     url: "https://dragon-five.vercel.app/",
 
     description:
-      "Inspired by colors of South Korea. Dragon's curve formed the letter ㅎ – hieut. that is where the name came from.",
+      "Inspired by colors of South Korea. The Dragon's curve formed the letter ㅎ – hieut. that is where the name came from.",
     technologies:
       "Both dragon and animations were done in blender. to make it reusable on web and easy to maintain i use gltfjsx.",
 
