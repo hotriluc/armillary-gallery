@@ -11,14 +11,18 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@react-three/drei": "^9.66.6",
+    "@cyriacbr/react-split-text": "^1.0.0",
+    "@react-three/drei": "9.66.6",
     "@react-three/fiber": "^8.13.0",
+    "@react-three/postprocessing": "^2.13.0",
+    "framer-motion": "^10.12.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^6.0.0-rc.1",
     "styled-normalize": "^8.0.7",
     "three": "^0.152.2",
-    "wouter": "^2.10.1"
+    "wouter": "^2.11.0",
+    "zustand": "^4.3.8"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

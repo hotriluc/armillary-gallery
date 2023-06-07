@@ -24,11 +24,67 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     margin: 0;
     padding: 0;
+    overscroll-behavior: none;
+  }
+
+  body {
+    background-color: ${(props) => props.theme.colors.secondary};
+    font-family: 'Inter', sans-serif;
+    font-size: 1.6rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.4rem;
+    }
+  }
+/* 
+  h1,h2,h3,h4,h5{
+    font-family: 'Inter', sans-serif;
+  } */
+
+  button {
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.5em;
+  }
+  h3 {
+    font-size: 1.125em;
+  }
+  h4{
+    font-size: 1em;
+  }
+
+  ::-webkit-scrollbar {
+    width: .8rem;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #101010;
+  }
+
+  ::-webkit-scrollbar-thumb {
+      background: rgba(116, 116, 116, 0.8);
+      -webkit-box-shadow: none;
+      border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+      background: ${(props) => props.theme.colors.primary};
   }
 
 `;
 
-const theme = {};
+const theme = {
+  colors: {
+    primary: "#abea9a",
+    secondary: "#101010",
+    light: "#fefefe",
+  },
+};
 
 const Wrapper = ({ children }) => {
   return (

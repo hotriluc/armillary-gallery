@@ -1,54 +1,74 @@
 import { Canvas } from "@react-three/fiber";
 import Wrapper from "./components/layout/Wrapper";
-import { Link, Redirect, Route, Switch } from "wouter";
-import Projects from "./components/scene/Projects";
+import { Redirect, Route, Switch, useLocation, useRoute } from "wouter";
 
-const Works = () => {
-  return <div style={{ position: "absolute" }}>works</div>;
-};
+import Scene from "./components/scene/Scene";
+import { Loader, useProgress } from "@react-three/drei";
 
-const About = () => {
-  return <div>About</div>;
-};
+import WorksPageOverlay from "./components/layout/WorksPageOverlay";
+import AboutPageOverlay from "./components/layout/AboutPageOverlay";
+import NotFoundPageOverlay from "./components/layout/NotFoundPageOverlay";
+import ProjectPageOverlay from "./components/layout/ProjectPageOverlay";
 
-const NotFound = () => {
-  return <div>Not found</div>;
-};
+import { useEffect } from "react";
+import { useUIStore } from "./store/UIStore";
+import { Perf } from "r3f-perf";
+import { AnimatePresence } from "framer-motion";
+import { Leva } from "leva";
 
 const App = () => {
+  const { active } = useProgress();
+
+  const setIsLoaded = useUIStore((state) => state.setIsLoaded);
+
+  useEffect(() => {
+    if (active === false) {
+      setTimeout(() => {
+        setIsLoaded(true);
+      }, 500);
+    }
+  }, [active, setIsLoaded]);
+
+  const [location] = useLocation();
+  const [isProjectRoute] = useRoute("/works/:id");
+
   return (
     <Wrapper>
-      <nav>
-        <Link href="/works"> Works</Link>
-        <Link href="/about"> About</Link>
-      </nav>
-
-      <Switch>
-        <Route path="/">
-          <Redirect to={"/works"} />
-        </Route>
-        <Route path="/works" component={Works} />
-        <Route path="/about" component={About} />
-        <Route component={NotFound} />
-      </Switch>
+      <AnimatePresence>
+        <Switch
+          key={!isProjectRoute ? location : "/works/"}
+          location={location}
+        >
+          <Route path="/">
+            <Redirect to={"/works"} />
+          </Route>
+          <Route path="/works">
+            <WorksPageOverlay path="/works" />
+          </Route>
+          <Route path="/about" component={AboutPageOverlay} />
+          <Route path="/works/:id" component={ProjectPageOverlay} />
+          <Route component={NotFoundPageOverlay} />
+        </Switch>
+      </AnimatePresence>
 
       <Canvas
-      // orthographic camera={{ position: [0, 0, 2]}}
+        shadows
+        dpr={[1, 2]}
+        camera={{ position: [0, 1.5, 5] }}
+        // orthographic camera={{ position: [0, 0, 2]}}
       >
-        <Switch>
-          <Route path="/works">
-            <Projects />
-          </Route>
-          <Route path="/about">
-            <mesh>
-              <planeGeometry />
-              <meshBasicMaterial color={"blue"} />
-            </mesh>
-          </Route>
-
-          <Route />
-        </Switch>
+        {/* <Perf /> */}
+        <Scene />
       </Canvas>
+      <Loader
+        containerStyles={{ backgroundColor: "#101010" }}
+        innerStyles={{ width: "40vw" }}
+        barStyles={{ backgroundColor: "#abea9a" }}
+        dataStyles={{
+          fontWeight: 300,
+          fontFamily: `'Inter', sans-serif`,
+        }}
+      />
     </Wrapper>
   );
 };
