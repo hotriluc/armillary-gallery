@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@cyriacbr/react-split-text": "^1.0.0",
-    "@react-three/drei": "^9.74.4",
+    "@react-three/drei": "9.66.6",
     "@react-three/fiber": "^8.13.0",
     "@react-three/postprocessing": "^2.13.0",
     "framer-motion": "^10.12.12",
