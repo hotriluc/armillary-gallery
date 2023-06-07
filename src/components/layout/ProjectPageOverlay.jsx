@@ -21,9 +21,6 @@ import Navigation from "../navigation/Navigation";
 import AnimatedSplitText from "../text/AnimatedSplitText";
 import { OverflowTextHolder } from "../../styled/Global";
 
-const text = `This is the project inspered by me. I was surfing through the net in
-order to find cool inspiration.`;
-
 const ProjectPageOverlay = () => {
   const [match, params] = useRoute("/works/:id");
   const projects = useProjectStore((state) => state.projects);
@@ -38,6 +35,18 @@ const ProjectPageOverlay = () => {
   const currentProject = projects[index];
   const prevProject = projects[mod(index - 1, projects.length)];
   const nextProject = projects[mod(index + 1, projects.length)];
+
+  const images = [
+    currentProject.leftImgUrl,
+    currentProject.rightImgUrl,
+    currentProject.centerImgUrl,
+  ];
+
+  images.forEach((img) => {
+    const preloadImg = new Image();
+    preloadImg.src = img;
+    console.log(preloadImg);
+  });
 
   // ANIMATIONS
   const textVariants = {
@@ -127,7 +136,7 @@ const ProjectPageOverlay = () => {
         { duration: 0.9, ease: [0.8, 0, 0.13, 1] }
       ),
       animateImage(
-        imageScope.current.children,
+        "img",
         {
           y: "-101%",
         },
@@ -139,26 +148,26 @@ const ProjectPageOverlay = () => {
   return (
     <>
       <Navigation leaveAnimation={projectLeaveAnimation} />
-
       <AnimatePresence mode="wait">
         <ProjectWrapper key={currentProject.id} ref={projectScope}>
           <Banner>
             <BannerTitle>
               <motion.a
-                href="#"
+                href={currentProject.url || "#"}
+                target="_blank"
                 className="title"
                 initial="initial"
                 animate="animate"
                 exit="exit"
                 variants={textVariants}
                 whileHover={{
-                  color: "#101010",
+                  WebkitTextFillColor: "#abea9a",
+                  opacity: 0.95,
                 }}
               >
-                {currentProject.title}
+                {currentProject.title || "untitled"}
               </motion.a>
             </BannerTitle>
-
             <BannerImage
               ref={imageScope}
               initial="initial"
@@ -166,13 +175,36 @@ const ProjectPageOverlay = () => {
               exit="exit"
               variants={imageVariants}
             >
-              <BannerImageInner
-                src="/default.png"
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                variants={imageInnerVariants}
-              />
+              <div>
+                <BannerImageInner
+                  preload="true"
+                  src={currentProject.leftImgUrl || "/bgr-1.png"}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  variants={imageInnerVariants}
+                />
+              </div>
+              <div>
+                <BannerImageInner
+                  preload="true"
+                  src={currentProject.centerImgUrl || "/bgr-2.png"}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  variants={imageInnerVariants}
+                />
+              </div>
+              <div>
+                <BannerImageInner
+                  preload="true"
+                  src={currentProject.rightImgUrl || "/bgr-3.png"}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  variants={imageInnerVariants}
+                />
+              </div>
             </BannerImage>
           </Banner>
 
@@ -185,7 +217,7 @@ const ProjectPageOverlay = () => {
                   exit="exit"
                   variants={textVariants}
                 >
-                  Ho Tri Luc
+                  Luc Ho
                 </Heading>
               </OverflowTextHolder>
               <OverflowTextHolder>
@@ -195,7 +227,7 @@ const ProjectPageOverlay = () => {
                   exit="exit"
                   variants={textVariants}
                 >
-                  APRIL 23
+                  {currentProject.date || "dd/mm/yyyy"}
                 </motion.span>
               </OverflowTextHolder>
             </div>
@@ -253,7 +285,10 @@ const ProjectPageOverlay = () => {
               </Heading>
             </OverflowTextHolder>
 
-            <AnimatedSplitText text={text} textVariants={textVariants} />
+            <AnimatedSplitText
+              text={currentProject.description || "No description"}
+              textVariants={textVariants}
+            />
           </Description>
 
           <Technologies>
@@ -268,7 +303,10 @@ const ProjectPageOverlay = () => {
               </Heading>
             </OverflowTextHolder>
 
-            <AnimatedSplitText text={text} textVariants={textVariants} />
+            <AnimatedSplitText
+              text={currentProject.technologies || "No technologies"}
+              textVariants={textVariants}
+            />
           </Technologies>
         </ProjectWrapper>
       </AnimatePresence>

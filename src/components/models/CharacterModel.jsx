@@ -38,18 +38,18 @@ const CharacterModel = (props) => {
 
   return (
     <>
-      <Float>
-        <Mask
-          ref={maskRef}
-          colorWrite
-          position={[width / 4, 0, 0]}
-          rotation-x={-0.5}
-          scale-y={0}
-        >
-          <planeGeometry args={[6, 3.5]} />
-          <meshBasicMaterial color={"#346899"} />
-        </Mask>
-      </Float>
+      {/* <Float> */}
+      <Mask
+        ref={maskRef}
+        colorWrite
+        position={[width / 4.36, 0, 0]}
+        rotation-x={-0.3}
+        scale-y={0}
+      >
+        <planeGeometry args={[6, 3.5]} />
+        <meshBasicMaterial color={"#346899"} />
+      </Mask>
+      {/* </Float> */}
 
       <Float>
         <group ref={group} {...props} dispose={null}>

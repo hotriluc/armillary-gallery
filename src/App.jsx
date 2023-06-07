@@ -34,7 +34,6 @@ const App = () => {
 
   return (
     <Wrapper>
-      <Leva hidden />
       <AnimatePresence>
         <Switch
           key={!isProjectRoute ? location : "/works/"}
@@ -62,6 +61,7 @@ const App = () => {
         <Scene />
       </Canvas>
       <Loader
+        containerStyles={{ backgroundColor: "#101010" }}
         innerStyles={{ width: "40vw" }}
         barStyles={{ backgroundColor: "#abea9a" }}
         dataStyles={{

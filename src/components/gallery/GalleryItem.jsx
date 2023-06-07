@@ -3,9 +3,8 @@ import { damp, lerp } from "three/src/math/MathUtils";
 
 import { useMemo, useRef, useState } from "react";
 
-import { extend, useFrame, useLoader } from "@react-three/fiber";
+import { extend, useFrame, useLoader, useThree } from "@react-three/fiber";
 import { Text, shaderMaterial } from "@react-three/drei";
-import { useControls } from "leva";
 
 import galleryItemVertexShader from "../../shaders/gallery-item/vertex.glsl";
 import galleryItemFragmentShader from "../../shaders/gallery-item/fragment.glsl";
@@ -26,21 +25,18 @@ const GalleryItemMaterial = new shaderMaterial(
 
 extend({ GalleryItemMaterial });
 
-const GalleryItem = ({
-  data,
-  noiseMap,
-  rotation,
-  c = new THREE.Color(),
-  ...props
-}) => {
-  const { id: projectID, imgUrl: projectImg, title: projectTitle } = data;
+const GalleryItem = ({ data, rotation, c = new THREE.Color(), ...props }) => {
+  const { id: projectID, thumbImgUrl: projectImg, title: projectTitle } = data;
 
   const ref = useRef();
   const materialRef = useRef();
   const textRef = useRef();
 
+  // Check if mobile device
+  const { width } = useThree((state) => state.viewport);
+  const isMobile = width < 7;
+
   const [hovered, setHovered] = useState(false);
-  // const [clicked, setClicked] = useState(false);
 
   const setDestination = useUIStore((state) => state.setDestination);
 
@@ -48,10 +44,6 @@ const GalleryItem = ({
     THREE.TextureLoader,
     projectImg ? projectImg : "/default.png"
   );
-
-  const { progress } = useControls({
-    progress: { min: 0, max: 1, value: 0, step: 0.05 },
-  });
 
   // It holds new pos when rotating
   const target = useMemo(() => {
@@ -65,34 +57,26 @@ const GalleryItem = ({
 
   // Animate Click and Hover
   useFrame((state, delta) => {
-    // const et = state.clock.getElapsedTime();
-    // materialRef.current.uTime = et;
-
     ref.current.rotation.y = damp(
       ref.current.rotation.y,
-      hovered ? rotation[1] - Math.PI / 5.5 : rotation[1],
+      hovered && !isMobile ? rotation[1] - Math.PI / 5.5 : rotation[1],
       6,
       delta
     );
 
-    // ref.current.position.y = damp(
-    //   ref.current.position.y,
-    //   clicked ? 2 : 0,
-    //   6,
-    //   delta
-    // );
-
     materialRef.current.uProgress = lerp(
       materialRef.current.uProgress,
-      hovered ? 1 : 0,
+      hovered || isMobile ? 1 : 0,
       0.03
     );
 
-    textRef.current.fontSize = lerp(
-      textRef.current.fontSize,
-      hovered ? 0.2 : 0.1,
-      0.05
-    );
+    if (!isMobile) {
+      textRef.current.fontSize = lerp(
+        textRef.current.fontSize,
+        hovered ? 0.2 : 0.1,
+        0.05
+      );
+    }
 
     textRef.current.material.color.lerp(
       c.set(hovered ? "#abea9a" : "#fefefe"),
@@ -104,10 +88,13 @@ const GalleryItem = ({
     // in order to hide the ones that have angle bigger then PI /2
     ref.current.getWorldPosition(target);
     const angle = initialVector.angleTo(target);
+    const anglePredicate = !isMobile
+      ? angle > Math.PI / 2 + 0.1
+      : angle < Math.PI / 2 + 0.1;
 
     textRef.current.fillOpacity = lerp(
       textRef.current.fillOpacity,
-      angle > Math.PI / 2 + 0.1 || hovered ? (hovered ? 1 : 0.5) : 0,
+      anglePredicate || hovered ? (hovered ? 1 : 0.5) : 0,
       0.05
     );
   });
@@ -132,13 +119,7 @@ const GalleryItem = ({
         onPointerUp={onPointerUpHandler}
       >
         <planeGeometry args={[1.5, 2.5]} />
-        <galleryItemMaterial
-          ref={materialRef}
-          uImage={imgMap}
-          uNoise={noiseMap}
-          uProgress={progress}
-          transparent
-        />
+        <galleryItemMaterial ref={materialRef} uImage={imgMap} transparent />
       </mesh>
 
       <Text
@@ -146,10 +127,10 @@ const GalleryItem = ({
         position={[0, 0, 0.2]}
         material-toneMapped={false}
         font={"/IBMPlexSans-Regular.woff"}
-        fontSize={0.1}
+        fontSize={isMobile ? 0.2 : 0.1}
         fillOpacity={0}
       >
-        {projectTitle.toUpperCase()}
+        {projectTitle ? projectTitle.toUpperCase() : "UNTITLED"}
       </Text>
 
       <Constellation hovered={hovered} />

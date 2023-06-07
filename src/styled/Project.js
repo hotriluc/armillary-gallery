@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { styled } from "styled-components";
 
 export const ProjectWrapper = styled(motion.div)`
-  padding: 8rem 4rem;
+  padding: 10rem 8rem 5rem;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -19,7 +19,7 @@ export const ProjectWrapper = styled(motion.div)`
     "nav description technologies";
 
   @media (max-width: 768px) {
-    padding: 7rem 2rem;
+    padding: 8rem 2rem 5rem;
     grid-template-rows: min-content;
     grid-template-areas:
       "banner banner banner"
@@ -34,6 +34,10 @@ export const Banner = styled(motion.div)`
   grid-area: banner;
   position: relative;
   overflow: hidden;
+
+  /* @media (max-width: 768px) {
+    margin-top: 4rem;
+  } */
 `;
 
 export const BannerTitle = styled(motion.h1)`
@@ -58,7 +62,10 @@ export const BannerTitle = styled(motion.h1)`
   a {
     display: inline-block;
     text-decoration: none;
-    color: ${(props) => props.theme.colors.light};
+    color: ${(props) => props.theme.colors.secondary};
+
+    -webkit-text-stroke: 1px;
+    -webkit-text-fill-color: ${(props) => props.theme.colors.light};
 
     position: relative;
   }
@@ -68,24 +75,25 @@ export const BannerTitle = styled(motion.h1)`
   } */
 
   @media (max-width: 768px) {
-    font-size: 3.2em;
+    font-size: 3em;
   }
 `;
 
 export const BannerImage = styled(motion.div)`
-  height: 55rem;
   overflow: hidden;
   transform-origin: top;
+  display: flex;
+  gap: 2rem;
 
   @media (max-width: 768px) {
-    height: 35rem;
+    gap: 1rem;
   }
 `;
 
 export const BannerImageInner = styled(motion.img)`
   height: 100%;
   width: 100%;
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 export const Author = styled.div`

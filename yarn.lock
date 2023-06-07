@@ -1552,7 +1552,7 @@
   resolved "https://registry.yarnpkg.com/@react-spring/types/-/types-9.6.1.tgz#913d3a68c5cbc1124fdb18eff919432f7b6abdde"
   integrity sha512-POu8Mk0hIU3lRXB3bGIGe4VHIwwDsQyoD1F394OK7STTiX9w4dG3cTLljjYswkQN+hDSHRrj4O36kuVa7KPU8Q==
 
-"@react-three/drei@^9.56.10", "@react-three/drei@^9.66.6":
+"@react-three/drei@9.66.6", "@react-three/drei@^9.56.10":
   version "9.66.6"
   resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.66.6.tgz#36650adf98ecf8653d1d3a6c7fa4c0373bed9942"
   integrity sha512-AQzuzawov5375PT612a4G1bNHLf31QxcZmfVSCFt9p4PolBgHtvkQGA8IDiCJRkbYYrOH4tOymfQEU6+f5Nmuw==
@@ -4223,10 +4223,10 @@ word-wrap@^1.2.3:
   resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.3.tgz#610636f6b1f703891bd34771ccb17fb93b47079c"
   integrity sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==
 
-wouter@^2.10.1:
-  version "2.10.1"
-  resolved "https://registry.yarnpkg.com/wouter/-/wouter-2.10.1.tgz#6c55c315023f46a7157c7cc123350f52a05722c5"
-  integrity sha512-jGwP371qcA68OBGsfVw2HdSe2/Dv69Zaj4cckEXxD92GH4sT5CAwLXb5ljmoVrmdkeBGLpSesvXDcN+2tO1k3A==
+wouter@^2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/wouter/-/wouter-2.11.0.tgz#3db485dec158115b67330821e7673bf3e2f78678"
+  integrity sha512-Y2CzNCwIN8kHjR2Q10D+UAgQND6TvBNmwXxgYw5ltXjjTlL7cLDUDpCip3a927Svxrmxr6vJMcPUysFxSvriCw==
   dependencies:
     use-sync-external-store "^1.0.0"
 

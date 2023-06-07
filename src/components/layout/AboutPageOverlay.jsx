@@ -89,6 +89,7 @@ const socialsData = [
     name: "Twitter",
     href: "https://twitter.com/Blink_LH",
   },
+  { name: "Codesandbox", href: "https://codesandbox.io/u/hotriluc97" },
 ];
 
 const creditsData = [
@@ -337,7 +338,7 @@ const AboutPageOverlay = () => {
               exit="exit"
               variants={textVariants}
             >
-              Ho Tri Luc
+              Luc Ho
             </motion.span>
           </Name>
 
@@ -377,7 +378,7 @@ const AboutPageOverlay = () => {
                 animate="animate"
                 variants={textVariants}
               >
-                Designed and developed by Ho Tri Luc. All rights reserved. 2023.
+                Designed and developed by Luc Ho. All rights reserved. 2023.
               </motion.span>
             </OverflowTextHolder>
           </Copyright>

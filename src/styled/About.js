@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { styled } from "styled-components";
 
 export const AboutWrapper = styled(motion.div)`
-  padding: 4rem;
+  padding: 10rem 8rem 5rem;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -15,11 +15,11 @@ export const AboutWrapper = styled(motion.div)`
     "copyright contentNav";
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: min-content 1fr 1fr;
-  column-gap: 4rem;
+  gap: 4rem;
 
   @media (max-width: 768px) {
-    column-gap: 0;
-    padding: 4rem 2rem;
+    gap: 2rem;
+    padding: 8rem 2rem 5rem;
     grid-template-areas:
       "name name"
       "content content"
@@ -38,6 +38,7 @@ export const Name = styled(motion.h1)`
   font-size: 7.5em;
   font-weight: 400;
   text-transform: uppercase;
+  margin: 0;
 
   width: max-content;
 
@@ -47,11 +48,13 @@ export const Name = styled(motion.h1)`
   span {
     display: inline-block;
     color: ${(props) => props.theme.colors.light};
+    /* 
+    -webkit-text-stroke: 1px;
+    -webkit-text-fill-color: transparent; */
   }
 
   @media (max-width: 768px) {
     font-size: 4em;
-    margin-bottom: 2rem;
   }
 `;
 

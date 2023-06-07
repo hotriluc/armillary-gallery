@@ -6,12 +6,13 @@ export const NavBar = styled(motion.nav)`
   width: 100%;
   z-index: 10;
 
-  padding: 4rem 4rem;
+  padding: 4rem 8rem;
   color: ${(props) => props.theme.colors.light};
   font-weight: 200;
 
   display: flex;
   gap: 4rem;
+  align-items: center;
 
   @media (max-width: 768px) {
     padding: 3rem 2rem;
@@ -51,7 +52,6 @@ export const NavItem = styled(motion.li)`
 
 export const NavLogo = styled.div`
   flex: 1;
-  cursor: pointer;
 `;
 
 export const NavSocials = styled.div`
