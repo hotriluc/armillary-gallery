@@ -19,7 +19,7 @@ export const AboutWrapper = styled(motion.div)`
 
   @media (max-width: 768px) {
     gap: 2rem;
-    padding: 8rem 2rem;
+    padding: 8rem 2rem 5rem;
     grid-template-areas:
       "name name"
       "content content"

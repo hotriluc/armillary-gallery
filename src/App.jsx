@@ -34,7 +34,6 @@ const App = () => {
 
   return (
     <Wrapper>
-      <Leva hidden />
       <AnimatePresence>
         <Switch
           key={!isProjectRoute ? location : "/works/"}

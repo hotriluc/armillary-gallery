@@ -21,9 +21,6 @@ import Navigation from "../navigation/Navigation";
 import AnimatedSplitText from "../text/AnimatedSplitText";
 import { OverflowTextHolder } from "../../styled/Global";
 
-const text = `This is the project inspered by me. I was surfing through the net in
-order to find cool inspiration.`;
-
 const ProjectPageOverlay = () => {
   const [match, params] = useRoute("/works/:id");
   const projects = useProjectStore((state) => state.projects);
@@ -139,7 +136,6 @@ const ProjectPageOverlay = () => {
   return (
     <>
       <Navigation leaveAnimation={projectLeaveAnimation} />
-
       <AnimatePresence mode="wait">
         <ProjectWrapper key={currentProject.id} ref={projectScope}>
           <Banner>
@@ -160,7 +156,6 @@ const ProjectPageOverlay = () => {
                 {currentProject.title || "untitled"}
               </motion.a>
             </BannerTitle>
-
             <BannerImage
               ref={imageScope}
               initial="initial"
@@ -170,6 +165,7 @@ const ProjectPageOverlay = () => {
             >
               <div>
                 <BannerImageInner
+                  preload="true"
                   src={currentProject.leftImgUrl || "/bgr-1.png"}
                   initial="initial"
                   animate="animate"
@@ -179,6 +175,7 @@ const ProjectPageOverlay = () => {
               </div>
               <div>
                 <BannerImageInner
+                  preload="true"
                   src={currentProject.centerImgUrl || "/bgr-2.png"}
                   initial="initial"
                   animate="animate"
@@ -188,6 +185,7 @@ const ProjectPageOverlay = () => {
               </div>
               <div>
                 <BannerImageInner
+                  preload="true"
                   src={currentProject.rightImgUrl || "/bgr-3.png"}
                   initial="initial"
                   animate="animate"
@@ -207,7 +205,7 @@ const ProjectPageOverlay = () => {
                   exit="exit"
                   variants={textVariants}
                 >
-                  Ho Tri Luc
+                  Luc Ho
                 </Heading>
               </OverflowTextHolder>
               <OverflowTextHolder>

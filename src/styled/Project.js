@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { styled } from "styled-components";
 
 export const ProjectWrapper = styled(motion.div)`
-  padding: 8rem 8rem;
+  padding: 10rem 8rem 5rem;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -19,7 +19,7 @@ export const ProjectWrapper = styled(motion.div)`
     "nav description technologies";
 
   @media (max-width: 768px) {
-    padding: 8rem 2rem;
+    padding: 8rem 2rem 5rem;
     grid-template-rows: min-content;
     grid-template-areas:
       "banner banner banner"

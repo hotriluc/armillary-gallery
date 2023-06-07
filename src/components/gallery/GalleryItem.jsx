@@ -5,7 +5,6 @@ import { useMemo, useRef, useState } from "react";
 
 import { extend, useFrame, useLoader, useThree } from "@react-three/fiber";
 import { Text, shaderMaterial } from "@react-three/drei";
-import { useControls } from "leva";
 
 import galleryItemVertexShader from "../../shaders/gallery-item/vertex.glsl";
 import galleryItemFragmentShader from "../../shaders/gallery-item/fragment.glsl";
@@ -45,10 +44,6 @@ const GalleryItem = ({ data, rotation, c = new THREE.Color(), ...props }) => {
     THREE.TextureLoader,
     projectImg ? projectImg : "/default.png"
   );
-
-  const { progress } = useControls({
-    progress: { min: 0, max: 1, value: 0, step: 0.05 },
-  });
 
   // It holds new pos when rotating
   const target = useMemo(() => {
@@ -124,12 +119,7 @@ const GalleryItem = ({ data, rotation, c = new THREE.Color(), ...props }) => {
         onPointerUp={onPointerUpHandler}
       >
         <planeGeometry args={[1.5, 2.5]} />
-        <galleryItemMaterial
-          ref={materialRef}
-          uImage={imgMap}
-          uProgress={progress}
-          transparent
-        />
+        <galleryItemMaterial ref={materialRef} uImage={imgMap} transparent />
       </mesh>
 
       <Text

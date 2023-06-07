@@ -3,7 +3,6 @@ import { damp } from "three/src/math/MathUtils";
 import { useGLTF, useScroll } from "@react-three/drei";
 import { useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useControls } from "leva";
 import { useUIStore } from "../../store/UIStore";
 
 const ArmillaryModel = (props) => {
@@ -21,17 +20,6 @@ const ArmillaryModel = (props) => {
 
   const directionalLightRef = useRef();
   // useHelper(directionalLightRef, THREE.DirectionalLightHelper);
-
-  const { color: directionalLightColor, intensity: directionalLightIntensity } =
-    useControls("directional lights", {
-      color: "#0d9600",
-      intensity: { min: 0, max: 20, value: 8 },
-    });
-
-  const { color, intensity } = useControls("ambient lights", {
-    color: "#346899",
-    intensity: { min: 0, max: 20, value: 0.4, step: 0.1 },
-  });
 
   useFrame((state, delta) => {
     if (!isLoaded) return;
@@ -119,7 +107,7 @@ const ArmillaryModel = (props) => {
 
   return (
     <>
-      <ambientLight intensity={intensity} color={color} />
+      <ambientLight intensity={0.4} color={"#346899"} />
 
       <group
         ref={groupRef}
@@ -132,8 +120,8 @@ const ArmillaryModel = (props) => {
             ref={directionalLightRef}
             castShadow
             position={[10, -1, 0]}
-            color={directionalLightColor}
-            intensity={directionalLightIntensity}
+            color={"#0d9600"}
+            intensity={8}
             shadow-mapSize={2048}
             shadow-camera-top={10}
             shadow-camera-right={10}

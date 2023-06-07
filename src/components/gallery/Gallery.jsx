@@ -50,7 +50,7 @@ const Gallery = () => {
           data={projectData}
           position={
             isMobile
-              ? [(itemGap + itemWidth) * i, 0, 2]
+              ? [(itemGap + itemWidth) * i, 0.5, 2]
               : [
                   Math.cos(interval * i) * radius,
                   0,

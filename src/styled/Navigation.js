@@ -12,6 +12,7 @@ export const NavBar = styled(motion.nav)`
 
   display: flex;
   gap: 4rem;
+  align-items: center;
 
   @media (max-width: 768px) {
     padding: 3rem 2rem;
@@ -51,7 +52,6 @@ export const NavItem = styled(motion.li)`
 
 export const NavLogo = styled.div`
   flex: 1;
-  cursor: pointer;
 `;
 
 export const NavSocials = styled.div`
