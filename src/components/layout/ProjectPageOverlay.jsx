@@ -36,6 +36,18 @@ const ProjectPageOverlay = () => {
   const prevProject = projects[mod(index - 1, projects.length)];
   const nextProject = projects[mod(index + 1, projects.length)];
 
+  const images = [
+    currentProject.leftImgUrl,
+    currentProject.rightImgUrl,
+    currentProject.centerImgUrl,
+  ];
+
+  images.forEach((img) => {
+    const preloadImg = new Image();
+    preloadImg.src = img;
+    console.log(preloadImg);
+  });
+
   // ANIMATIONS
   const textVariants = {
     initial: {
